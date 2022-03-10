@@ -35,7 +35,7 @@ export default class Data extends React.Component{
     render()
     {
         return (
-                <ul>{this.state.data.map(topic => <li key = {topic.topic_id}>{topic.topicName}</li>)}</ul>
+                <ul>{this.state.data.map(topic => <li key = {topic.id}>{topic.topicName + " " + topic.description_topic }</li>)}</ul>
         );
     };
 }

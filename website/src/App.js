@@ -29,20 +29,16 @@ export default class App extends React.Component{
       }
     })
   }
-  /*
+
   toevoegen = async () => {
-    await students.post('/',{
-      name: "beke",
+    await approvedTopics.post('/',{
+      topicName: "TopicName", description_topic: "TopicDescription"
     }).then(res => {
       console.log(res);
-
     }).catch(err => {
       console.log("err" + err);
     })
-
-    <button onClick={this.toevoegen}>Druk hier om persoon toe te voegen</button>
-
-  }*/
+  }
 
   render()
   {
@@ -50,6 +46,7 @@ export default class App extends React.Component{
         <div className="App">
           <button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
           {this.state.hideData && <Data />}
+          <button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
         </div>
     );
   }

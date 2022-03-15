@@ -1,5 +1,6 @@
 import './App.css';
 import Data from './Data.js'
+import Footer from "./Footer";
 import React from 'react';
 import axios from 'axios';
 
@@ -47,6 +48,7 @@ export default class App extends React.Component{
           <button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
           {this.state.hideData && <Data />}
           <button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
+          <Footer />
         </div>
     );
   }

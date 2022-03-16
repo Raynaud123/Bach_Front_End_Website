@@ -2,14 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Error404 from "./Views/Error404";
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+      <Routes>
+          <Route path="/" element={<App />}/>
+          <Route path="*" element={<Error404 />}/>
+      </Routes>
   </BrowserRouter>,
   rootElement
 );

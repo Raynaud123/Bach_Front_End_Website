@@ -1,6 +1,6 @@
 import './App.css';
 import Data from './Data.js'
-import Footer from "./Footer";
+import Footer from "./Views/Footer";
 import React from 'react';
 import axios from 'axios';
 

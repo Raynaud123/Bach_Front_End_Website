@@ -1,18 +1,18 @@
 .footer{
     background-color: lightgray;
     position: fixed;
-    height: 10%;
+    height: 7%;
     width: auto;
     bottom: 0;
     right: 0;
     left: 0;
-
+    padding: 15px 0;
+    color: #777;
+    font-size: 14px;
 }
 .logo{
     height: 100%;
 }
-.icon{
-    height: 100%;
-    position: center;
-
-}
+.footer a { color: #aaa; }
+.footer a:hover { color: #fff; }
+.footer p { margin: 0; }

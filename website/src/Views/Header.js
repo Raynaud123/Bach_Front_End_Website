@@ -2,6 +2,7 @@ import React from "react";
 import '../Styles/Header.css';
 import {Link} from 'react-router-dom'
 import KULeuvenLogo from '../assets/KULeuvenLogo.png'
+import {IoIosNotificationsOutline, GoPerson} from "react-icons/all";
 
 export default function Header(props){
 
@@ -23,6 +24,10 @@ export default function Header(props){
                         <button><Link to="/maintenance">Maintenance</Link></button>
                         <button><Link to="/Topics">Topics</Link></button>
                 </div>
+                <div className={"icon"}>
+                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                    <GoPerson color='white' size={50}></GoPerson>
+                </div>
             </div>
         )
     }else if(role === "student"){
@@ -33,6 +38,10 @@ export default function Header(props){
                         <button><Link to="/Choice">Choice</Link></button>
                         <button><Link to="/Topics">Topics</Link></button>
                 </div>
+                <div className={"icon"}>
+                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                    <GoPerson color='white' size={40}></GoPerson>
+                </div>
             </div>
         )
     }else if(role === "masterProef"){
@@ -41,6 +50,10 @@ export default function Header(props){
                 <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 <div className={"buttons"}>
                         <button><Link to="/Topics">Topics</Link></button>
+                </div>
+                <div className={"icon"}>
+                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                    <GoPerson color='white' size={40}></GoPerson>
                 </div>
             </div>
         )
@@ -51,6 +64,10 @@ export default function Header(props){
                 <div className={"buttons"}>
                         <button><Link to="/Add">Add a Topic</Link></button>
                         <button><Link to="/Topics">Topics</Link></button>
+                </div>
+                <div className={"icon"}>
+                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                    <GoPerson color='white' size={40}></GoPerson>
                 </div>
             </div>
         )

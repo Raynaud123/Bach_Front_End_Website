@@ -14,6 +14,7 @@ const approvedTopics = axios.create({
 
 export default class App extends React.Component{
 
+
   state = {
     hideData: false
   }
@@ -38,9 +39,14 @@ export default class App extends React.Component{
 
   render()
   {
+
+
     return (
         <div className="App">
-          <Header />
+          <Header
+              isLoggedIn={this.props.isLoggedIn}
+              roles={this.props.roles}
+          />
           <button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
           {this.state.hideData && <Data />}
           <button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>

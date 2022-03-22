@@ -11,7 +11,10 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
   <BrowserRouter>
       <Routes>
-          <Route path="/" element={<App />}/>
+          <Route path="/" element={<App
+                                        isLoggedIn={true}
+                                        roles={"student"}
+          />}/>
           <Route path="*" element={<Error404 />}/>
       </Routes>
   </BrowserRouter>,

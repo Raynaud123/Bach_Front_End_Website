@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Bach_Front_End_Website.iml" filepath="$PROJECT_DIR$/.idea/Bach_Front_End_Website.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/test_bach_frontend_website.iml" filepath="$PROJECT_DIR$/.idea/test_bach_frontend_website.iml" />
     </modules>
   </component>
 </project>

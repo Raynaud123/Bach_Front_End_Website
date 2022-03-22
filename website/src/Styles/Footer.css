@@ -2,11 +2,17 @@
     background-color: lightgray;
     position: fixed;
     height: 10%;
-    width: 100%;
+    width: auto;
     bottom: 0;
     right: 0;
     left: 0;
+
 }
-.Logo{
-    height: 5%;
+.logo{
+    height: 100%;
+}
+.icon{
+    height: 100%;
+    position: center;
+
 }

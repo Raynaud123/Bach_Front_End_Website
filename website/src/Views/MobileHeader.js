@@ -24,8 +24,20 @@ export default function MobileHeader(props){
             </div>
         )}else if(role === "admin"){
         return(
-            <div className={"header"}>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+            <div className={"header hamburger"}>
+                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
+                {navbarOpen && <ul className={"menuNav"}>
+                    <div className={"hamburgerbuttons"}>
+                        <Link to="/deadlines">Deadlines</Link>
+                        <Link to="/maintenance">Maintenance</Link>
+                        <Link to="/Topics">Topics</Link>
+                        <div className={"iconshamburger"}>
+                            <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                            <GoPerson color='white' size={40}></GoPerson>
+                        </div>
+                    </div>
+                </ul>}
             </div>
         )
     }else if(role === "student"){
@@ -47,16 +59,35 @@ export default function MobileHeader(props){
         )
     }else if(role === "masterProef"){
         return(
-            <div className={"header"}>
+            <div className={"header hamburger"}>
                 <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-
+                <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
+                {navbarOpen && <ul className={"menuNav"}>
+                    <div className={"hamburgerbuttons"}>
+                        <Link to="/Topics">Topics</Link>
+                        <div className={"iconshamburger"}>
+                            <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                            <GoPerson color='white' size={40}></GoPerson>
+                        </div>
+                    </div>
+                </ul>}
             </div>
         )
     }else if(role === "bedrijf"){
         return(
-            <div className={"header"}>
+            <div className={"header hamburger"}>
                 <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-
+                <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
+                {navbarOpen && <ul className={"menuNav"}>
+                    <div className={"hamburgerbuttons"}>
+                        <Link to="/Add">Add a Topic</Link>
+                        <Link to="/Topics">Topics</Link>
+                        <div className={"iconshamburger"}>
+                            <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
+                            <GoPerson color='white' size={40}></GoPerson>
+                        </div>
+                    </div>
+                </ul>}
             </div>
         )
     }

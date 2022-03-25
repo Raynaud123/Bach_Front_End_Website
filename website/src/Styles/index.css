@@ -5,13 +5,43 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
 }
 
-body{
-  position: fixed;
+#root{
+  height: 100%;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.height{
+  height: 100%;
+}
+
+button {
+  color: #fff;
+  background-color: #067aac;
+  border: none;
+  padding: 0.625em 1em;
+  border-radius: 24px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  transition: all .2s ease-in-out;
+}
+
+button > a {
+  text-decoration: none;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: aqua;
 }

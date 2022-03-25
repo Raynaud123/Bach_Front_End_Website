@@ -14,7 +14,10 @@ ReactDOM.render(
                                         isLoggedIn={true}
                                         roles={"student"}
           />}/>
-          <Route path="*" element={<Error404 />}/>
+          <Route path="*" element={<Error404
+              isLoggedIn={true}
+              roles={"student"}
+          />}/>
       </Routes>
   </BrowserRouter>,
   rootElement

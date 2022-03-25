@@ -1,59 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import '../Styles/Header.css';
-import {Link} from 'react-router-dom'
-import KULeuvenLogo from '../assets/KULeuvenLogo.png'
+import NormalHeader from "./NormalHeader";
+import MobileHeader from "./MobileHeader";
+
 
 export default function Header(props){
 
+    //states
+    //props
     const role = props.roles;
     const isLoggedIn = props.isLoggedIn;
 
-    if(!isLoggedIn){
-        return(
-            <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-            </div>
-        )
-    }else if(role === "admin"){
-        return(
-            <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                <div className={"buttons"}>
-                        <button><Link to="/deadlines">Deadlines</Link></button>
-                        <button><Link to="/maintenance">Maintenance</Link></button>
-                        <button><Link to="/Topics">Topics</Link></button>
-                </div>
-            </div>
-        )
-    }else if(role === "student"){
-        return(
-            <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                <div className={"buttons"}>
-                        <button><Link to="/Choice">Choice</Link></button>
-                        <button><Link to="/Topics">Topics</Link></button>
-                </div>
-            </div>
-        )
-    }else if(role === "masterProef"){
-        return(
-            <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                <div className={"buttons"}>
-                        <button><Link to="/Topics">Topics</Link></button>
-                </div>
-            </div>
-        )
-    }else if(role === "bedrijf"){
-        return(
-            <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                <div className={"buttons"}>
-                        <button><Link to="/Add">Add a Topic</Link></button>
-                        <button><Link to="/Topics">Topics</Link></button>
-                </div>
-            </div>
-        )
-    }
+    const [width, setWidth] = useState(window.innerWidth);
+    const breakpoint = 620;
+
+    useEffect(() => {
+        const handleWindowResize = () => setWidth(window.innerWidth)
+        window.addEventListener("resize", handleWindowResize);
+
+        // Return a function from the effect that removes the event listener
+        return () => window.removeEventListener("resize", handleWindowResize);
+    }, []);
+
+
+    return width < breakpoint ? <MobileHeader
+        isLoggedIn={isLoggedIn}
+        roles={role}
+    /> : <NormalHeader
+        isLoggedIn={isLoggedIn}
+        roles={role}
+    />;
 
 }

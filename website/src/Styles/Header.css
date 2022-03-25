@@ -2,15 +2,26 @@
     background-color: rgb(29,141,176);
     height: 10%;
     display: flex;
+    justify-content: space-between;
 }
 .buttons{
     display: flex;
     justify-content: space-around;
-    width: 10%;
+    width: 50%;
     height: 50%;
     margin-top: auto;
     margin-bottom: auto;
 }
+
+
+.icon{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1%;
+    display: flex;
+    flex-direction: row;
+}
+
 
 .buttons > button {
     color: #fff;
@@ -32,4 +43,47 @@ a {
 
 .Logo{
     height: 100%;
+    width: auto;
+}
+
+/*Hamburger styling */
+
+.hamburgerbutton{
+    z-index: 999;
+    cursor: pointer;
+    color: white;
+    margin-right: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.hamburgerbuttons{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.menuNav {
+    width: 100vw;
+    height: 100vh;
+    z-index: 990;
+    position: absolute;
+    background-color: rgb(29,141,176);
+    margin: 0;
+    padding: 0;
+}
+
+
+.hamburgerbuttons > a {
+    color: white;
+    font-size: 4em;
+    text-transform: uppercase;
+    font-weight: bold
+}
+
+.iconshamburger{
+    display: flex;
+    flex-direction: row;
 }

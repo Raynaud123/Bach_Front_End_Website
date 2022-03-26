@@ -11,7 +11,6 @@
     flex-grow: 8;
     text-align: center;
     border-top: 3px #00407a solid;
-
 }
 .logo{
     height: 40px;
@@ -46,6 +45,7 @@
 .footertekst{
     color: black;
     text-decoration: underline;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .icon > .footerbalk{
     color: #067aac;

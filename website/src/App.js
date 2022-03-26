@@ -36,7 +36,7 @@ export default class App extends React.Component{
               <Routes>
                 <Route path="/" element={<Topic
                     isLoggedIn={true}
-                    roles={"student"}
+                    roles={"bedrijf"}
                 />}/>
                 <Route path="*" element={<Error404
                     isLoggedIn={true}

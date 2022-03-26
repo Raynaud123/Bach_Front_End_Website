@@ -1,17 +1,11 @@
 import './Styles/App.css';
-import Data from './Data.js'
 import Footer from "./Views/Footer";
 import Header from "./Views/Header";
 import Topic from "./Views/topics/Topic"
 import React from 'react';
-import axios from 'axios';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Error404 from "./Views/Error404";
 
-
-const approvedTopics = axios.create({
-  baseURL: `http://localhost:8080/topics/approved`
-})
 
 export default class App extends React.Component{
 
@@ -34,7 +28,7 @@ export default class App extends React.Component{
               <Routes>
                 <Route path="/" element={<Topic
                     isLoggedIn={true}
-                    roles={"bedrijf"}
+                    roles={"student"}
                 />}/>
                 <Route path="*" element={<Error404
                     isLoggedIn={true}
@@ -86,10 +80,10 @@ export default class App extends React.Component{
           <button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
           {this.state.hideData && <Data />}
           <button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
-<Topics isLoggedIn={this.props.isLoggedIn} roles={this.props.roles} />
-{/!*<button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
-    {/!*{this.state.hideData && <Data />}
-    {/!*<button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
+            <Topics isLoggedIn={this.props.isLoggedIn} roles={this.props.roles} />
+            {/!*<button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
+            {/!*{this.state.hideData && <Data />}
+            {/!*<button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
           <Footer />
         </div>
     );

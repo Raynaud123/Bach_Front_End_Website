@@ -1,12 +1,10 @@
-.Topics {
-    position: relative;
+.showTopics {
     height: auto;
-    width: auto;
     justify-content: space-between;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    margin: 25px;
+    margin: 30px;
 }
 .titel{
     height: auto;
@@ -20,7 +18,56 @@
     font-weight: normal;
 }
 .filter{
-    width: auto;
     height: 30px;
     background: lightgray;
+}
+
+
+
+.topiccontainer{
+    height: auto;
+    width: auto;
+    background: #067aac;
+    display: inline-block;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 30px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.topiccontainer :first-child{
+    align-self: flex-start;
+}
+.topicbox{
+    height: 200px;
+    width: 250px;
+    border: darkblue solid 3px;
+    border-radius: 15px;
+    padding: 10px;
+}
+.topictitleinbox{
+    size: 24px;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+.contentintopicbow{
+    size: 14px;
+    padding-left: 15px;
+    max-width: 220px;
+}
+.topicDescriptionbox{
+    background: #0b2e13;
+    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.topicPromotorbox{
+    background: #1c7430;
+    height: 22px;
+}
+.topicAantalStudentenbox{
+    margin-top: 120px;
+    background: #6f42c1;
 }

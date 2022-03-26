@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
 
 const approvedTopics = axios.create({
     baseURL: `http://localhost:8080/topics/approved`
@@ -30,12 +29,34 @@ export default class Data extends React.Component{
 //        super();
 //        this.get();
  //   }
+    whichTopics = this.props.whichTopics;
+
 
     render()
     {
-        return (
-            <ul>{this.state.data.map(topic => <li
-                key={topic.id}>{topic.topicName + " " + topic.description_topic}</li>)}</ul>
-        );
+        if(this.whichTopics === "onlyTopicsApproved"){
+            return(
+                <div >
+                    {this.state.data.map(topic =>
+                        <li
+                        key = {topic.id}>{topic.topicName}
+                        </li>
+                        )
+                    }
+                </div>
+            )
+        } else if (this.whichTopics === "all"){
+            return(
+                <div >
+                    {this.state.data.concat()}
+                </div>
+            )
+        }
+        else {
+            return (
+                <ul>{this.state.data.map(topic => <li
+                    key={topic.id}>{topic.topicName + " " + topic.description_topic}</li>)}</ul>
+            );
+        }
     };
 }

@@ -10,27 +10,28 @@ export default function Footer(){
             <div className={"footerbalk"}>
                 <img className={"logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 <p>&copy; 2022</p>
-                <p><a href="https://admin.kuleuven.be/privacy/" target="_blank" className="footertekst">Disclaimer</a></p> {/*href="https://www.kuleuven.be/kuleuven/disclaimer.html"*/}
-                <p> <a href="https://admin.kuleuven.be/privacy/" target="_blank" className="footertekst">Privacy</a></p>  {/*href="https://admin.kuleuven.be/privacy/"*/}
+                <p><a href="https://admin.kuleuven.be/privacy/" className="footertekst">Disclaimer</a></p>
+                <p> <a href="https://admin.kuleuven.be/privacy/" className="footertekst">Privacy</a></p>
             </div>
             <div className="social-container">
                 <a href="https://www.youtube.com/user/kuleuven/"
-                   className="youtube social">
+                   className="youtube social" target="_blank">
                     <FontAwesomeIcon icon={faYoutube} size="2x" />
                 </a>
                 <a href="https://www.facebook.com/KULeuven/"
-                   className="facebook social">
+                   className="facebook social" target="_blank">
                     <FontAwesomeIcon icon={faFacebook} size="2x" />
                 </a>
-                <a href="https://www.twitter.com/KU_Leuven" className="twitter social">
+                <a href="https://www.twitter.com/KU_Leuven"
+                   className="twitter social" target="_blank">
                     <FontAwesomeIcon icon={faTwitter} size="2x" />
                 </a>
                 <a href="https://www.instagram.com/kuleuven"
-                   className="instagram social">
+                   className="instagram social" target="_blank">
                     <FontAwesomeIcon icon={faInstagram} size="2x" />
                 </a>
                 <a href="https://www.linkedin.com/school/ku_leuven/"
-                   className="linkedin social">
+                   className="linkedin social" target="_blank">
                     <FontAwesomeIcon icon={faLinkedin} size="2x" />
                 </a>
             </div>

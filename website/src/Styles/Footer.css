@@ -1,12 +1,91 @@
 .footer{
-    background-color: lightgray;
+    background-color: white;
     position: fixed;
-    height: 10%;
-    width: 100%;
+    height: auto;
     bottom: 0;
-    right: 0;
-    left: 0;
+    width: 100vw;
+    font-size: 14px;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 8;
+    text-align: center;
+    border-top: 3px #00407a solid;
+
 }
-.Logo{
-    height: 5%;
+.logo{
+    height: 40px;
+    width: max-content;
+    text-align: center;
+    float: inherit;
+}
+.footerbalk{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 50%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1%;
+}
+@media (max-width: 768px) {
+    .footerbalk {
+        flex-direction: column;
+    }
+    .logo{
+        display: flex;
+        margin: auto;
+        padding-top: 10px;
+    }
+    .social-container{
+        margin: auto;
+    }
+}
+.footertekst{
+    color: black;
+    text-decoration: underline;
+}
+.icon > .footerbalk{
+    color: #067aac;
+}
+.social-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px 5px;
+    align-content: center;
+}
+a.social {
+    margin: 0 1rem;
+    transition: transform 250ms;
+    display: inline-block;
+    size: 14px;
+}
+a.social:hover {
+    transform: translateY(-2px);
+}
+a.youtube {
+    color: #eb3223;
+}
+
+a.facebook {
+    color: #4968ad;
+}
+
+a.twitter {
+    color: #49a1eb;
+}
+a.instagram {
+    color: white;
+    background: radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%), radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%), radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent), linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
+    border-radius: 20%;
+}
+a.linkedin {
+    color: #0e76a8;
+}
+
+.youtube-icon, .youtube-outline, .youtube-inner-circle {
+    transition: 300ms all;
+    transform-origin: 50% 50%;
 }

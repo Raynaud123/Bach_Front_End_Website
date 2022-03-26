@@ -4,7 +4,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    margin: 30px;
+    margin: 45px;
 }
 .titel{
     height: auto;
@@ -19,7 +19,6 @@
 }
 .filter{
     height: 30px;
-    background: lightgray;
 }
 
 
@@ -27,11 +26,10 @@
 .topiccontainer{
     height: auto;
     width: auto;
-    background: #067aac;
     display: inline-block;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 30px;
+    padding: 15px;
     align-items: flex-start;
     justify-content: space-between;
 }
@@ -41,12 +39,13 @@
 .topicbox{
     height: 200px;
     width: 250px;
-    border: darkblue solid 3px;
+    border: lightgray solid 3px;
+    mso-border-shadow: yes;
     border-radius: 15px;
-    padding: 10px;
+    padding: 15px;
 }
 .topictitleinbox{
-    size: 24px;
+    size: 28px;
     font-weight: bold;
     padding-left: 15px;
     padding-bottom: 10px;
@@ -57,17 +56,35 @@
     max-width: 220px;
 }
 .topicDescriptionbox{
-    background: #0b2e13;
+    margin-top: 10px;
     word-break: break-word;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .topicPromotorbox{
-    background: #1c7430;
     height: 22px;
 }
 .topicAantalStudentenbox{
-    margin-top: 120px;
-    background: #6f42c1;
+    margin-top: 110px;
+}
+
+.persoonicoontopic{
+    color: black;
+    size: 20px;
+    justify-content: center;
+    vertical-align: -2px;
+    margin-right: 10px;
+}
+
+.info_topic_button{
+    margin-left: 8px;
+    border-radius: 10px;
+    border: lightgray solid 1px;
+    background: #00407a;
+    color: white;
+}
+.info_topic_button:hover{
+    transform: translateY(-2px);
+    background: #115a9b;
 }

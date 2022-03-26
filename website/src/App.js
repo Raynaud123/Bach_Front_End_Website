@@ -3,7 +3,7 @@ import Footer from "./Views/Footer";
 import Header from "./Views/Header";
 import Topic from "./Views/topics/Topic"
 import React from 'react';
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Error404 from "./Views/Error404";
 
 

@@ -7,7 +7,7 @@ export default function StudentTopic(){
         <div className={"showTopics"}>
             <div className={"titel"}>
                 <h1 className={"topicTitle titel"}> Masterthesis Topics </h1>
-                <h4 className={"ronde titel"}>First Round</h4>
+                <h4 className={"ronde titel"}><b>First Round</b> </h4>
             </div>
             <div className={"filter"}>
                 <a>Filter</a>

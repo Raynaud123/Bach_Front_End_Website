@@ -2,6 +2,8 @@ import './Styles/App.css';
 import Topic from "./Views/Topic"
 import React from 'react';
 import axios from 'axios';
+import Header from "./Views/Header";
+import Footer from "./Views/Footer";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Error404 from "./Views/Error404";
 
@@ -27,6 +29,10 @@ export default class App extends React.Component{
     else {
       return(
             <BrowserRouter>
+              <Header
+                  isLoggedIn={true}
+                  roles={"student"}
+              />
               <Routes>
                 <Route path="/" element={<Topic
                     isLoggedIn={true}
@@ -37,6 +43,7 @@ export default class App extends React.Component{
                     roles={"student"}
                 />}/>
               </Routes>
+              <Footer/>
             </BrowserRouter>)
     }
   }

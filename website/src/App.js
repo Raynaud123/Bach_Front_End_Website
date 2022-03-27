@@ -2,6 +2,7 @@ import './Styles/App.css';
 import Footer from "./Views/Footer";
 import Header from "./Views/Header";
 import Topic from "./Views/topics/Topic"
+import AddTopic from "./Views/topics/AddTopic"
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Error404 from "./Views/Error404";
@@ -26,9 +27,15 @@ export default class App extends React.Component{
                   roles={"student"}
               />
               <Routes>
-                <Route path="/" element={<Topic
+                  <Route path="/topic" element={
+                      <Topic
+                          isLoggedIn={true}
+                          roles={"student"}
+                      />
+                  }/>
+                <Route path="/Add" element={<AddTopic
                     isLoggedIn={true}
-                    roles={"student"}
+                    roles={"bedrijf"}
                 />}/>
                 <Route path="*" element={<Error404
                     isLoggedIn={true}
@@ -70,22 +77,19 @@ export default class App extends React.Component{
 /*  render()
   {
 
-
+/!*
     return (
         <div className="App">
           <Header
               isLoggedIn={this.props.isLoggedIn}
               roles={this.props.roles}
           />
-          <button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
-          {this.state.hideData && <Data />}
-          <button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
-            <Topics isLoggedIn={this.props.isLoggedIn} roles={this.props.roles} />
-            {/!*<button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>
-            {/!*{this.state.hideData && <Data />}
-            {/!*<button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>
+          {/!*<button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>*!/}
+          {/!*{this.state.hideData && <Data />}*!/}
+          {/!*<button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>*!/}
           <Footer />
         </div>
-    );
- }*/
+    );*!/
+  }*/
+
 }

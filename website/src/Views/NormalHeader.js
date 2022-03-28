@@ -2,7 +2,7 @@ import React from "react";
 import '../Styles/Header.css';
 import {Link} from 'react-router-dom'
 import KULeuvenLogo from '../assets/KULeuvenLogo.png'
-import {IoIosNotificationsOutline, GoPerson} from "react-icons/all";
+import {GoPerson, IoIosNotificationsOutline} from "react-icons/all";
 
 export default function NormalHeader(props){
     const role = props.roles;
@@ -27,8 +27,8 @@ export default function NormalHeader(props){
                         <button><Link to="/Topics">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                        <GoPerson color='white' size={50}></GoPerson>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={50}/>
                     </div>
                 </div>
             </div>
@@ -42,8 +42,8 @@ export default function NormalHeader(props){
                         <button><Link to="/Topics">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                        <GoPerson color='white' size={40}></GoPerson>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
                     </div>
                 </div>
         )
@@ -55,8 +55,8 @@ export default function NormalHeader(props){
                     <button><Link to="/Topics">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                    <GoPerson color='white' size={40}></GoPerson>
+                    <IoIosNotificationsOutline color='white' size={50}/>
+                    <GoPerson color='white' size={40}/>
                 </div>
             </div>
         )
@@ -69,8 +69,8 @@ export default function NormalHeader(props){
                     <button><Link to="/Topics">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                    <GoPerson color='white' size={40}></GoPerson>
+                    <IoIosNotificationsOutline color='white' size={50}/>
+                    <GoPerson color='white' size={40}/>
                 </div>
             </div>
         )

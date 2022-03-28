@@ -1,5 +1,5 @@
 import React from 'react';
-import AddTopic from "./AddTopic";
+import BedrijfTopic from "./BedrijfTopic";
 import StudentTopic from "./StudentTopic"
 
 
@@ -14,6 +14,6 @@ export default function Topic(props){
         case "masterProef":
             break;
         case "bedrijf":
-            break;
+            return <BedrijfTopic/>
     }
 }

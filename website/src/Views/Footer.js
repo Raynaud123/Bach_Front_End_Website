@@ -1,7 +1,7 @@
 import React from "react";
 import '../Styles/Footer.css';
 import KULeuvenLogo from "../assets/KULeuvenLogo.png";
-import {faYoutube,faFacebook,faTwitter,faInstagram,faLinkedin} from "@fortawesome/free-brands-svg-icons";
+import {faFacebook, faInstagram, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function Footer(){

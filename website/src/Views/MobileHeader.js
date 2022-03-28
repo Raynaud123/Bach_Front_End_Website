@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import {GiHamburgerMenu, GoPerson, IoIosNotificationsOutline} from "react-icons/all";
 
 
-
 export default function MobileHeader(props){
 
 
@@ -33,8 +32,8 @@ export default function MobileHeader(props){
                         <Link to="/maintenance">Maintenance</Link>
                         <Link to="/Topics">Topics</Link>
                         <div className={"iconshamburger"}>
-                            <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                            <GoPerson color='white' size={40}></GoPerson>
+                            <IoIosNotificationsOutline color='white' size={50}/>
+                            <GoPerson color='white' size={40}/>
                         </div>
                     </div>
                 </ul>}
@@ -50,8 +49,8 @@ export default function MobileHeader(props){
                             <Link to="/Choice">Choice</Link>
                             <Link to="/Topics">Topics</Link>
                             <div className={"iconshamburger"}>
-                                <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                                <GoPerson color='white' size={40}></GoPerson>
+                                <IoIosNotificationsOutline color='white' size={50}/>
+                                <GoPerson color='white' size={40}/>
                             </div>
                         </div>
                     </ul>}
@@ -66,8 +65,8 @@ export default function MobileHeader(props){
                     <div className={"hamburgerbuttons"}>
                         <Link to="/Topics">Topics</Link>
                         <div className={"iconshamburger"}>
-                            <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                            <GoPerson color='white' size={40}></GoPerson>
+                            <IoIosNotificationsOutline color='white' size={50}/>
+                            <GoPerson color='white' size={40}/>
                         </div>
                     </div>
                 </ul>}
@@ -83,8 +82,8 @@ export default function MobileHeader(props){
                         <Link to="/Add">Add a Topic</Link>
                         <Link to="/Topics">Topics</Link>
                         <div className={"iconshamburger"}>
-                            <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                            <GoPerson color='white' size={40}></GoPerson>
+                            <IoIosNotificationsOutline color='white' size={50}/>
+                            <GoPerson color='white' size={40}/>
                         </div>
                     </div>
                 </ul>}

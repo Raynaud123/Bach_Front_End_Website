@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {FiSearch} from "react-icons/all";
 import '../../Styles/Topics.css';
 
 

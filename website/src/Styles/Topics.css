@@ -46,6 +46,23 @@
     font-weight: bold;
     padding-left: 15px;
     padding-bottom: 10px;
+    max-width: 200px;
+}
+.topicmetheart{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+.hearticoonfill{
+    fill: darkred;
+    right: 0;
+    height: 20px;
+}
+.buttonheart{
+    background: white;
+}
+.hearticoon:hover{
+    transform: translateY(-2px);
 }
 .contentintopicbow{
     size: 14px;
@@ -63,9 +80,14 @@
     height: 22px;
 }
 .topicAantalStudentenbox{
-    margin-top: 110px;
+    bottom: 0;
 }
-
+.studentenmetinfo{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    margin-top: 80px;
+}
 .persoonicoontopic{
     color: black;
     size: 20px;
@@ -80,6 +102,9 @@
     border: lightgray solid 1px;
     background: #00407a;
     color: white;
+    height: 35px;
+    bottom: 0;
+    left: 0;
 }
 .info_topic_button:hover{
     transform: translateY(-2px);

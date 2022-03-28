@@ -33,7 +33,7 @@ export default class App extends React.Component{
                           roles={"student"}
                       />
                   }/>
-                <Route path="/Add" element={<AddTopic
+                <Route path="/add" element={<AddTopic
                     isLoggedIn={true}
                     roles={"bedrijf"}
                 />}/>

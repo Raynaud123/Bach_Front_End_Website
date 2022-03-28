@@ -1,11 +1,14 @@
 import React from "react";
 import axios from "axios";
-import {HiUsers} from "react-icons/all";
+import {HiUsers, BsHeartFill} from "react-icons/all";
 
 
 const approvedTopics = axios.create({
     baseURL: `http://localhost:8080/topics/approved`
 })
+
+
+
 
 export default class ApprovedTopics extends React.Component{
 
@@ -26,22 +29,28 @@ export default class ApprovedTopics extends React.Component{
                 {this.state.data.map(topic =>
                     <div className={"topiccontainer"}>
                         <div key = {topic.id} className={"topicbox"}>
-                            <div className={"topictitleinbox"}>
-                                {topic.topicName}
+                            <div className={"topicmetheart"}>
+                                <div className={"topictitleinbox"}>
+                                    {topic.topicName}
+                                </div>
+                                <button className={"buttonheart"}>
+                                    <BsHeartFill className={"hearticoonfill"}></BsHeartFill>
+                                </button>
                             </div>
                             <div className={"topicDescriptionbox contentintopicbow"}>
                                 {topic.description_topic}
                             </div>
-                            <div className={"topicAantalStudentenbox contentintopicbow"}>
-                                <HiUsers className={"persoonicoontopic"}></HiUsers>
-                                aantal studenten: {topic.aantal_studenten}
+                            <div className={"topicPromotorbox contentintopicbow"}>
+                                {topic.promotor_id}
+                            </div>
+                            <div className={"studentenmetinfo"}>
+                                <div className={"topicAantalStudentenbox contentintopicbow"}>
+                                    <HiUsers className={"persoonicoontopic"}></HiUsers>
+                                    aantal studenten: {topic.aantal_studenten}
+                                    </div>
                                 <button className={"info_topic_button"}>Info</button>
                             </div>
-                            {/*<div className={"topicPromotorbox contentintopicbow"}>*/}
-                            {/*    {topic.promotor_id}*/}
-                            {/*</div>*/}
                         </div>
-
                     </div>
                 )}
             </div>

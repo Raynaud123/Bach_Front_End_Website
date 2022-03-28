@@ -8,9 +8,9 @@ const approvedTopics = axios.create({
     baseURL: `http://localhost:8080/topics/approved`
 })
 
-const promotors = axios.create({
-    baseURL: `http://localhost:8080/promotors/{id}`
-})
+// const promotors = axios.create({
+//     baseURL: `http://localhost:8080/promotor`
+// })
 
 export default class ApprovedTopics extends React.Component{
 
@@ -24,14 +24,10 @@ export default class ApprovedTopics extends React.Component{
             console.log(res);
             this.setState({apprTopics :res.data})
         })
-        promotors.get('/').then(res => {
-            console.log(res);
-            this.setState({prom :res.data})
-        })
-        // axios.all([approvedTopics, promotors]).then(axios.spread((...res) => {
-        //     const topic = res[0]
-        //     const promotor = res[1]
-        // }))
+        // promotors.get('/').then(res => {
+        //     console.log(res);
+        //     this.setState({prom :res.data})
+        // })
     }
 
     render(){
@@ -50,7 +46,8 @@ export default class ApprovedTopics extends React.Component{
                                 {topic.description_topic}
                             </div>
                             <div className={"topicPromotorbox contentintopicbow"}>
-                                {topic.promotor_id}
+                                {/*{topic.promotor_id}*/}
+                                {/*{this.findNameProm(topic.promotor_id)}*/}
                             </div>
                             <div className={"studentenmetinfo"}>
                                 <div className={"topicAantalStudentenbox contentintopicbow"}>
@@ -63,35 +60,15 @@ export default class ApprovedTopics extends React.Component{
                     </div>
                 )}
             </div>
-            // <div >
-            //     {this.state.apprTopics.map(topic =>
-            //         <div className={"topiccontainer"}>
-            //             <div key = {topic.id} className={"topicbox"}>
-            //                 <div className={"topicmetheart"}>
-            //                     <div className={"topictitleinbox"}>
-            //                         {topic.topicName}
-            //                     </div>
-            //                     <PreferredTopic className={"buttonheart"} gevuld={false}></PreferredTopic>
-            //                 </div>
-            //                 <div className={"topicDescriptionbox contentintopicbow"}>
-            //                     {topic.description_topic}
-            //                 </div>
-            //                 <div className={"topicPromotorbox contentintopicbow"}>
-            //                     {this.state.prom.map(promotor => {
-            //                         {prom.promotor_id === topic.promotor_id} {promotor_id}
-            //                 }
-            //                 </div>
-            //                 <div className={"studentenmetinfo"}>
-            //                     <div className={"topicAantalStudentenbox contentintopicbow"}>
-            //                         <HiUsers className={"persoonicoontopic"}></HiUsers>
-            //                         aantal studenten: {topic.aantal_studenten}
-            //                     </div>
-            //                     <button className={"info_topic_button"}>Info</button>
-            //                 </div>
-            //             </div>
-            //         </div>
-            //     )}
-            // </div>
         )
     };
+
+    findNameProm(id) {
+        // promotors.get('/').then(res => {
+        //     console.log(res);
+        //     this.setState({prom :res.data})
+        // })
+        //return this.state.prom.indexOf(id).firstName
+        return id
+    }
 }

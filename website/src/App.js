@@ -27,7 +27,7 @@ export default class App extends React.Component{
                   roles={"student"}
               />
               <Routes>
-                  <Route path="/topic" element={
+                  <Route path="/topics" element={
                       <Topic
                           isLoggedIn={true}
                           roles={"student"}

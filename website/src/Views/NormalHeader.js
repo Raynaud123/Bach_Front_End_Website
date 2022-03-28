@@ -13,7 +13,9 @@ export default function NormalHeader(props){
     if(!isLoggedIn){
         return(
             <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                {/*<a> href='../index'*/}
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                {/*</a>*/}
             </div>
         )
     }else if(role === "admin"){

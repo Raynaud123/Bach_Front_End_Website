@@ -58,10 +58,17 @@
     right: 0;
     height: 20px;
 }
+.hearticoon{
+    fill: darkred;
+    right: 0;
+}
 .buttonheart{
     background: white;
 }
 .hearticoon:hover{
+    transform: translateY(-2px);
+}
+.hearticoonfill:hover{
     transform: translateY(-2px);
 }
 .contentintopicbow{

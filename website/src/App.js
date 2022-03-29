@@ -46,7 +46,7 @@ export default class App extends React.Component{
                     roles={"student"}
                 />}/>
               </Routes>
-              <Footer/>
+              <Footer className={"footer"}/>
             </BrowserRouter>)
     }
   }

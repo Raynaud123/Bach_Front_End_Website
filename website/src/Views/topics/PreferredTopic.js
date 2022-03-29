@@ -13,8 +13,8 @@ export function PreferredTopic(props){
 
     return (
         <button className={"buttonheart"} onClick={() => onToggle()} type={"button"}>{
-            filled? <BsHeartFill className={"hearticoonfill"}></BsHeartFill>:
-                    <BsHeart className={"hearticoon"}></BsHeart>
+            filled? <BsHeartFill className={"hearticoonfill"}/>:
+                    <BsHeart className={"hearticoon"}/>
         }
         </button>
     )

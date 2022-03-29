@@ -15,5 +15,7 @@ export default function Topic(props){
             break;
         case "bedrijf":
             break;
+        default:
+            break;
     }
 }

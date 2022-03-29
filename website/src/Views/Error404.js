@@ -1,7 +1,5 @@
 import React from "react";
 import '../Styles/Error404.css'
-import Footer from "./Footer";
-import Header from "./Header"
 import {Link} from "react-router-dom";
 
 export default function Error404() {

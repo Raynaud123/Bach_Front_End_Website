@@ -13,24 +13,26 @@ export default function NormalHeader(props){
     if(!isLoggedIn){
         return(
             <div className={"header"}>
-                {/*<a> href='../index'*/}
+                <a href='/'>
                     <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                {/*</a>*/}
+                </a>
             </div>
         )
     }else if(role === "admin"){
         return(
             <div className={"header"}>
                 <div>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
                     <div className={"buttons"}>
                         <button><Link to="/deadlines">Deadlines</Link></button>
                         <button><Link to="/maintenance">Maintenance</Link></button>
                         <button><Link to="/Topics">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                        <GoPerson color='white' size={50}></GoPerson>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={50}/>
                     </div>
                 </div>
             </div>
@@ -38,41 +40,47 @@ export default function NormalHeader(props){
     }else if(role === "student"){
         return(
                 <div className={"header"}>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
                     <div className={"buttons"}>
                         <button><Link to="/Choice">Choice</Link></button>
                         <button><Link to="/Topics">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                        <GoPerson color='white' size={40}></GoPerson>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
                     </div>
                 </div>
         )
     }else if(role === "masterProef"){
         return(
             <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
                 <div className={"buttons"}>
                     <button><Link to="/Topics">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                    <GoPerson color='white' size={40}></GoPerson>
+                    <IoIosNotificationsOutline color='white' size={50}/>
+                    <GoPerson color='white' size={40}/>
                 </div>
             </div>
         )
     }else if(role === "bedrijf"){
         return(
             <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
                 <div className={"buttons"}>
                     <button><Link to="/Add">Add a Topic</Link></button>
                     <button><Link to="/Topics">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}></IoIosNotificationsOutline>
-                    <GoPerson color='white' size={40}></GoPerson>
+                    <IoIosNotificationsOutline color='white' size={50}/>
+                    <GoPerson color='white' size={40}/>
                 </div>
             </div>
         )

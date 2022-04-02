@@ -9,7 +9,11 @@ const approvedTopics = axios.create({
 })
 
 // const promotors = axios.create({
-//     baseURL: `http://localhost:8080/promotor`
+//     baseURL: `http://localhost:8080/promotor`,
+// withCredentials: true,
+// headers: {
+//     'Content-Type': 'application/json',
+// },
 // })
 
 export default class ApprovedTopics extends React.Component{
@@ -61,7 +65,7 @@ export default class ApprovedTopics extends React.Component{
                 )}
             </div>
         )
-    };
+    }
 
     findNameProm(id) {
         // promotors.get('/').then(res => {

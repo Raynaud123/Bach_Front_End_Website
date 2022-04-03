@@ -13,14 +13,18 @@ export default function NormalHeader(props){
     if(!isLoggedIn){
         return(
             <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
             </div>
         )
     }else if(role === "admin"){
         return(
             <div className={"header"}>
                 <div>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
                     <div className={"buttons"}>
                         <button><Link to="/deadlines">Deadlines</Link></button>
                         <button><Link to="/maintenance">Maintenance</Link></button>
@@ -36,7 +40,9 @@ export default function NormalHeader(props){
     }else if(role === "student"){
         return(
                 <div className={"header"}>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
                     <div className={"buttons"}>
                         <button><Link to="/Choice">Choice</Link></button>
                         <button><Link to="/Topics">Topics</Link></button>
@@ -50,7 +56,9 @@ export default function NormalHeader(props){
     }else if(role === "masterProef"){
         return(
             <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
                 <div className={"buttons"}>
                     <button><Link to="/Topics">Topics</Link></button>
                 </div>
@@ -63,7 +71,9 @@ export default function NormalHeader(props){
     }else if(role === "bedrijf"){
         return(
             <div className={"header"}>
-                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
                 <div className={"buttons"}>
                     <button><Link to="/Add">Add a Topic</Link></button>
                     <button><Link to="/Topics">Topics</Link></button>

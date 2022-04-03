@@ -1,0 +1,12 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.title{
+    height: auto;
+    size: 20px;
+    text-align: center;
+}

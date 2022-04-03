@@ -11,27 +11,27 @@ export default function Footer(){
                 <img className={"logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 <p>&copy; 2022</p>
                 <p><a href="https://admin.kuleuven.be/privacy/" className="footertekst">Disclaimer</a></p>
-                <p> <a href="https://admin.kuleuven.be/privacy/" className="footertekst">Privacy</a></p>
+                <p><a href="https://admin.kuleuven.be/privacy/" className="footertekst">Privacy</a></p>
             </div>
             <div className="social-container">
                 <a href="https://www.youtube.com/user/kuleuven/"
-                   className="youtube social" target="_blank">
+                   className="youtube social" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faYoutube} size="2x" />
                 </a>
                 <a href="https://www.facebook.com/KULeuven/"
-                   className="facebook social" target="_blank">
+                   className="facebook social" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faFacebook} size="2x" />
                 </a>
                 <a href="https://www.twitter.com/KU_Leuven"
-                   className="twitter social" target="_blank">
+                   className="twitter social" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faTwitter} size="2x" />
                 </a>
                 <a href="https://www.instagram.com/kuleuven"
-                   className="instagram social" target="_blank">
+                   className="instagram social" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faInstagram} size="2x" />
                 </a>
                 <a href="https://www.linkedin.com/school/ku_leuven/"
-                   className="linkedin social" target="_blank">
+                   className="linkedin social" target="_blank" rel="noopener noreferrer">
                     <FontAwesomeIcon icon={faLinkedin} size="2x" />
                 </a>
             </div>

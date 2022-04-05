@@ -7,6 +7,7 @@ import Home from "./Views/Home"
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Error404 from "./Views/Error404";
+import TopicInfo from "./Views/topics/TopicInfo";
 
 
 export default class App extends React.Component{
@@ -45,6 +46,10 @@ export default class App extends React.Component{
                     isLoggedIn={true}
                     roles={"student"}
                 />}/>
+                  <Route path="topics/info" element={<TopicInfo
+                      isLoggedIn={true}
+                      roles={"student"}
+                  />}/>
               </Routes>
               <Footer className={"footer"}/>
             </BrowserRouter>)

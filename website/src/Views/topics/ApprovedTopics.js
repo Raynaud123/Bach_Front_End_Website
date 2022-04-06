@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import {HiUsers} from "react-icons/all";
 import {PreferredTopic} from "./PreferredTopic"
-import {Link, Route} from "react-router-dom";
-import TopicInfo from "./TopicInfo";
+import {Link} from "react-router-dom";
 
 const approvedTopics = axios.create({
     baseURL: `http://localhost:8080/topic/approved`
@@ -61,7 +60,11 @@ export default class ApprovedTopics extends React.Component{
                                     <HiUsers className={"persoonicoontopic"}/>
                                     aantal studenten: {topic.aantal_studenten}
                                     </div>
-                                <button className={"info_topic_button"}><Link to={"/topics/info"} state={{ topicid: topic.id}}>Info</Link></button>
+                                <button className={"info_topic_button"}>
+                                    <Link to={{
+                                        pathname: `/topics/info/${topic.topicName}`,
+                                    }}
+                                    >Info</Link></button>
                                 {/*<button className={"info_topic_button"}><Route path="topics/info" element={<TopicInfo*/}
                                 {/*    isLoggedIn={true}*/}
                                 {/*    roles={"student"}*/}

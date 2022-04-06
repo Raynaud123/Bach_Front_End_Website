@@ -1,18 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import {replaceBehavior} from "@testing-library/user-event/dist/keyboard/plugins";
 
 export default function TopicInfo() {
     const [Topic, setTopic] = useState(false);
+    const [Provider, setProvider] = useState(false);
+
     const t = useParams();
-    let tpath = 'http://localhost:8080/topic/info/' + t.t;
+    let tpath = 'http://localhost:8080/';
 
     useEffect(async () => {
         if (!Topic) {
-            axios.get(tpath).then(res => {
+            axios.get(tpath + 'topic/info/' + t.t).then(res => {
                 console.log(res);
-                setTopic(res.data)
+                setTopic(res.data);
+            }, [])
+        }
+        if (!Provider && Topic) {
+            axios.get('http://localhost:8080/topicprovider/' + Topic.provider_id).then(res => {
+                console.log(res);
+                setProvider(res.data[0]);
             }, [])
         }
     });
@@ -21,9 +28,8 @@ export default function TopicInfo() {
         <div>
             <a>
                 {Topic.topicName}
-                {Topic.aantal_studenten}
+                {Provider.name}
             </a>
         </div>
     )
-
 }

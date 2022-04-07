@@ -1,44 +1,58 @@
-import React from "react";
-import axios from "axios";
+import React, {useState, useEffect} from "react";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import {HiUsers} from "react-icons/all";
+import qs from "qs";
+import {useNavigate, useLocation} from "react-router-dom";
 import {PreferredTopic} from "./PreferredTopic"
 import {Link} from "react-router-dom";
 
-const approvedTopics = axios.create({
-    baseURL: `http://localhost:8080/topic/approved`
-})
 
-const promotorswithtopic = axios.create({
-    baseURL: `http://localhost:8080/promotor/withtopic`,
-    // withCredentials: true,
-    // headers: {
-    //     'Content-Type': 'application/json',
-    // },
-})
+export default function ApprovedTopics(){
 
+    const axiosPrivate = useAxiosPrivate();
+    const [data, setData] = useState([]);
+    const [errMsg, setErrMsg] = useState('');
+    const location = useLocation();
 
-export default class ApprovedTopics extends React.Component{
+    const navigate = useNavigate();
 
-    state = {
-        apprTopics : [],
-        prom : [],
-    }
+    useEffect(() => {
+        let isMounted = true;
 
-    componentDidMount() {
-        approvedTopics.get('/').then(res => {
-            console.log(res);
-            this.setState({apprTopics :res.data})
-        })
-        promotorswithtopic.get('/').then(res => {
-            console.log(res);
-            this.setState({prom :res.data})
-        })
-    }
+        //cancel request if component is unmountend
+        const controller = new AbortController();
 
-    render(){
+        const getApprovedTopic = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/topic/approved",
+                    signal: controller.signal
+                });
+                console.log(response.data);
+                isMounted && setData(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log("tyfus " + errMsg);
+            }
+        }
+
+        getApprovedTopic();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, [])
+
+    data.map(topic => console.log(
+        topic
+    ));
+
         return(
-            <div >
-                {this.state.apprTopics.map(topic =>
+            <div>
+                {data.map((topic) => (
                     <div className={"topiccontainer"}>
                         <div key = {topic.id} className={"topicbox"}>
                             <div className={"topicmetheart"}>
@@ -50,35 +64,23 @@ export default class ApprovedTopics extends React.Component{
                             <div className={"topicDescriptionbox contentintopicbow"}>
                                 {topic.description_topic}
                             </div>
-                            <div className={"topicPromotorbox contentintopicbow"}>
-                                promotor id: {topic.promotor_id}
-                                {this.findNameProm(topic.promotor_id)}
-                                {/*{this.state.prom.indexOf(topic.promotor_id)}*/}
-                            </div>
-                            <div className={"studentenmetinfo"}>
-                                <div className={"topicAantalStudentenbox contentintopicbow"}>
-                                    <HiUsers className={"persoonicoontopic"}/>
-                                    aantal studenten: {topic.aantal_studenten}
+                            <div className={"topicAantalStudentenbox contentintopicbow"}>
+                                <HiUsers className={"persoonicoontopic"}/>
+                                aantal studenten: {topic.aantal_studenten}
+                                <div className={"topicPromotorbox contentintopicbow"}>
+                                    {/*{topic.promotor_id}*/}
+                                    {/*{this.findNameProm(topic.promotor_id)}*/}
+                                </div>
+                                <div className={"studentenmetinfo"}>
+                                    <div className={"topicAantalStudentenbox contentintopicbow"}>
+                                        <HiUsers className={"persoonicoontopic"}/>
+                                        aantal studenten: {topic.aantal_studenten}
                                     </div>
-                                <button className={"info_topic_button"}>
-                                    <Link to={{
-                                        pathname: `/topics/info/${topic.topicName}`,
-                                    }}
-                                    >Info</Link></button>
-                                {/*<button className={"info_topic_button"}><Route path="topics/info" element={<TopicInfo*/}
-                                {/*    isLoggedIn={true}*/}
-                                {/*    roles={"student"}*/}
-                                {/*    topicid={topic.id}*/}
-                                {/*/>}/></button>*/}
+                                    <button className={"info_topic_button"}>Info</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
-        )
-    }
-
-    findNameProm(id) {
-        return this.state.prom.indexOf(id).firstName;
-    }
+                ))}
+            </div>)
 }

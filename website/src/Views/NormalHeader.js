@@ -28,7 +28,7 @@ export default function NormalHeader(props){
                     <div className={"buttons"}>
                         <button><Link to="/deadlines">Deadlines</Link></button>
                         <button><Link to="/maintenance">Maintenance</Link></button>
-                        <button><Link to="/Topics">Topics</Link></button>
+                        <button><Link to="/topic">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>
@@ -45,7 +45,7 @@ export default function NormalHeader(props){
                     </a>
                     <div className={"buttons"}>
                         <button><Link to="/Choice">Choice</Link></button>
-                        <button><Link to="/Topics">Topics</Link></button>
+                        <button><Link to="/topic">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>
@@ -60,7 +60,7 @@ export default function NormalHeader(props){
                     <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 </a>
                 <div className={"buttons"}>
-                    <button><Link to="/Topics">Topics</Link></button>
+                    <button><Link to="/topic">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>
@@ -76,7 +76,7 @@ export default function NormalHeader(props){
                 </a>
                 <div className={"buttons"}>
                     <button><Link to="/Add">Add a Topic</Link></button>
-                    <button><Link to="/Topics">Topics</Link></button>
+                    <button><Link to="/topic">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>

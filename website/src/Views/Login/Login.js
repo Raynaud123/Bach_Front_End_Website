@@ -1,21 +1,29 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import axios from 'axios';
-import {Link} from "react-router-dom";
-import AuthContext from "./AuthProvider";
 import "../../Styles/Register.css"
-import qs from "qs";
-
+import useAuth from "../../Hooks/useAuth";
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {axiosPrivate} from "../../axios";
 
 export default function Login(){
 
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
     const userRef = useRef();
     const errRef = useRef();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    let from = "/";
+
+    if(!(location.state === undefined || location.state === null)){
+        from =  location.state.from.pathname;
+    }
+
+
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -33,19 +41,21 @@ export default function Login(){
         try {
             const response = await axios({
                 method: "post",
-                url: "http://localhost:8080/login",
-                data: qs.stringify({'email': user,'password' : pwd}),
-                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                url: "http://localhost:8080/appuser/authenticate",
+                headers: {
+                    "Content-Type" : "application/json",
+                    'Access-Control-Allow-Origin': '*'
+                },
+                data: JSON.stringify({'username': user,'password' : pwd})
             });
-            console.log(JSON.stringify(response.data));
-            //console.log(JSON.stringify(response));
-            const accessToken = response.data.accessToken;
-            const refreshToken = response.data.refreshToken;
-            const roles = response.data.roles;
-            setAuth({ user, pwd, roles, accessToken, refreshToken });
+            console.log(JSON.stringify(response));
+            const accessToken = response.data.jwt;
+//            const roles = response.data.roles;
+            setAuth({ user, pwd, accessToken});
             setUser('');
             setPwd('');
-            setSuccess(true);
+//            setSuccess(true);
+            navigate(from, { replace: true });
         } catch (err) {
             if (!err.response) {
                 setErrMsg('No Server Response');
@@ -63,17 +73,7 @@ export default function Login(){
 
 
 
-
     return(
-        <>
-            {success ? (
-                <section>
-                    <h1>You are logged in!</h1>
-                    <br />
-                    <p>
-                    </p>
-                </section>
-            ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Sign In</h1>
@@ -106,7 +106,5 @@ export default function Login(){
                         </span>
                     </p>
                 </section>
-            )}
-        </>
     )
 }

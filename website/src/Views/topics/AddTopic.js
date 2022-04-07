@@ -1,33 +1,41 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
-import {useNavigate} from "react-router-dom"
+import {useLocation, useNavigate} from "react-router-dom"
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 
 export default function AddTopic(){
 
+
+
+    const axiosPrivate = useAxiosPrivate();
     const [formValue, setformValue] = React.useState({
         Question: '',
         Description: ''
     });
 
-    const navigate= useNavigate();
+
+
+    const [data, setData] = useState([]);
+    const [errMsg, setErrMsg] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    let from = "/topic";
 
     const handleSubmit = async(e) => {
-        e.preventDefault();
-
 
         try {
-            const response = await axios({
+            const response = await axiosPrivate({
                 method: "post",
-                url: "http://localhost:8080/topics",
+                url: "http://localhost:8080/topic",
                 data: {
                     topicName: formValue.Question,
                     description_topic: formValue.Description
-                },
-                headers: { "Content-Type": "application/json" },
+                }
             });
             console.log(response)
-            navigate("/topic")
+            navigate(from, { replace: true });
         } catch(error) {
             console.log(error)
         }

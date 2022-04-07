@@ -30,7 +30,7 @@ export default function MobileHeader(props){
                     <div className={"hamburgerbuttons"}>
                         <Link to="/deadlines">Deadlines</Link>
                         <Link to="/maintenance">Maintenance</Link>
-                        <Link to="/Topics">Topics</Link>
+                        <Link to="/topic">Topics</Link>
                         <div className={"iconshamburger"}>
                             <IoIosNotificationsOutline color='white' size={50}/>
                             <GoPerson color='white' size={40}/>
@@ -47,7 +47,7 @@ export default function MobileHeader(props){
                     {navbarOpen && <ul className={"menuNav"}>
                         <div className={"hamburgerbuttons"}>
                             <Link to="/Choice">Choice</Link>
-                            <Link to="/Topics">Topics</Link>
+                            <Link to="/topic">Topics</Link>
                             <div className={"iconshamburger"}>
                                 <IoIosNotificationsOutline color='white' size={50}/>
                                 <GoPerson color='white' size={40}/>
@@ -63,7 +63,7 @@ export default function MobileHeader(props){
                 <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
                 {navbarOpen && <ul className={"menuNav"}>
                     <div className={"hamburgerbuttons"}>
-                        <Link to="/Topics">Topics</Link>
+                        <Link to="/topic">Topics</Link>
                         <div className={"iconshamburger"}>
                             <IoIosNotificationsOutline color='white' size={50}/>
                             <GoPerson color='white' size={40}/>
@@ -80,7 +80,7 @@ export default function MobileHeader(props){
                 {navbarOpen && <ul className={"menuNav"}>
                     <div className={"hamburgerbuttons"}>
                         <Link to="/Add">Add a Topic</Link>
-                        <Link to="/Topics">Topics</Link>
+                        <Link to="/topic">Topics</Link>
                         <div className={"iconshamburger"}>
                             <IoIosNotificationsOutline color='white' size={50}/>
                             <GoPerson color='white' size={40}/>

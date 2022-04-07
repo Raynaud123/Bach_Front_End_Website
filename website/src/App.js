@@ -11,6 +11,7 @@ import TopicInfo from "./Views/topics/TopicInfo";
 import Login from "./Views/Login/Login"
 import Register from "./Views/Login/Register"
 import {AuthProvider} from "./Views/Login/AuthProvider";
+import RequireAuth from "./Views/RequireAuth";
 
 
 export default class App extends React.Component{
@@ -18,13 +19,21 @@ export default class App extends React.Component{
   render() {
 
       return(
-          <AuthProvider>
+
               <BrowserRouter>
+                  <AuthProvider>
                   <Header
                       isLoggedIn={true}
                       roles={"student"}
                   />
                   <Routes>
+
+                      <Route path="/" element={
+                            <Home
+
+                            />
+                      }/>
+
                       <Route path="/login" element={
                           <Login
 
@@ -35,104 +44,41 @@ export default class App extends React.Component{
 
                           />
                       }/>
-                      <Route path="/topic" element={
-                          <Topic
+
+
+                      <Route element={<RequireAuth/>}>
+                          <Route path="/topic" element={
+                              <Topic
+                                  isLoggedIn={true}
+                                  roles={"student"}
+                              />
+                          }/>
+                          <Route path="/Add" element={<AddTopic
+                              isLoggedIn={true}
+                              roles={"bedrijf"}
+                          />}/>
+                          <Route path="topics/info/:t" element={<TopicInfo
                               isLoggedIn={true}
                               roles={"student"}
-                          />
-                      }/>
-                      <Route path="/Add" element={<AddTopic
-                          isLoggedIn={true}
-                          roles={"bedrijf"}
-                      />}/>
+                          />}/>
+                      </Route>
+
+
+
                       <Route path="*" element={<Error404
                           isLoggedIn={true}
                           roles={"student"}
                       />}/>
                   </Routes>
                   <Footer/>
+                </AuthProvider>
               </BrowserRouter>
-          </AuthProvider>
       )
     }
   }
-            <BrowserRouter>
-              <Header
-                  isLoggedIn={true}
-                  roles={"student"}
-              />
-              <Routes>
-                  <Route path="/" element={
-                      <Home/>
-                  }/>
-                  <Route path="/topics" element={
-                      <Topic
-                          isLoggedIn={true}
-                          roles={"student"}
-                      />
-                  }/>
-                <Route path="/add" element={<AddTopic
-                    isLoggedIn={true}
-                    roles={"bedrijf"}
-                />}/>
-                <Route path="*" element={<Error404
-                    isLoggedIn={true}
-                    roles={"student"}
-                />}/>
-                  <Route path="topics/info/:t" element={<TopicInfo
-                      isLoggedIn={true}
-                      roles={"student"}
-                  />}/>
-              </Routes>
-              <Footer className={"footer"}/>
-            </BrowserRouter>)
-    }
-  }
 
 
 
-
-
-
-//  state = {
- //   hideData: false
- // }
-
- // knop = () => {
- //   this.setState((state) => {
- //     return{
- //       hideData: !state.hideData
- //     }
- //   })
- // }
-
-  // toevoegen = async () => {
-  //   await approvedTopics.post('/',{
-  //     topicName: "TopicName", description_topic: "TopicDescription"
-  //   }).then(res => {
-  //     console.log(res);
-  //   }).catch(err => {
-  //     console.log("err" + err);
-  //   })
-  // }
-
-/*  render()
-  {
-
-/!*
-    return (
-        <div className="App">
-          <Header
-              isLoggedIn={this.props.isLoggedIn}
-              roles={this.props.roles}
-          />
-          {/!*<button onClick={this.knop}>Druk hier om de onderwerpen weg te laten of te tonen</button>*!/}
-          {/!*{this.state.hideData && <Data />}*!/}
-          {/!*<button onClick={this.toevoegen}>Druk hier om topic toe te voegen</button>*!/}
-          <Footer />
-        </div>
-    );*!/
-  }*/
 
 
 

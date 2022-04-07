@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import axios from 'axios';
+// import axios from 'axios';
 import {BsHeartFill, BsHeart} from "react-icons/all";
 
-const preferredTopics = axios.create({
-    baseURL: `http://localhost:8080/student/{id}/preferred`
-})
+// const preferredTopics = axios.create({
+//     baseURL: `http://localhost:8080/student/{id}/preferred`
+// })
 
 export const PreferredTopic = () => {
     const [filled, setFilled] = useState(false);

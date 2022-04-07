@@ -9,7 +9,6 @@ export default function Topic(props){
         case "student":
             return <StudentTopic/>
         case "admin":
-            // code block
             break;
         case "masterProef":
             break;

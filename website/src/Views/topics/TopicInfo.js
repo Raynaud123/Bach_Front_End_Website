@@ -6,12 +6,12 @@ export default function TopicInfo() {
     const [Topic, setTopic] = useState(false);
     const [Provider, setProvider] = useState(false);
 
-    const t = useParams();
+    const top = useParams();
     let tpath = 'http://localhost:8080/';
 
     useEffect(async () => {
         if (!Topic) {
-            axios.get(tpath + 'topic/info/' + t.t).then(res => {
+            axios.get(tpath + 'topic/info/' + top.t).then(res => {
                 console.log(res);
                 setTopic(res.data);
             }, [])
@@ -25,11 +25,10 @@ export default function TopicInfo() {
     });
 
     return(
-        <div>
-            <a>
-                {Topic.topicName}
-                {Provider.name}
-            </a>
+        <div className={"showTopics"}>
+            <h1 className={"topicTitle title"}>{Topic.topicName}</h1>
+            <h4 className={"sectie title"}>Information Topic</h4>
+            {Provider.name}
         </div>
     )
 }

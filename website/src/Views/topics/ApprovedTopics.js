@@ -76,7 +76,11 @@ export default function ApprovedTopics(){
                                         <HiUsers className={"persoonicoontopic"}/>
                                         aantal studenten: {topic.aantal_studenten}
                                     </div>
-                                    <button className={"info_topic_button"}>Info</button>
+                                    <button className={"info_topic_button"}>
+                                    <Link to={{
+                                        pathname: `/topics/info/${topic.topicName}`,
+                                    }}
+                                    >Info</Link></button>
                                 </div>
                             </div>
                         </div>

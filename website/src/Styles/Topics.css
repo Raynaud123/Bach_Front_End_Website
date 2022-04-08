@@ -10,7 +10,6 @@
     height: auto;
 }
 .topicTitle{
-    size: 20px;
     text-align: left;
 }
 .ronde{
@@ -18,7 +17,7 @@
     font-weight: normal;
 }
 
-
+/*Topic Containers ------------------------------------------*/
 
 .topiccontainer{
     height: auto;
@@ -117,4 +116,23 @@
 .info_topic_button:hover{
     transform: translateY(-2px);
     background: #115a9b;
+}
+
+/*Topic Info Page------------------------------------------*/
+.topicinfocontainer{
+    height: auto;
+    width: auto;
+    display: inline-block;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 30px;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: #0b2e13;
+    margin: 45px;
+}
+.sectie{
+    text-align: left;
+    font-weight: bold;
+    background: #0c5460;
 }

@@ -1,9 +1,9 @@
 import React from 'react';
-import TopicInfo_Student from "../Student/TopicInfo_Student";
-import TopicInfo_Admin from "../Admin/TopicInfo_Admin";
-import TopicInfo_Masterproef from "../Masterproefcoordinator/TopicInfo_Masterproef";
-import TopicInfo_Company from "../Company/TopicInfo_Company";
-import TopicInfo_Promotor from "../Promotor/TopicInfo_Promotor";
+import TopicInfo_Student from "../AppUsers/Student/TopicInfo_Student";
+import TopicInfo_Admin from "../AppUsers/Admin/TopicInfo_Admin";
+import TopicInfo_Masterproef from "../AppUsers/Masterproefcoordinator/TopicInfo_Masterproef";
+import TopicInfo_Company from "../AppUsers/Company/TopicInfo_Company";
+import TopicInfo_Promotor from "../AppUsers/Promotor/TopicInfo_Promotor";
 
 
 export default function TopicInfo(props){

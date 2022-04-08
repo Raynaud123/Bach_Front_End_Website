@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
-import ApprovedTopics from "../topics/ApprovedTopics";
-import TopicFilter from "../topics/TopicFilter"
-import '../../Styles/Topics.css';
+import ApprovedTopics from "../../topics/ApprovedTopics";
+import TopicFilter from "../../topics/TopicFilter"
+import '../../../Styles/Topics.css';
 import axios from "axios";
-import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
 const phase = axios.create({
     baseURL: `http://localhost:8080/phase/now`
 })
 
-export default function StudentTopic (){
+export default function Topic_Student (){
 
     const axiosPrivate = useAxiosPrivate();
     const [data, setData] = useState([]);
@@ -40,7 +40,6 @@ export default function StudentTopic (){
                 console.log("tyfus " + errMsg);
             }
         }
-
         getPhase();
 
         return () => {
@@ -50,10 +49,9 @@ export default function StudentTopic (){
     }, [])
 
 
-
         return (
              <div className={"showTopics"}>
-   <div className={"titel"}>
+                <div className={"titel"}>
                    <h1 className={"topicTitle titel"}>Masterthesis Topics</h1>
                      <h4 className={"ronde titel"}><b>First Round</b> &emsp;&emsp; {data.phase_name} ({data.begin_deadline} - {data.end_deadline})</h4>
                </div>

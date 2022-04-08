@@ -16,6 +16,9 @@ export default function NormalHeader(props){
                 <a href='/'>
                     <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 </a>
+                <button><Link to="/">Home</Link></button>
+                <button><Link to="/login">Login</Link></button>
+                <button><Link to="/register">Registreren</Link></button>
             </div>
         )
     }else if(role === "admin"){
@@ -44,7 +47,7 @@ export default function NormalHeader(props){
                         <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                     </a>
                     <div className={"buttons"}>
-                        <button><Link to="/Choice">Choice</Link></button>
+                        <button><Link to="/choice">Choice</Link></button>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
                     <div className={"icon"}>
@@ -61,8 +64,8 @@ export default function NormalHeader(props){
                 </a>
                 <div className={"buttons"}>
                     <button><Link to="/topic">Topics</Link></button>
-                    <button><Link to="/assign">Topics</Link></button>
-                    <button><Link to="/approve">Topics</Link></button>
+                    <button><Link to="/assign">Assign Topics</Link></button>
+                    <button><Link to="/approve">Approve Topics</Link></button>
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>
@@ -77,7 +80,7 @@ export default function NormalHeader(props){
                     <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 </a>
                 <div className={"buttons"}>
-                    <button><Link to="/Add">Add a Topic</Link></button>
+                    <button><Link to="/add">Add Topic</Link></button>
                     <button><Link to="/topic">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
@@ -94,7 +97,8 @@ export default function NormalHeader(props){
                 </a>
                 <div className={"buttons"}>
                     <button><Link to="/topic">Topics</Link></button>
-                    <button><Link to="/boost">Boost a student</Link></button>
+                    <button><Link to="/add">Add Topic</Link></button>
+                    <button><Link to="/boost">Boost student</Link></button>
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>

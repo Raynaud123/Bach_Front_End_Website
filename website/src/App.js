@@ -2,7 +2,7 @@ import './Styles/App.css';
 import Footer from "./Views/Footer";
 import Header from "./Views/Header";
 import Topic from "./Views/topics/Topic"
-import AddTopic from "./Views/topics/AddTopic"
+import TopicAdd_CompanyAndPromotor from "./Views/topics/TopicAdd_CompanyAndPromotor"
 import Home from "./Views/Home"
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
@@ -49,7 +49,7 @@ export default class App extends React.Component{
                   {/*                roles={"student"}*/}
                   {/*            />*/}
                   {/*        }/>*/}
-                  {/*        <Route path="/Add" element={<AddTopic*/}
+                  {/*        <Route path="/Add" element={<TopicAdd_CompanyAndPromotor*/}
                   {/*            roles={"bedrijf"}*/}
                   {/*        />}/>*/}
                   {/*        <Route path="topics/info/:t" element={<TopicInfo*/}

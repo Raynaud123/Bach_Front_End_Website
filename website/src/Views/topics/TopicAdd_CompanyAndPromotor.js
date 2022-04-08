@@ -4,9 +4,7 @@ import {useLocation, useNavigate} from "react-router-dom"
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 
-export default function AddTopic(){
-
-
+export default function TopicAdd_CompanyAndPromotor(){
 
     const axiosPrivate = useAxiosPrivate();
     const [formValue, setformValue] = React.useState({

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import KULeuvenLogo from "../assets/KULeuvenLogo.png";
+import KULeuvenLogo from "../../assets/KULeuvenLogo.png";
 import {Link} from "react-router-dom";
 import {GiHamburgerMenu, GoPerson, IoIosNotificationsOutline} from "react-icons/all";
 

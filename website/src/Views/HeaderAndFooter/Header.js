@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../Styles/Header.css';
+import '../../Styles/Header.css';
 import NormalHeader from "./NormalHeader";
 import MobileHeader from "./MobileHeader";
 

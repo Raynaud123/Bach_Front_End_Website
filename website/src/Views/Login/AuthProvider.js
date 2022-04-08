@@ -1,6 +1,6 @@
 import React, {createContext, useState} from "react";
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../HeaderAndFooter/Header";
+import Footer from "../HeaderAndFooter/Footer";
 import {Route, Routes} from "react-router-dom";
 import Home from "../Home";
 import Login from "./Login";

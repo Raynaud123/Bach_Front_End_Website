@@ -1,6 +1,6 @@
 import React from "react";
-import '../Styles/Footer.css';
-import KULeuvenLogo from "../assets/KULeuvenLogo.png";
+import '../../Styles/Footer.css';
+import KULeuvenLogo from "../../assets/KULeuvenLogo.png";
 import {faFacebook, faInstagram, faLinkedin, faTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 

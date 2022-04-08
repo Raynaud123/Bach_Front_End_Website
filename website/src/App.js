@@ -1,6 +1,6 @@
 import './Styles/App.css';
-import Footer from "./Views/Footer";
-import Header from "./Views/Header";
+import Footer from "./Views/HeaderAndFooter/Footer";
+import Header from "./Views/HeaderAndFooter/Header";
 import Topic from "./Views/topics/Topic"
 import TopicAdd_CompanyAndPromotor from "./Views/topics/TopicAdd_CompanyAndPromotor"
 import Home from "./Views/Home"

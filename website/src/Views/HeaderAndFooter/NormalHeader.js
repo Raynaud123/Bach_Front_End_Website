@@ -1,7 +1,7 @@
 import React from "react";
-import '../Styles/Header.css';
+import '../../Styles/Header.css';
 import {Link} from 'react-router-dom'
-import KULeuvenLogo from '../assets/KULeuvenLogo.png'
+import KULeuvenLogo from '../../assets/KULeuvenLogo.png'
 import {GoPerson, IoIosNotificationsOutline} from "react-icons/all";
 
 export default function NormalHeader(props){

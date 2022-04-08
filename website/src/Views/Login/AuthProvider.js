@@ -58,10 +58,8 @@ export const AuthProvider = ({ children }) => {
                 </Route>
 
 
-
                 <Route path="*" element={<Error404
                     isLoggedIn={auth.loggedIn}
-                    roles={"student"}
                 />}/>
             </Routes>
             <Footer/>

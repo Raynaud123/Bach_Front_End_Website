@@ -167,12 +167,10 @@ export default function Register(){
                 <button disabled={!validName || !validPwd || !validMatch}> Register</button>
 
             </form>
-            <p>
-                Already registered?<br />
-                <span className="line">
-                    <Link to="/login">Login</Link>
-                </span>
-            </p>
+            <p>Already registered?<br /></p>
+               <button>
+                   <Link to="/login">Login</Link>
+               </button>
         </div>)}
             </>
     )

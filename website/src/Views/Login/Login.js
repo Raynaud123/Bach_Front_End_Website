@@ -4,6 +4,7 @@ import "../../Styles/Register.css"
 import useAuth from "../../Hooks/useAuth";
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {axiosPrivate} from "../../axios";
+import {BiJoystickButton} from "react-icons/all";
 
 export default function Login(){
 
@@ -108,12 +109,10 @@ export default function Login(){
                         />
                         <button>Sign In</button>
                     </form>
-                    <p>
-                        Need an Account?<br />
-                        <span className="line">
-                            <Link to="/register"/>
-                        </span>
-                    </p>
+                    <p>Need an Account?<br /></p>
+                        <button>
+                            <Link to="/register">Register Here!</Link>
+                        </button>
                 </section>
     )
 }

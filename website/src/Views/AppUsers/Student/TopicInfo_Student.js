@@ -35,8 +35,8 @@ export default function TopicInfo_Student() {
             }
         }
         const getProvider = async (provid) => {
-            console.log(provid);
-            if (Topic.provider_id !== "undefined") {
+            // console.log(provid);
+            if (provid !== "undefined") {
                 try {
                     const response = await axiosPrivate({
                         method: "get",
@@ -48,7 +48,7 @@ export default function TopicInfo_Student() {
                 } catch (err) {
                     console.error(err);
                     navigate('/login', {state: {from: location}, replace: true});
-                    console.log("tyfus " + errMsg);
+                    console.log(errMsg);
                 }
             }
         }

@@ -75,6 +75,8 @@
     size: 14px;
     padding-left: 15px;
     max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .topicDescriptionbox{
     margin-top: 10px;

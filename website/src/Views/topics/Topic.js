@@ -13,7 +13,7 @@ export default function Topic(props){
             return <Topic_Student/>
         case "admin":
             return <Topic_Admin/>
-        case "masterProef":
+        case "masterproef":
             return <Topic_Masterproef/>
         case "company":
             return <Topic_Company/>

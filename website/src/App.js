@@ -16,61 +16,54 @@ import RequireAuth from "./Views/RequireAuth";
 
 export default class App extends React.Component{
 
+
   render() {
 
       return(
 
               <BrowserRouter>
                   <AuthProvider>
-                  <Header
-                      isLoggedIn={true}
-                      roles={"student"}
-                  />
-                  <Routes>
+                  {/*<Routes>*/}
 
-                      <Route path="/" element={
-                            <Home
+                  {/*    <Route path="/" element={*/}
+                  {/*          <Home*/}
 
-                            />
-                      }/>
+                  {/*          />*/}
+                  {/*    }/>*/}
 
-                      <Route path="/login" element={
-                          <Login
+                  {/*    <Route path="/login" element={*/}
+                  {/*        <Login*/}
 
-                          />
-                      }/>
-                      <Route path="/register" element={
-                          <Register
+                  {/*        />*/}
+                  {/*    }/>*/}
+                  {/*    <Route path="/register" element={*/}
+                  {/*        <Register*/}
 
-                          />
-                      }/>
+                  {/*        />*/}
+                  {/*    }/>*/}
 
 
-                      <Route element={<RequireAuth/>}>
-                          <Route path="/topic" element={
-                              <Topic
-                                  isLoggedIn={true}
-                                  roles={"student"}
-                              />
-                          }/>
-                          <Route path="/Add" element={<AddTopic
-                              isLoggedIn={true}
-                              roles={"bedrijf"}
-                          />}/>
-                          <Route path="topics/info/:t" element={<TopicInfo
-                              isLoggedIn={true}
-                              roles={"student"}
-                          />}/>
-                      </Route>
+                  {/*    <Route element={<RequireAuth/>}>*/}
+                  {/*        <Route path="/topic" element={*/}
+                  {/*            <Topic*/}
+                  {/*                roles={"student"}*/}
+                  {/*            />*/}
+                  {/*        }/>*/}
+                  {/*        <Route path="/Add" element={<AddTopic*/}
+                  {/*            roles={"bedrijf"}*/}
+                  {/*        />}/>*/}
+                  {/*        <Route path="topics/info/:t" element={<TopicInfo*/}
+                  {/*            roles={"student"}*/}
+                  {/*        />}/>*/}
+                  {/*    </Route>*/}
 
 
 
-                      <Route path="*" element={<Error404
-                          isLoggedIn={true}
-                          roles={"student"}
-                      />}/>
-                  </Routes>
-                  <Footer/>
+                  {/*    <Route path="*" element={<Error404*/}
+                  {/*        isLoggedIn={true}*/}
+                  {/*        roles={"student"}*/}
+                  {/*    />}/>*/}
+                  {/*</Routes>*/}
                 </AuthProvider>
               </BrowserRouter>
       )

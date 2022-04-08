@@ -1,4 +1,15 @@
 import React, {createContext, useState} from "react";
+import Header from "../Header";
+import Footer from "../Footer";
+import {Route, Routes} from "react-router-dom";
+import Home from "../Home";
+import Login from "./Login";
+import Register from "./Register";
+import RequireAuth from "../RequireAuth";
+import Topic from "../topics/Topic";
+import AddTopic from "../topics/AddTopic";
+import TopicInfo from "../topics/TopicInfo";
+import Error404 from "../Error404";
 
 const AuthContext = createContext({});
 
@@ -7,7 +18,53 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
-            {children}
+            <Header
+                isLoggedIn={auth.loggedIn}
+                roles={"student"}
+            />
+          {/*{children}*/}
+            <Routes>
+
+                <Route path="/" element={
+                    <Home
+
+                    />
+                }/>
+
+                <Route path="/login" element={
+                    <Login
+
+                    />
+                }/>
+                <Route path="/register" element={
+                    <Register
+
+                    />
+                }/>
+
+
+                <Route element={<RequireAuth/>}>
+                    <Route path="/topic" element={
+                        <Topic
+                            roles={"student"}
+                        />
+                    }/>
+                    <Route path="/Add" element={<AddTopic
+                        roles={"bedrijf"}
+                    />}/>
+                    <Route path="topics/info/:t" element={<TopicInfo
+                        roles={"student"}
+                    />}/>
+                </Route>
+
+
+
+                <Route path="*" element={<Error404
+                    isLoggedIn={auth.loggedIn}
+                    roles={"student"}
+                />}/>
+            </Routes>
+            <Footer/>
         </AuthContext.Provider>
     )
 }

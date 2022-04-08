@@ -23,6 +23,8 @@ export default function Login(){
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
+    const [accesToken, setAccesToken] = useState('');
+    const [loggedIn, setloggedIn] = useState(false);
     const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
@@ -32,6 +34,13 @@ export default function Login(){
     useEffect(() => {
         setErrMsg('');
     }, [user, pwd])
+
+    useEffect(() => {
+        const accesTokenVar = accesToken;
+        setAuth({ user, pwd, loggedIn, accesTokenVar});
+        setUser('');
+        setPwd('');
+    }, [loggedIn])
 
 
     const handleSubmit = async (e) => {
@@ -49,16 +58,16 @@ export default function Login(){
                 data: JSON.stringify({'username': user,'password' : pwd})
             });
             console.log(JSON.stringify(response));
-            const accessToken = response.data.jwt;
-//            const roles = response.data.roles;
-            setAuth({ user, pwd, accessToken});
-            setUser('');
-            setPwd('');
-//            setSuccess(true);
+            setAccesToken(response.data.jwt);
+            setloggedIn(true);
+//            setAuth({ user, pwd, accessToken, loggedIn});
+//            setUser('');
+//            setPwd('');
             navigate(from, { replace: true });
         } catch (err) {
             if (!err.response) {
                 setErrMsg('No Server Response');
+                console.log(err);
             } else if (err.response.status === 400) {
                 setErrMsg('Missing Username or Password');
             } else if (err.response.status === 401) {

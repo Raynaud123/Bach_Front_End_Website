@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import {HiUsers} from "react-icons/all";
-import qs from "qs";
 import {useNavigate, useLocation} from "react-router-dom";
-import {PreferredTopic} from "./PreferredTopic"
+import PreferredTopic from "./PreferredTopic"
 import {Link} from "react-router-dom";
 
 

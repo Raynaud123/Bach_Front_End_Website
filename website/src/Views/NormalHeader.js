@@ -61,6 +61,8 @@ export default function NormalHeader(props){
                 </a>
                 <div className={"buttons"}>
                     <button><Link to="/topic">Topics</Link></button>
+                    <button><Link to="/assign">Topics</Link></button>
+                    <button><Link to="/approve">Topics</Link></button>
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>
@@ -68,7 +70,7 @@ export default function NormalHeader(props){
                 </div>
             </div>
         )
-    }else if(role === "bedrijf"){
+    }else if(role === "company"){
         return(
             <div className={"header"}>
                 <a href='/'>
@@ -77,6 +79,22 @@ export default function NormalHeader(props){
                 <div className={"buttons"}>
                     <button><Link to="/Add">Add a Topic</Link></button>
                     <button><Link to="/topic">Topics</Link></button>
+                </div>
+                <div className={"icon"}>
+                    <IoIosNotificationsOutline color='white' size={50}/>
+                    <GoPerson color='white' size={40}/>
+                </div>
+            </div>
+        )
+    }else if(role === "promotor"){
+        return(
+            <div className={"header"}>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
+                <div className={"buttons"}>
+                    <button><Link to="/topic">Topics</Link></button>
+                    <button><Link to="/boost">Boost a student</Link></button>
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>

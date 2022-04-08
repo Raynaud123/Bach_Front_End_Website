@@ -15,45 +15,40 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({});
+    const role = "student";
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
             <Header
                 isLoggedIn={auth.loggedIn}
-                roles={"student"}
+                roles={role}
             />
           {/*{children}*/}
             <Routes>
 
                 <Route path="/" element={
-                    <Home
-
-                    />
+                    <Home/>
                 }/>
 
                 <Route path="/login" element={
-                    <Login
-
-                    />
+                    <Login/>
                 }/>
                 <Route path="/register" element={
-                    <Register
-
-                    />
+                    <Register/>
                 }/>
 
 
                 <Route element={<RequireAuth/>}>
                     <Route path="/topic" element={
                         <Topic
-                            roles={"student"}
+                            roles={role}
                         />
                     }/>
                     <Route path="/Add" element={<AddTopic
-                        roles={"bedrijf"}
+                        roles={role}
                     />}/>
                     <Route path="topics/info/:t" element={<TopicInfo
-                        roles={"student"}
+                        roles={role}
                     />}/>
                 </Route>
 

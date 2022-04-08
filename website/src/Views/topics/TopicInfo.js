@@ -1,34 +1,23 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import TopicInfo_Student from "../Student/TopicInfo_Student";
+import TopicInfo_Admin from "../Admin/TopicInfo_Admin";
+import TopicInfo_Masterproef from "../Masterproefcoordinator/TopicInfo_Masterproef";
+import TopicInfo_Company from "../Company/TopicInfo_Company";
+import TopicInfo_Promotor from "../Promotor/TopicInfo_Promotor";
 
-export default function TopicInfo() {
-    const [Topic, setTopic] = useState(false);
-    const [Provider, setProvider] = useState(false);
 
-    const top = useParams();
-    let tpath = 'http://localhost:8080/';
+export default function TopicInfo(props){
 
-    useEffect(async () => {
-        if (!Topic) {
-            axios.get(tpath + 'topic/info/' + top.t).then(res => {
-                console.log(res);
-                setTopic(res.data);
-            }, [])
-        }
-        if (!Provider && Topic) {
-            axios.get('http://localhost:8080/topicprovider/' + Topic.provider_id).then(res => {
-                console.log(res);
-                setProvider(res.data[0]);
-            }, [])
-        }
-    });
-
-    return(
-        <div className={"showTopics"}>
-            <h1 className={"topicTitle title"}>{Topic.topicName}</h1>
-            <h4 className={"sectie title"}>Information Topic</h4>
-            {Provider.name}
-        </div>
-    )
+    switch(props.roles) {
+        case "student":
+            return <TopicInfo_Student/>
+        case "admin":
+            return <TopicInfo_Admin/>
+        case "masterProef":
+            return <TopicInfo_Masterproef/>
+        case "company":
+            return <TopicInfo_Company/>
+        case "promotor":
+            return <TopicInfo_Promotor/>
+    }
 }

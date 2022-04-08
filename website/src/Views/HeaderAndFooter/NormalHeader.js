@@ -56,7 +56,7 @@ export default function NormalHeader(props){
                     </div>
                 </div>
         )
-    }else if(role === "masterProef"){
+    }else if(role === "masterproef"){
         return(
             <div className={"header"}>
                 <a href='/'>

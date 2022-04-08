@@ -46,7 +46,7 @@ export default function MobileHeader(props){
                     <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
                     {navbarOpen && <ul className={"menuNav"}>
                         <div className={"hamburgerbuttons"}>
-                            <Link to="/Choice">Choice</Link>
+                            <Link to="/choice">Choice</Link>
                             <Link to="/topic">Topics</Link>
                             <div className={"iconshamburger"}>
                                 <IoIosNotificationsOutline color='white' size={50}/>
@@ -56,13 +56,32 @@ export default function MobileHeader(props){
                     </ul>}
             </div>
         )
-    }else if(role === "masterProef"){
+    }else if(role === "masterproef"){
         return(
             <div className={"header hamburger"}>
                 <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
                 {navbarOpen && <ul className={"menuNav"}>
                     <div className={"hamburgerbuttons"}>
+                        <Link to="/topic">Topics</Link>
+                        <Link to="/assign">Assign Topics</Link>
+                        <Link to="/approve">Approve Topics</Link>
+                        <div className={"iconshamburger"}>
+                            <IoIosNotificationsOutline color='white' size={50}/>
+                            <GoPerson color='white' size={40}/>
+                        </div>
+                    </div>
+                </ul>}
+            </div>
+        )
+    }else if(role === "company"){
+        return(
+            <div className={"header hamburger"}>
+                <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
+                {navbarOpen && <ul className={"menuNav"}>
+                    <div className={"hamburgerbuttons"}>
+                        <Link to="/add">Add Topic</Link>
                         <Link to="/topic">Topics</Link>
                         <div className={"iconshamburger"}>
                             <IoIosNotificationsOutline color='white' size={50}/>
@@ -72,15 +91,16 @@ export default function MobileHeader(props){
                 </ul>}
             </div>
         )
-    }else if(role === "bedrijf"){
+    }else if(role === "promotor"){
         return(
             <div className={"header hamburger"}>
                 <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                 <GiHamburgerMenu size={50} className={"hamburgerbutton"} onClick={handleToggle}>{navbarOpen ? "Close" : "Open"}</GiHamburgerMenu>
                 {navbarOpen && <ul className={"menuNav"}>
                     <div className={"hamburgerbuttons"}>
-                        <Link to="/Add">Add a Topic</Link>
                         <Link to="/topic">Topics</Link>
+                        <Link to="/add">Add Topic</Link>
+                        <Link to="/boost">boost Student</Link>
                         <div className={"iconshamburger"}>
                             <IoIosNotificationsOutline color='white' size={50}/>
                             <GoPerson color='white' size={40}/>
@@ -90,6 +110,4 @@ export default function MobileHeader(props){
             </div>
         )
     }
-
-
 }

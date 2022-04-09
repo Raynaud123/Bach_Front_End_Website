@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import ApprovedTopics from "../../topics/ApprovedTopics";
 import TopicFilter from "../../topics/TopicFilter"
 import '../../../Styles/Topics.css';
-import axios from "axios";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 

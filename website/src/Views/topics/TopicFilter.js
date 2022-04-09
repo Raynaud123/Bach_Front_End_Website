@@ -7,14 +7,13 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 
 export default function TopicFilter (){
-
+    const [TargetAudience, setTargetAudience] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
-    const [data, setData] = useState([]);
     const [errMsg, setErrMsg] = useState('');
     const location = useLocation();
-
     const navigate = useNavigate();
+
 
     useEffect(() => {
         let isMounted = true;
@@ -30,11 +29,11 @@ export default function TopicFilter (){
                     signal: controller.signal
                 });
                 console.log(response.data);
-                isMounted && setData(response.data);
+                isMounted && setTargetAudience(response.data);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
-                console.log("tyfus " + errMsg);
+                console.log(errMsg);
             }
         }
 

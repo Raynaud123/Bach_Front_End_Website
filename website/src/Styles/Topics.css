@@ -34,7 +34,7 @@
 }
 .topicbox{
     height: 200px;
-    width: 250px;
+    width: 270px;
     border: lightgray solid 3px;
     mso-border-shadow: yes;
     border-radius: 15px;
@@ -45,7 +45,7 @@
     font-weight: bold;
     padding-left: 15px;
     padding-bottom: 10px;
-    max-width: 200px;
+    max-width: 220px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -74,7 +74,7 @@
 .contentintopicbow{
     size: 14px;
     padding-left: 15px;
-    max-width: 220px;
+    max-width: 240px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

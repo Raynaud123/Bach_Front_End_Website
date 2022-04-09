@@ -30,7 +30,7 @@ export default function ApprovedTopics(){
                     url: "/topic/approved",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);
@@ -91,7 +91,7 @@ export default function ApprovedTopics(){
                             <div className={"studentenmetinfo"}>
                                 <div className={"topicAantalStudentenbox contentintopicbow"}>
                                     <HiUsers className={"persoonicoontopic"}/>
-                                    aantal studenten: {topic.aantal_studenten}
+                                    Number of students: {topic.aantal_studenten}
                                 </div>
                                 <button className={"info_topic_button"}>
                                 <Link to={{

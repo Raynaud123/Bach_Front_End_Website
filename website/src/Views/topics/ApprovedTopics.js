@@ -80,7 +80,7 @@ export default function ApprovedTopics(){
                                 <div className={"topictitleinbox"}>
                                     {topic.topicName}
                                 </div>
-                                <PreferredTopic className={"buttonheart"} gevuld={false}/>
+                                <PreferredTopic className={"buttonheart"} topicname={topic.topicName} />
                             </div>
                             <div className={"topicDescriptionbox contentintopicbow"}>
                                 {topic.description_topic}

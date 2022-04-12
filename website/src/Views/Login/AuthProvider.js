@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({});
     const role = auth.role;
+    const id = auth.id;
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

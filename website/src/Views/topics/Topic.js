@@ -4,20 +4,24 @@ import Topic_Company from "../AppUsers/Company/Topic_Company";
 import Topic_Admin from "../AppUsers/Admin/Topic_Admin";
 import Topic_Masterproef from "../AppUsers/Masterproefcoordinator/Topic_Masterproef";
 import Topic_Promotor from "../AppUsers/Promotor/Topic_Promotor";
+import Topic_Not from "./Topic_Not"
+
 
 
 export default function Topic(props){
 
     switch(props.roles) {
-        case "student":
+        case "STUDENT":
             return <Topic_Student/>
-        case "admin":
+        case "ADMIN":
             return <Topic_Admin/>
-        case "masterproef":
+        case "MASTER":
             return <Topic_Masterproef/>
-        case "company":
+        case "COMPANY":
             return <Topic_Company/>
-        case "promotor":
+        case "PROMOTOR":
             return <Topic_Promotor/>
+        case "NOTAPPROVED":
+            return <Topic_Not/>
     }
 }

@@ -10,7 +10,7 @@ export default function NormalHeader(props){
 
 
 
-    if(!isLoggedIn){
+    if(!isLoggedIn || role === "NOTAPPROVED"){
         return(
             <div className={"header"}>
                 <a href='/'>
@@ -21,7 +21,7 @@ export default function NormalHeader(props){
                 <button><Link to="/register">Registreren</Link></button>
             </div>
         )
-    }else if(role === "admin"){
+    }else if(role === "ADMIN"){
         return(
             <div className={"header"}>
                 <div>
@@ -40,7 +40,7 @@ export default function NormalHeader(props){
                 </div>
             </div>
         )
-    }else if(role === "student"){
+    }else if(role === "STUDENT"){
         return(
                 <div className={"header"}>
                     <a href='/'>
@@ -56,7 +56,7 @@ export default function NormalHeader(props){
                     </div>
                 </div>
         )
-    }else if(role === "masterproef"){
+    }else if(role === "MASTER"){
         return(
             <div className={"header"}>
                 <a href='/'>
@@ -73,7 +73,7 @@ export default function NormalHeader(props){
                 </div>
             </div>
         )
-    }else if(role === "company"){
+    }else if(role === "COMPANY"){
         return(
             <div className={"header"}>
                 <a href='/'>
@@ -89,7 +89,7 @@ export default function NormalHeader(props){
                 </div>
             </div>
         )
-    }else if(role === "promotor"){
+    }else if(role === "PROMOTOR"){
         return(
             <div className={"header"}>
                 <a href='/'>

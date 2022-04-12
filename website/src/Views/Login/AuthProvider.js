@@ -19,8 +19,9 @@ import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
+
     const [auth, setAuth] = useState({});
-    const role = "student";
+    const role = auth.role;
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

@@ -24,6 +24,7 @@ export default function Login(){
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
+    const [role, setRole] = useState('');
     const [accesToken, setAccesToken] = useState('');
     const [loggedIn, setloggedIn] = useState(false);
     const [errMsg, setErrMsg] = useState('');
@@ -38,7 +39,8 @@ export default function Login(){
 
     useEffect(() => {
         const accesTokenVar = accesToken;
-        setAuth({ user, pwd, loggedIn, accesTokenVar});
+        console.log(role);
+        setAuth({ user, pwd, loggedIn, accesTokenVar, role});
         setUser('');
         setPwd('');
     }, [loggedIn])
@@ -59,6 +61,7 @@ export default function Login(){
                 data: JSON.stringify({'username': user,'password' : pwd})
             });
             console.log(JSON.stringify(response));
+            setRole(response.data.role[0].authority);
             setAccesToken(response.data.jwt);
             setloggedIn(true);
 //            setAuth({ user, pwd, accessToken, loggedIn});
@@ -76,7 +79,7 @@ export default function Login(){
             } else {
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus();
+           errRef.current.focus();
         }
     }
 

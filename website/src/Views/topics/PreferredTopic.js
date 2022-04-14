@@ -8,6 +8,8 @@ export default function PreferredTopic (props){
     const studentid = props.studentid;
 
     const [filled, setFilled] = useState(false);
+    const [Student, setStudent] = useState([]);
+
     const topicid = props.topic_id;
 
     const axiosPrivate = useAxiosPrivate();
@@ -25,7 +27,7 @@ export default function PreferredTopic (props){
                     url: "/student/" + studentid + "/preferred/" + topicid,
                     signal: controller.signal
                 });
-                // console.log(response.data);
+                console.log("Response preferred: " + response.data);
                 isMounted && setFilled(response.data);
             } catch (err) {
                 console.error(err);
@@ -33,6 +35,22 @@ export default function PreferredTopic (props){
                 console.log(errMsg);
             }
         }
+        const getStudent = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/student/" + studentid,
+                    signal: controller.signal
+                });
+                console.log(response.data);
+                isMounted && setStudent(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log(errMsg);
+            }
+        }
+        getStudent();
         getPreferred();
 
         return () => {
@@ -41,15 +59,15 @@ export default function PreferredTopic (props){
         }
     }, [])
 
-    async function submitPreferrence(effect, deps) {
+    async function submitPreferrence() {
+        setFilled(!filled);
         try {
             const response = await axiosPrivate({
-                method: "post",
+                method: "put",
                 url: "http://localhost:8080/student/" + studentid + "/submitpreferrencetopic/" + topicid,
             });
             // console.log(response)
             navigate(location, {replace: true});
-            setFilled(!filled);
         } catch (error) {
             console.log(error)
         }

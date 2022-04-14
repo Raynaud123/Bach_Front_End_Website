@@ -5,12 +5,13 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 
 export default function PreferredTopic (props){
-    const [filled, setFilled] = useState(false);
-    const topicname = props.topicname;
+    const studentid = props.studentid;
 
+    const [filled, setFilled] = useState(false);
+    const topicid = props.topic_id;
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ export default function PreferredTopic (props){
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/student/" + 1 + "/preferred/" + topicname,                     // hier nog id van student -> "/student/{id}/preferred"
+                    url: "/student/" + studentid + "/preferred/" + topicid,
                     signal: controller.signal
                 });
                 // console.log(response.data);
@@ -33,14 +34,29 @@ export default function PreferredTopic (props){
             }
         }
         getPreferred();
+
         return () => {
             isMounted = false;
             controller.abort();
         }
     }, [])
 
+    async function submitPreferrence(effect, deps) {
+        try {
+            const response = await axiosPrivate({
+                method: "post",
+                url: "http://localhost:8080/student/" + studentid + "/submitpreferrencetopic/" + topicid,
+            });
+            // console.log(response)
+            navigate(location, {replace: true});
+            setFilled(!filled);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <button className={"buttonheart"} onClick={() => setFilled(!filled)} type={"button"}>{
+        <button className={"buttonheart"} onClick={() => submitPreferrence()} type={"button"}>{         //setFilled(!filled)}
             filled? <BsHeartFill className={"hearticoonfill"}/>:
                     <BsHeart className={"hearticoon"}/>
         }

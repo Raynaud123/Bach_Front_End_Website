@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import PreferredTopic from "../../topics/PreferredTopic";
 
 
-export default function TopicInfo_Student() {
-
-    const top = useParams();
+export default function TopicInfo_Student(props) {
+    const studentid = props.studentid;
+    const topicid = useParams().topicid;
     const [Topic, setTopic] = useState([]);
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
@@ -15,7 +16,7 @@ export default function TopicInfo_Student() {
 
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ export default function TopicInfo_Student() {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/topic/info/" + top.t,
+                    url: "/topic/" + topicid,
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -112,6 +113,7 @@ export default function TopicInfo_Student() {
                 console.log(errMsg);
             }
         }
+
         await getTopic();
 
 
@@ -134,7 +136,7 @@ export default function TopicInfo_Student() {
                 &emsp;  Phone number: {Promotor.phoneNumber? <div>&emsp;&emsp;{Promotor.phoneNumber}</div> : "None" }
             </div>
             <div>
-                &emsp;  Address: {(Promotor.country && Promotor.city && Promotor.streetName)? <div>&emsp;&emsp;{Promotor.streetName} {Promotor.streetNumber}<br/>&emsp;&emsp;{Promotor.country} {Promotor.city}</div> : "None"}
+                &emsp;  Address: {(Promotor.country && Promotor.city && Promotor.streetName)? <div>&emsp;&emsp;{Promotor.streetName} {Promotor.streetNumber}<br/>&emsp;&emsp;{Promotor.country} {Promotor.city} {Promotor.postNumber}</div> : "None"}
             </div>
         </div>
     )}
@@ -151,7 +153,7 @@ export default function TopicInfo_Student() {
                         &emsp;  Phone number: {Provider.phoneNumber? <div>&emsp;&emsp;{Provider.phoneNumber}</div> : "None" }
                     </div>
                     <div>
-                        &emsp;  Address: {(Provider.country && Provider.city && Provider.streetName)? <div>&emsp;&emsp;{Provider.streetName} {Provider.streetNumber}<br/>&emsp;&emsp;{Provider.country} {Provider.city}</div> : "None"}
+                        &emsp;  Address: {(Provider.country && Provider.city && Provider.streetName)? <div>&emsp;&emsp;{Provider.streetName} {Provider.streetNumber} <br/>&emsp;&emsp;{Provider.country} {Provider.city} {Provider.postNumber}</div> : "None"}
                     </div>
                 </div>
                 <br/>
@@ -170,28 +172,40 @@ export default function TopicInfo_Student() {
         )}
 
     return(
-        <div className={"showTopics"}>
-            <h1 className={"topicTitle title"}>{Topic.topicName}</h1>
-            <div>
-                <h3 className={"sectie title"}>Topic Information</h3>
-                <div>Description: {Topic.description_topic}</div>
-                <br/>
-                Promotor: {Promotor? <div>&emsp;  {Promotor.firstName} {Promotor.lastName}</div> : "None"}
-                <br/>
-                TargetAudience: {TargetAudience.map((target) => (
-                    <div> &emsp; {target.campus.campus_name} - {target.course.course_name}</div>
-                ))}
-                {/*Coordinator: */}
-                <br/>
-                {KeywordInfo()}
+        <div className={"showTopicInfo"}>
+            <h1 className={"topicTitleInfo"}>{Topic.topicName}</h1>
+            <div className={"topicinfocontainer"}>
+                <div className={"sectie title"}>
+                    <div className={"topicmetheart"}>
+                        <h2>Topic Information</h2>
+                        <PreferredTopic className={"buttonheartInfo"} topic_id={topicid} studentid={studentid} />
+                    </div>
+                    <div className={"sectie content"}>
+                        <div>Description: {Topic.description_topic}</div>
+                        <br/>
+                        Promotor: {Promotor? <div>&emsp;  {Promotor.firstName} {Promotor.lastName}</div> : "None"}
+                        <br/>
+                        TargetAudience: {TargetAudience.map((target) => (
+                        <div> &emsp; {target.campus.campus_name} - {target.course.course_name}</div>
+                        ))}
+                        {/*Coordinator: */}
+                        <br/>
+                        {KeywordInfo()}
+                    </div>
+                </div>
+
+                <div className={"sectie title"}>
+                    <h2>Contact</h2>
+                    {ProvInfo()}
+                </div>
+
             </div>
             <div>
-                <h3 className={"sectie title"}>Contact</h3>
-                {ProvInfo()}
+
             </div>
 
         </div>
     )
 }
 
-// APIKey: AIzaSyDnFThyxze2Hll6-MDNfV-x1HFX227FuyA
+{/* APIKey: AIzaSyDnFThyxze2Hll6-MDNfV-x1HFX227FuyA*/}

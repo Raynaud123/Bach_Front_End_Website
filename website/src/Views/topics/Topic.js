@@ -7,21 +7,21 @@ import Topic_Promotor from "../AppUsers/Promotor/Topic_Promotor";
 import Topic_Not from "./Topic_Not"
 
 
-
 export default function Topic(props){
 
     switch(props.roles) {
         case "STUDENT":
-            return <Topic_Student/>
+            return <Topic_Student studentid={props.persoonid}/>
         case "ADMIN":
-            return <Topic_Admin/>
+            return <Topic_Admin adminid={props.persoonid}/>
         case "MASTER":
-            return <Topic_Masterproef/>
+            return <Topic_Masterproef masterid={props.persoonid}/>
         case "COMPANY":
-            return <Topic_Company/>
+            return <Topic_Company companyid={props.persoonid}/>
         case "PROMOTOR":
-            return <Topic_Promotor/>
+            return <Topic_Promotor promotorid={props.persoonid}/>
         case "NOTAPPROVED":
             return <Topic_Not/>
+        default:
     }
 }

@@ -28,7 +28,7 @@ export default function TopicFilter (){
                     url: "/targetaudience/all",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 isMounted && setTargetAudience(response.data);
             } catch (err) {
                 console.error(err);

@@ -48,27 +48,35 @@ export const AuthProvider = ({ children }) => {
                 <Route element={<RequireAuth/>}>
                     <Route path="/topic" element={<Topic
                             roles={role}
+                            persoonid = {id}
                     />}/>
                     <Route path="/add" element={<TopicAdd_CompanyAndPromotor
                         roles={role}
+                        persoonid = {id}
                     />}/>
-                    <Route path="topics/info/:t" element={<TopicInfo
+                    <Route path="topics/info/:topicid" element={<TopicInfo
                         roles={role}
+                        persoonid = {id}
                     />}/>
                     <Route path="choice" element={<TopicChoice_Student
                         roles={role}
+                        persoonid = {id}
                     />}/>
                     <Route path="assign" element={<TopicAssign_Masterproef
                         roles={role}
+                        persoonid = {id}
                     />}/>
                     <Route path="approve" element={<Approve_Masterproef
                         roles={role}
+                        persoonid = {id}
                     />}/>
                     <Route path="boost" element={<BoostStudent_Promotor
                         roles={role}
+                        persoonid = {id}
                     />}/>
                     <Route path="maintenance" element={<Maintenance_Admin
                         roles={role}
+                        persoonid = {id}
                     />}/>
                     {/*Nog routes voor admin*/}
                 </Route>

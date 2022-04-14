@@ -6,8 +6,8 @@ import PreferredTopic from "./PreferredTopic"
 import {Link} from "react-router-dom";
 
 
-export default function ApprovedTopics(){
-
+export default function ApprovedTopics(props){
+    const studentid = props.studentid;
     const axiosPrivate = useAxiosPrivate();
     const [errMsg, setErrMsg] = useState('');
     const location = useLocation();
@@ -80,7 +80,7 @@ export default function ApprovedTopics(){
                                 <div className={"topictitleinbox"}>
                                     {topic.topicName}
                                 </div>
-                                <PreferredTopic className={"buttonheart"} topicname={topic.topicName} />
+                                <PreferredTopic className={"buttonheart"} topic_id={topic.topic_id} studentid={studentid}/>
                             </div>
                             <div className={"topicDescriptionbox contentintopicbow"}>
                                 {topic.description_topic}
@@ -95,7 +95,7 @@ export default function ApprovedTopics(){
                                 </div>
                                 <button className={"info_topic_button"}>
                                 <Link to={{
-                                    pathname: `/topics/info/${topic.topicName}`,
+                                    pathname: `/topics/info/${topic.topic_id}`,
                                 }}
                                 >Info</Link></button>
                             </div>

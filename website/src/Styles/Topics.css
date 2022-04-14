@@ -64,6 +64,7 @@
 }
 .buttonheart{
     background: white;
+    size: auto;
 }
 .hearticoon:hover{
     transform: translateY(-2px);
@@ -121,19 +122,44 @@
 }
 
 /*Topic Info Page------------------------------------------*/
-.topicinfocontainer{
+.showTopicInfo {
     height: auto;
-    width: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 45px;
+
+}
+.topicTitleInfo{
+    text-align: left;
+    height: auto;
+}
+.topicinfocontainer{
+    border: lightgray solid 3px;
+    mso-border-shadow: yes;
+    border-radius: 15px;
+    padding: 20px 40px 40px 40px;
+    margin-right: 10px;
     display: inline-block;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 30px;
     align-items: flex-start;
     justify-content: space-between;
-    background: #0b2e13;
-    margin: 45px;
 }
 .sectie{
     text-align: left;
     font-weight: bold;
+    background: #0e76a8;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.content{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.buttonheartInfo{
+    background: white;
 }

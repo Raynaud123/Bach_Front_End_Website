@@ -25,7 +25,7 @@ export default function PreferredTopic (props){
                     url: "/student/" + studentid + "/preferred/" + topicid,
                     signal: controller.signal
                 });
-                console.log("Response preferred: " + response.data);
+                // console.log("Response preferred: " + response.data);
                 isMounted && setFilled(response.data);
             } catch (err) {
                 console.error(err);

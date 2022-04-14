@@ -4,7 +4,6 @@ import TopicInfo_Admin from "../AppUsers/Admin/TopicInfo_Admin";
 import TopicInfo_Masterproef from "../AppUsers/Masterproefcoordinator/TopicInfo_Masterproef";
 import TopicInfo_Company from "../AppUsers/Company/TopicInfo_Company";
 import TopicInfo_Promotor from "../AppUsers/Promotor/TopicInfo_Promotor";
-import {useParams} from "react-router-dom";
 
 
 export default function TopicInfo(props){

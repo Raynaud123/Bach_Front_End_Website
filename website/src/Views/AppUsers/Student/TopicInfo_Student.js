@@ -186,7 +186,7 @@ export default function TopicInfo_Student(props) {
                         Promotor: {Promotor? <div>&emsp;  {Promotor.firstName} {Promotor.lastName}</div> : "None"}
                         <br/>
                         TargetAudience: {TargetAudience.map((target) => (
-                        <div> &emsp; {target.campus.campus_name} - {target.course.course_name}</div>
+                        <div key={target.id}> &emsp; {target.campus.campus_name} - {target.course.course_name}</div>
                         ))}
                         {/*Coordinator: */}
                         <br/>

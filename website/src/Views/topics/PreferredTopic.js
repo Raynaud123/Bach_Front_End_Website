@@ -5,11 +5,9 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 
 export default function PreferredTopic (props){
-    const studentid = props.studentid;
 
     const [filled, setFilled] = useState(false);
-    const [Student, setStudent] = useState([]);
-
+    const studentid = props.studentid;
     const topicid = props.topic_id;
 
     const axiosPrivate = useAxiosPrivate();
@@ -35,22 +33,6 @@ export default function PreferredTopic (props){
                 console.log(errMsg);
             }
         }
-        const getStudent = async () => {
-            try {
-                const response = await axiosPrivate({
-                    method: "get",
-                    url: "/student/" + studentid,
-                    signal: controller.signal
-                });
-                console.log(response.data);
-                isMounted && setStudent(response.data);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
-                console.log(errMsg);
-            }
-        }
-        getStudent();
         getPreferred();
 
         return () => {
@@ -60,7 +42,6 @@ export default function PreferredTopic (props){
     }, [])
 
     async function submitPreferrence() {
-        setFilled(!filled);
         try {
             const response = await axiosPrivate({
                 method: "put",
@@ -68,6 +49,7 @@ export default function PreferredTopic (props){
             });
             // console.log(response)
             navigate(location, {replace: true});
+            setFilled(!filled);
         } catch (error) {
             console.log(error)
         }

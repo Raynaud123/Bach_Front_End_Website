@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {BsHeart, BsHeartFill, HiUsers} from "react-icons/all";
+import {HiUsers} from "react-icons/all";
 import PreferredTopic from "../../topics/PreferredTopic";
+import Top3Pick_Student from "../Student/Top3Pick_Student";
 
 export default function TopicChoice_Student(props) {
-    const [Preferred, setPreferred] = useState([]);
-    const [Show, setShow] = useState(false);
     const studentid = props.persoonid;
+    const [Preferred, setPreferred] = useState([]);
+    const [Top3, setTop3] = useState([]);
+    const [Show, setShow] = useState(false);
+
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
+
 
     useEffect(() => {
         let isMounted = true;
@@ -32,7 +36,23 @@ export default function TopicChoice_Student(props) {
                 console.log(errMsg);
             }
         }
+        const getTop3 = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/student/" + studentid + "/top3" ,
+                    signal: controller.signal
+                });
+                console.log("Response top3: " + response.data);
+                isMounted && setTop3(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log(errMsg);
+            }
+        }
         getPreferred();
+        getTop3();
 
         return () => {
             isMounted = false;
@@ -40,45 +60,23 @@ export default function TopicChoice_Student(props) {
         }
     }, [])
 
-
     function setshow() {
         setShow(!Show);
     }
 
-    function showChoiceTop3() {
-        return(
+    function top3possible() {
+        return (
             <div>
-                <div>
-                    <label htmlFor="cars">1st choice:</label>
-                    <select name="cars" id="cars">
-                        <option>None</option>
-                        {Preferred.map((topic) => (
-                            <option>{topic.topicName}</option>
-                        ))}
-                        {/*<option value="volvo">Volvo</option>*/}
-
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="cars">2nd choice:</label>
-                    <select name="cars" id="cars">
-                        <option>None</option>
-                        {Preferred.map((topic) => (
-                            <option>{topic.topicName}</option>
-                        ))}
-                        {/*<option value="volvo">Volvo</option>*/}
-
-                    </select>
-                </div><div>
-                    <label htmlFor="cars">3rd choice:</label>
-                    <select name="cars" id="cars">
-                        <option>None</option>
-                        {Preferred.map((topic) => (
-                            <option>{topic.topicName}</option>
-                        ))}
-                    </select>
-                </div>
-                <button type={"button"}> Save Choice </button>
+                {
+                    Show? <Top3Pick_Student
+                        studentid={studentid}
+                        preferred={Preferred}
+                    />:<div/>
+                }
+                <button onClick={() => setshow()} type={"button"}>{
+                    Show? <div>Don't show choice</div>:<div>Make choice Top 3 topics</div>
+                }
+                </button>
             </div>
         )
     }
@@ -87,12 +85,8 @@ export default function TopicChoice_Student(props) {
         <div>
             <div>
                 {
-                    Show? showChoiceTop3():<div/>
+                    !Top3[0]? top3possible():<div>Already made top 3 choice</div>
                 }
-                <button onClick={() => setshow()} type={"button"}>{
-                    Show? <div>Don't show choice</div>:<div>Make choice Top 3 topics</div>
-                }
-                </button>
             </div>
             <div>
                 {Preferred.map((topic) => (
@@ -123,6 +117,5 @@ export default function TopicChoice_Student(props) {
                 ))}
             </div>
         </div>
-
     )
 }

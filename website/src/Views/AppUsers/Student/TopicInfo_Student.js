@@ -34,7 +34,7 @@ export default function TopicInfo_Student(props) {
                 console.log(response.data);
                 isMounted && setTopic(response.data);
                 await getProvider(response.data.provider_id);
-                await getPromotor(response.data.promotor_id);
+                // await getPromotor(response.data.promotor_id);
                 // getCoordinator(response.data.coordinator_id);
                 await getTargetAudience(response.data.targetAudience_list);
                 await getKeywords(response.data.keyword_list);

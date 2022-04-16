@@ -24,19 +24,16 @@ export default function NormalHeader(props){
     }else if(role === "ADMIN"){
         return(
             <div className={"header"}>
-                <div>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
-                    <div className={"buttons"}>
-                        <button><Link to="/deadlines">Deadlines</Link></button>
-                        <button><Link to="/maintenance">Maintenance</Link></button>
-                        <button><Link to="/topic">Topics</Link></button>
-                    </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={50}/>
-                    </div>
+                <a href='/'>
+                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                </a>
+                <div className={"buttons"}>
+                    <button><Link to="/maintenance">Maintenance</Link></button>
+                    <button><Link to="/topic">Topics</Link></button>
+                </div>
+                <div className={"icon"}>
+                    <IoIosNotificationsOutline color='white' size={50}/>
+                    <GoPerson color='white' size={50}/>
                 </div>
             </div>
         )

@@ -1,3 +1,6 @@
+:root{
+    --heightButtons: 25px;
+}
 .Maintenancebar{
     background: lightgray;
     display: flex;
@@ -7,27 +10,61 @@
     padding: 10px;
 }
 .windowMainenance{
-    background: #893dc2;
-    padding: 15px;
+    margin: 15px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    min-height: 600px;
+    height: 640px;
+    border: lightgray solid 3px;
 }
 .windowleftlist{
-    background: #bc318f;
     width: 40%;
+    align-items: self-end;
+}
+.listitemsleft{
+    height: 600px;
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
+.leftUnderSidebalk{
+    justify-content: space-evenly;
+    display: flex;
+}
+.buttonMaintenance{
+    background: gray;
+    height: max-content;
+}
+.borderinwindow{
+    background: lightgray;
+    width: 0.25%;
+    height: auto;
+}
+.windowrightcrud{
+    width: 59.75%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
-.windowrightcrud{
-    background: #fec564;
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+.emptyListItem{
+    height: 120px;
+    border: rgba(211, 211, 211, 0.47) solid;
+    color: transparent;
+    text-shadow: 0 0 7px #000;
+    font-size: 30px;
+}
+.ListItem{
+    height: 120px;
+    border: rgba(211, 211, 211, 0.47) solid;
+}
+.ListItem:active {
+    background: rgba(211, 211, 211, 0.18);
+}
+.ListItemTitle{
+    font-size: 30px;
+}
+.ListItemSelected{
+    font-size: 110%;
+
 }

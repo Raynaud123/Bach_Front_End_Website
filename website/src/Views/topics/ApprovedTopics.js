@@ -14,7 +14,7 @@ export default function ApprovedTopics(props){
     const navigate = useNavigate();
 
     const [Topic, setTopic] = useState([]);
-    const [Promotor, setPromotor] = useState([]);
+    //const [Promotor, setPromotor] = useState([]);
 
 
     useEffect(() => {
@@ -38,24 +38,24 @@ export default function ApprovedTopics(props){
                 console.log(errMsg);
             }
         }
-        const getPromotor = async () => {
-            try {
-                const response = await axiosPrivate({
-                    method: "get",
-                    url: "/promotor/withtopic",
-                    signal: controller.signal
-                });
-                // console.log(response.data);
-                isMounted && setPromotor(response.data);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', {state: {from: location}, replace: true});
-                console.log(errMsg);
-            }
-
-        }
+        // const getPromotor = async () => {
+        //     try {
+        //         const response = await axiosPrivate({
+        //             method: "get",
+        //             url: "/promotor/withtopic",
+        //             signal: controller.signal
+        //         });
+        //         // console.log(response.data);
+        //         isMounted && setPromotor(response.data);
+        //     } catch (err) {
+        //         console.error(err);
+        //         navigate('/login', {state: {from: location}, replace: true});
+        //         console.log(errMsg);
+        //     }
+        //
+        // }
         getApprovedTopic();
-        getPromotor();
+        //getPromotor();
 
 
         return () => {
@@ -65,11 +65,11 @@ export default function ApprovedTopics(props){
     }, [])
     // Topic.map(topic => console.log( topic ));
 
-    function getPromotorName(promotor_id) {
-        for(let i = 0; i<Promotor.length; i++){
-            if (Promotor[i].id === promotor_id) return Promotor[i].firstName + " " + Promotor[i].lastName;
-        }
-    }
+    // function getPromotorName(promotor_id) {
+    //     for(let i = 0; i<Promotor.length; i++){
+    //         if (Promotor[i].id === promotor_id) return Promotor[i].firstName + " " + Promotor[i].lastName;
+    //     }
+    // }
 
     return(
             <div>
@@ -85,9 +85,9 @@ export default function ApprovedTopics(props){
                             <div className={"topicDescriptionbox contentintopicbow"}>
                                 {topic.description_topic}
                             </div>
-                            <div className={"topicPromotorbox contentintopicbow"} >
-                                {getPromotorName(topic.promotor_id)}
-                            </div>
+                            {/*<div className={"topicPromotorbox contentintopicbow"} >*/}
+                            {/*    {getPromotorName(topic.promotor_id)}*/}
+                            {/*</div>*/}
                             <div className={"studentenmetinfo"}>
                                 <div className={"topicAantalStudentenbox contentintopicbow"}>
                                     <HiUsers className={"persoonicoontopic"}/>

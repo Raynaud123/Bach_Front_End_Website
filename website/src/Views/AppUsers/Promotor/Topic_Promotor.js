@@ -11,7 +11,6 @@ export default function Topic_Promotor(props){
     const [errMsg, setErrMsg] = useState('');
 
     const [Topic, setTopic] = useState([]);
-    const [Promotor, setPromotor] = useState([]);
 
     useEffect(() => {
         let isMounted = true;
@@ -20,9 +19,10 @@ export default function Topic_Promotor(props){
         const controller = new AbortController();
         const getTopics = async () => {
             try {
+                console.log(props.promotorid);
                 const response = await axiosPrivate({
                     method: "get",
-                    url: `/topic/promotor/${props.id}`,
+                    url: `/topic/promotor/${props.promotorid}`,
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -35,25 +35,8 @@ export default function Topic_Promotor(props){
         }
 
 
-        const getPromotor = async () => {
-            try {
-                const response = await axiosPrivate({
-                    method: "get",
-                    url: `/promotor/${props.id}`,
-                    signal: controller.signal
-                });
-                console.log(response.data);
-                isMounted && setPromotor(response.data);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', {state: {from: location}, replace: true});
-                console.log(errMsg);
-            }
-
-        }
 
         getTopics();
-        getPromotor();
 
 
         return () => {
@@ -65,7 +48,6 @@ export default function Topic_Promotor(props){
 
     return(
         <div >
-            <h1>Test</h1>
             {Topic.map((topic) => (
                 <div className={"topiccontainer"}>
                     <div key={topic.id} className={"topicbox"}>
@@ -77,19 +59,16 @@ export default function Topic_Promotor(props){
                         <div className={"topicDescriptionbox contentintopicbow"}>
                             {topic.description_topic}
                         </div>
-                        <div className={"topicPromotorbox contentintopicbow"} >
-                            {Promotor.username}
-                        </div>
                         <div className={"studentenmetinfo"}>
                             <div className={"topicAantalStudentenbox contentintopicbow"}>
                                 <HiUsers className={"persoonicoontopic"}/>
                                 <p>number of students: {topic.aantal_studenten}</p>
                             </div>
-                            {/*<button className={"info_topic_button"}>*/}
-                            {/*    <Link to={{*/}
-                            {/*        pathname: `/topics/info/${topic.topicName}`,*/}
-                            {/*    }}*/}
-                            {/*    >Info</Link></button>*/}
+                            <button className={"info_topic_button"}>
+                                <Link to={{
+                                    pathname: `/topics/info/${topic.topic_id}`,
+                                }}
+                                >Info</Link></button>
                         </div>
                     </div>
                 </div>

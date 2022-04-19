@@ -138,7 +138,6 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             test();
         }
         console.log(target);
-
     }
 
 

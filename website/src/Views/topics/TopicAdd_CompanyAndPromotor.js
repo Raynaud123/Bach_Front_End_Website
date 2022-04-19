@@ -120,22 +120,42 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
     const handleSelectButtonTarget = (event) => {
 
-        if(target.indexOf(selectTarget.id) <= -1){
+
+        console.log(selectTarget);
+        const {id, name} = JSON.parse(selectTarget);
+        var bool = false;
+        for(const i of target){
+
+            console.log(id);
+            var parsed = JSON.parse(i);
+            console.log(parsed.id);
+            if(id === parsed.id){
+                bool = true;
+            }
+        }
+        if(!bool){
             const test = () => setTarget((oldArray) => oldArray.concat(selectTarget));
             test();
         }
-
-        // if (!target.includes(selectTarget) && selectTarget !== undefined) {
-        //     const test = () => setTarget((oldArray) => oldArray.concat(selectTarget));
-        //     test();
-        // }
         console.log(target);
+
     }
 
 
     const handleSelectButtonKeyword = (event) => {
         console.log(selectKeyword);
-        if(keyword.indexOf(selectKeyword.id) <= -1){
+        const {id, name} = JSON.parse(selectKeyword);
+        var bool = false;
+        for(const i of keyword){
+
+            console.log(id);
+            var parsed = JSON.parse(i);
+            console.log(parsed.id);
+            if(id === parsed.id){
+                bool = true;
+            }
+        }
+        if(!bool){
             const test = () => setKeyword((oldArray) => oldArray.concat(selectKeyword));
             test();
         }

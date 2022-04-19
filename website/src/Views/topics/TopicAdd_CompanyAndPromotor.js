@@ -1,24 +1,30 @@
 import React, {useEffect, useState} from "react";
-import axios from 'axios';
 import {useLocation, useNavigate} from "react-router-dom"
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 
-export default function TopicAdd_CompanyAndPromotor(){
+export default function TopicAdd_CompanyAndPromotor(props) {
 
+
+    const [errMsg, setErrMsg] = useState('');
     const axiosPrivate = useAxiosPrivate();
     const [formValue, setformValue] = React.useState({
         Question: '',
         Description: '',
-        StudentsAmount:0
+        StudentsAmount: 0
     });
-//    const arr = [];
-    const [campus, setcampus] = useState([]);
-    const [errMsg, setErrMsg] = useState('');
+
+    const [targetData, setTargetData] = useState([]);
+    const [selectTarget, setSelectTarget] = useState();
+    const [target, setTarget] = useState([]);
+    const [targetId, setTargetId] = useState([]);
+
+    const [keywordData, setKeywordData] = useState([]);
+    const [selectKeyword, setSelectKeyword] = useState();
+    const [keyword, setKeyword] = useState([]);
+    const [keywordId, setKeywordId] = useState([]);
 
 
-
-    const [data, setData] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -29,31 +35,68 @@ export default function TopicAdd_CompanyAndPromotor(){
 
         //cancel request if component is unmountend
         const controller = new AbortController();
-        const getCampus = async () => {
-        try {
-            const response = await axiosPrivate({
-                method: "get",
-                url: "/targetaudience/campus",
-                signal: controller.signal
-            });
-            console.log(response.data);
-            isMounted && setData(response.data);
-        } catch (err) {
-            console.error(err);
-            navigate('/login', { state: { from: location }, replace: true });
-            console.log("tyfus " + errMsg);
+        const getTarget = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/targetaudience/all",
+                    signal: controller.signal
+                });
+                console.log("response getTarget:" + response.data);
+                isMounted && setTargetData(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', {state: {from: location}, replace: true});
+                console.log("tyfus " + errMsg);
+            }
         }
-    }
-    getCampus();
 
-    return () => {
-        isMounted = false;
-        controller.abort();
-    }
-}, [])
+        const getKeyword = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/keyword/all",
+                    signal: controller.signal
+                });
+                console.log("response getKey:" + response.data);
+                isMounted && setKeywordData(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', {state: {from: location}, replace: true});
+                console.log("tyfus " + errMsg);
+            }
+        }
+
+        getTarget();
+        getKeyword();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, [])
 
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
+
+
+        target.map((test) => {
+            var parsed=JSON.parse(test);
+            const {id} = parsed;
+            const rara = () => setTargetId((oldArray) => oldArray.concat(test.id));
+            rara();
+        })
+
+        keyword.map((test) => {
+            var parsed=JSON.parse(test);
+            const {id} = parsed;
+            const rara = () => setKeywordId((oldArray) => oldArray.concat(test.id));
+            rara();
+        })
+
+        console.log(props.id);
+        console.log(targetId);
+        console.log(keywordId);
 
         try {
             const response = await axiosPrivate({
@@ -61,22 +104,42 @@ export default function TopicAdd_CompanyAndPromotor(){
                 url: "http://localhost:8080/topic",
                 data: {
                     topicName: formValue.Question,
-                    description_topic: formValue.Description
+                    description_topic: formValue.Description,
+                    aantal_studenten: formValue.StudentsAmount,
+                    targetAudience: targetId,
+                    keywords: keywordId,
+                    provider_id: props.id
                 }
             });
-            console.log(response)
-            navigate(from, { replace: true });
-        } catch(error) {
+            console.log("response submit:"  + response)
+            navigate(from, {replace: true});
+        } catch (error) {
             console.log(error)
         }
     }
 
-    const handleMultipleChange = (event) => {
-        if(!campus.includes(event.target.value)){
-            const test = () => setcampus((oldArray) => oldArray.concat(event.target.value));
+    const handleSelectButtonTarget = (event) => {
+
+        if(target.indexOf(selectTarget.id) <= -1){
+            const test = () => setTarget((oldArray) => oldArray.concat(selectTarget));
             test();
         }
-        console.log(campus);
+
+        // if (!target.includes(selectTarget) && selectTarget !== undefined) {
+        //     const test = () => setTarget((oldArray) => oldArray.concat(selectTarget));
+        //     test();
+        // }
+        console.log(target);
+    }
+
+
+    const handleSelectButtonKeyword = (event) => {
+        console.log(selectKeyword);
+        if(keyword.indexOf(selectKeyword.id) <= -1){
+            const test = () => setKeyword((oldArray) => oldArray.concat(selectKeyword));
+            test();
+        }
+        console.log(keyword);
     }
 
 
@@ -88,7 +151,7 @@ export default function TopicAdd_CompanyAndPromotor(){
         });
     }
 
-    return(
+    return (
         <div className={"center"}>
             <form onSubmit={handleSubmit}>
                 <h2>Add a new Topic</h2>
@@ -112,27 +175,63 @@ export default function TopicAdd_CompanyAndPromotor(){
                 </div>
                 <div className={"inputgroup"}>
                     <label>Amount of students:</label>
-                <select
-                    name="StudentsAmount"
-                    value={formValue.StudentsAmount}
-                    onChange={handleChange}
-                >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
+                    <select
+                        name="StudentsAmount"
+                        value={formValue.StudentsAmount}
+                        onChange={handleChange}
+                    >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
                 </div>
                 <div className={"inputgroup"}>
-                    <label>Select Campus:</label>
+                    <label>Select TargetAudience:</label>
                     <select
-                        name="campus"
-                        onChange={handleMultipleChange}
+                        name="targetAudience"
+                        onChange={(e) => {
+                            setSelectTarget(e.target.value);
+                        }}
                     >
-                        {data.map((campus) => <option key={campus.campus_id}value={campus.campus_name}>
-                            {campus.campus_name}
-                        </option> )}
+                        {targetData.map((variable) => <option key={variable.targetAudience_id}
+                                                              value={JSON.stringify({"campus_name": variable.campus.campus_name,"course_name" : variable.course.course_name,"id":variable.targetAudience_id})}>
+                            {variable.campus.campus_name} {variable.course.course_name}
+                        </option>)}
                     </select>
+                    <button type="button" onClick={handleSelectButtonTarget}>
+                        Add TargetAudience
+                    </button>
                     <ul>
-                        {campus.map((name) => <li key={name}>{name}</li>)}
+                        {target.map((name) =>{
+                            var parsed=JSON.parse(name);
+                            const {campus_name,course_name, id} = parsed;
+                            return(
+                            <li key={id}>{campus_name + " " + course_name}</li>
+                            )})}
+                    </ul>
+                </div>
+                <div className={"inputgroup"}>
+                    <label>Select Keywords:</label>
+                    <select
+                        name="keywords"
+                        onChange={(e) => {
+                            setSelectKeyword(e.target.value);
+                        }}
+                    >
+                        {keywordData.map((variable) => <option key={variable.keyword_id} value={JSON.stringify({"name": variable.keyword_name,"id":variable.keyword_id})}>
+                            {variable.keyword_name}
+                        </option>)}
+                    </select>
+                    <button type="button" onClick={handleSelectButtonKeyword}>
+                        Add keyword
+                    </button>
+                    <ul>
+                        {keyword.map((test) => {
+                            var parsed=JSON.parse(test);
+                            const {name, id} = parsed;
+                            return(
+                                <li key={id}>{name}</li>
+                            )
+                        })}
                     </ul>
                 </div>
                 <button type="submit">

@@ -48,6 +48,7 @@ export const AuthProvider = ({ children }) => {
                 <Route element={<RequireAuth/>}>
                     <Route path="/topic" element={<Topic
                             roles={role}
+                            id={id}
                             persoonid = {id}
                     />}/>
                     <Route path="/add" element={<TopicAdd_CompanyAndPromotor

@@ -42,7 +42,7 @@
 }
 .windowrightcrud{
     width: 59.75%;
-    display: flex;
+    display: inherit;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -64,6 +64,11 @@
 .ListItemTitle{
     font-size: 30px;
 }
+@media only screen and (max-width: 650px) {
+    .ListItemTitle {
+        font-size: 20px;
+    }
+}
 .ListItemSelected{
     color: #067aac;
 }
@@ -71,6 +76,11 @@
 .FormInfo{
     height: 100%;
     width: 100%;
+}
+.FormInfoTitle{
+    font-size: 25px;
+    justify-content: space-around;
+    display: flex;
 }
 .InfoSection{
     text-align: center;

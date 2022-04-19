@@ -12,7 +12,7 @@ export default function Maintenance_Admin(props){
     const [PhaseIndex, setPhaseIndex] = useState(-1);
     const [PhaseCreate, setPhaseCreate] = useState(false);
     const [FormValuePhase, setFormValuePhase] = React.useState({
-        phaseName: '',
+        phaseName: "",
         phaseRound: null,
         phaseEndDeadline: "",
         phaseBeginDeadline: "",
@@ -39,6 +39,7 @@ export default function Maintenance_Admin(props){
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
+
 
         const getPhases = async () => {
             try {
@@ -181,9 +182,7 @@ export default function Maintenance_Admin(props){
         }
     }, [])
 
-
-
-    function showMaintenanceBar() {
+    function showMaintenanceBar(effect, deps) {
         function showStandaard() {
             return (
                 <div className={"windowMainenance"}>
@@ -209,14 +208,12 @@ export default function Maintenance_Admin(props){
                 const year = 20 + date[2];
                 return year + "-" + month + "-" + day;
             }
-
             const handlePhaseChange = (event) => {
                 setFormValuePhase({
                     ...FormValuePhase,
                     [event.target.name]: event.target.value
                 });
             }
-
             function showPhaseInfo() {
                 return(
                     <div>
@@ -296,79 +293,129 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseName" className={"InfoAttribute"}>Phase Name</label>
-                                    <input type="text" id="phaseName" placeholder={"Phase Name"}/>
+                                    <input type="text" name="phaseName" placeholder={"Phase Name"}
+                                           value={FormValuePhase.phaseName}
+                                           onChange={handlePhaseChange}
+                                    />
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>
-                                    <input type="checkbox" id="phaseRound"/>
+                                    <input type="checkbox" name="phaseRound"
+                                           value={!FormValuePhase.phaseRound}
+                                           onClick={handlePhaseChange}
+                                    />
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>
-                                    <input type="date" id="phaseBeginDeadline"/>
+                                    <input type="date" name="phaseBeginDeadline"
+                                           value={FormValuePhase.phaseBeginDeadline}
+                                           onChange={handlePhaseChange}
+                                    />
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>
-                                    <input type="date" id="phaseEndDeadline"/>
+                                    <input type="date" name="phaseEndDeadline"
+                                           value={FormValuePhase.phaseEndDeadline}
+                                           onChange={handlePhaseChange}
+                                    />
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>
-                                    <input type="checkbox" id="phaseHide"/>
+                                    <input type="checkbox" name="phaseHide"
+                                           value={!FormValuePhase.phaseHide}
+                                           onClick={handlePhaseChange}
+                                    />
                                 </div>
                             </div>
-
-                            {/*<input type="submit" value="Submit"/>*/}
                         </form>
                     </div>
                 )
             }
 
             const submitPhaseUpdate = async(e) => {
+                console.log(Phases[PhaseIndex]);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
-                        url: "http://localhost:8080/admin/update/phase",
+                        url: "http://localhost:8080/admin/update/phase/" + Phases[PhaseIndex].phase_id,
                         data: {
-                            phaseName: FormValuePhase.phaseName,
-                            phaseRound: FormValuePhase.phaseRound,
-                            phaseEndDeadline: FormValuePhase.phaseEndDeadline,
-                            phaseBeginDeadline: FormValuePhase.phaseBeginDeadline,
-                            phaseHide: FormValuePhase.phaseHide
+                            phase_name: FormValuePhase.phaseName,
+                            firstRound: FormValuePhase.phaseRound,
+                            end_deadline: FormValuePhase.phaseEndDeadline,
+                            begin_deadline: FormValuePhase.phaseBeginDeadline,
+                            hide: FormValuePhase.phaseHide
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
+                    await updatePhases();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            const submitPhaseCreate = async(e) => {
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/create/phase/",
+                        data: {
+                            phase_name: FormValuePhase.phaseName,
+                            firstRound: FormValuePhase.phaseRound,
+                            end_deadline: FormValuePhase.phaseEndDeadline,
+                            begin_deadline: FormValuePhase.phaseBeginDeadline,
+                            hide: FormValuePhase.phaseHide
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    await updatePhases();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            const submitPhaseDelete = async(e) => {
+                console.log(Phases[PhaseIndex]);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/delete/phase",
+                        data: {
+                            phase_id: Phases[PhaseIndex].phase_id
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    await updatePhases();
+                    setPhaseIndex(-1);
                 } catch(error) {
                     console.log(error)
                 }
             }
 
-            function checkUpdatePhase() {
-                console.log(FormValuePhase);
-
-                if(FormValuePhase.phaseName === "")
-                    setFormValuePhase({
-                        ...FormValuePhase,
-                        phaseName: JSON.stringify(Phases[PhaseIndex].phaseName)
+            async function updatePhases() {
+                let isMounted = true;
+                const controller = new AbortController();
+                try {
+                    const response = await axiosPrivate({
+                        method: "get",
+                        url: "/phase/all",
+                        signal: controller.signal
                     });
-                //     FormValuePhase.phaseName = Phases[PhaseIndex].phaseName;
-                // if(FormValuePhase.phaseRound === null)
-                //     FormValuePhase.phaseRound = Phases[PhaseIndex].phaseRound;
-                // if(FormValuePhase.phaseEndDeadline === "")
-                //     FormValuePhase.phaseEndDeadline = Phases[PhaseIndex].phaseEndDeadline;
-                // if(FormValuePhase.phaseBeginDeadline === "")
-                //     FormValuePhase.phaseBeginDeadline = Phases[PhaseIndex].phaseBeginDeadline;
-                // if(FormValuePhase.phaseHide === null)
-                //     FormValuePhase.phaseHide = Phases[PhaseIndex].phaseHide;
-                console.log(Phases[PhaseIndex]);
-                console.log(FormValuePhase);
+                    console.log(response.data);
+                    isMounted && setPhases(response.data);
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg);
+                }
             }
 
             return (
@@ -402,14 +449,14 @@ export default function Maintenance_Admin(props){
                         <div className={"InfoButtonsBottom"}>
                             {PhaseCreate?
                                 <div>
-                                    <button className={"buttonMaintenance"} >Save</button>
+                                    <button className={"buttonMaintenance"} type="submit" onClick={submitPhaseCreate}>Save</button>
                                     <button className={"buttonMaintenance"} onClick={() => setPhaseCreate(false)}>Cancel</button>
                                 </div>:
                                 <div>
                                     {PhaseIndex===-1? <div/>:
                                         <div>
-                                            <button className={"buttonMaintenance"}>Delete</button>
-                                            <button className={"buttonMaintenance"} type="submit" onClick={checkUpdatePhase}>Update</button>
+                                            <button className={"buttonMaintenance"}type="submit" onClick={submitPhaseDelete}>Delete</button>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitPhaseUpdate}>Update</button>
                                         </div>
                                     }
                                 </div>

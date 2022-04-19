@@ -62,7 +62,7 @@
     background: rgba(211, 211, 211, 0.18);
 }
 .ListItemTitle{
-    font-size: 30px;
+    font-size: 25px;
 }
 @media only screen and (max-width: 650px) {
     .ListItemTitle {

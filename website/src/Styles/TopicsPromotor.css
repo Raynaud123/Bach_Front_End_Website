@@ -1,0 +1,46 @@
+.showTopicInfo {
+    height: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 4.95%;
+
+}
+.topicTitleInfo{
+    text-align: center;
+    height: auto;
+}
+.topicinfocontainer{
+    border: none;
+    mso-border-shadow: yes;
+    border-radius: 15px;
+    padding: 20px 40px 40px 40px;
+    margin-right: 10px;
+    display: inline-block;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.sectie{
+    text-align: left;
+    font-weight: bold;
+    background: white;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.tekst{
+    width: 100%;
+}
+
+h3{
+    color: #52BDEC;
+    display: inline;
+}
+
+.inline{
+    display: inline;
+}

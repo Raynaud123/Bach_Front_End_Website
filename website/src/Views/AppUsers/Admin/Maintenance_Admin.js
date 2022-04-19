@@ -7,9 +7,17 @@ import "../../../Styles/Maintenance.css"
 export default function Maintenance_Admin(props){
     const adminid = props.persoonid;
 
+
     const [Phases, setPhases] = useState([]);
     const [PhaseIndex, setPhaseIndex] = useState(-1);
     const [PhaseCreate, setPhaseCreate] = useState(false);
+    const [FormValuePhase, setFormValuePhase] = React.useState({
+        phaseName: '',
+        phaseRound: null,
+        phaseEndDeadline: "",
+        phaseBeginDeadline: "",
+        phaseHide: null
+    });
 
 
     const [Promotors, setPromotors] = useState([]);
@@ -201,11 +209,22 @@ export default function Maintenance_Admin(props){
                 const year = 20 + date[2];
                 return year + "-" + month + "-" + day;
             }
+
+            const handlePhaseChange = (event) => {
+                setFormValuePhase({
+                    ...FormValuePhase,
+                    [event.target.name]: event.target.value
+                });
+            }
+
             function showPhaseInfo() {
                 return(
                     <div>
                         {PhaseIndex===-1? <div/>:
                             <form className={"FormInfo"}>
+                                <div className={"FormInfoTitle"}>
+                                    Phase
+                                </div>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <div className={"comment"}>Initial Value</div>
                                     <div className={"comment"}>New Value</div>
@@ -214,28 +233,50 @@ export default function Maintenance_Admin(props){
                                     <label htmlFor="phaseName" className={"InfoAttribute"}>Phase Name</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Phases[PhaseIndex].phase_name}
-                                        <input type="text" id="phaseName" placeholder={"Phase Name"}/>
+                                        <input type="text" name="phaseName" placeholder={"Phase Name"}
+                                               value={FormValuePhase.phaseName}
+                                               onChange={handlePhaseChange}
+                                        />
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>
+                                    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Phases[PhaseIndex].firstRound? "True":"False"}
-                                        <input type="checkbox" id="phaseRound"/>
+                                        <input type="checkbox" name="phaseRound"
+                                               value={!FormValuePhase.phaseRound}
+                                               onClick={handlePhaseChange}
+                                        />
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
                                     <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Phases[PhaseIndex].begin_deadline}
-                                        <input type="date" id="phaseBeginDeadline"/>
+                                        <input type="date" name="phaseBeginDeadline"
+                                               value={FormValuePhase.phaseBeginDeadline}
+                                               onChange={handlePhaseChange}
+                                        />
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
                                     <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Phases[PhaseIndex].end_deadline}
-                                        <input type="date" id="phaseEndDeadline"/>
+                                        <input type="date" name="phaseEndDeadline"
+                                               value={FormValuePhase.phaseEndDeadline}
+                                               onChange={handlePhaseChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Phases[PhaseIndex].hide? "True":"False"}
+                                        <input type="checkbox" name="phaseHide"
+                                               value={!FormValuePhase.phaseHide}
+                                               onClick={handlePhaseChange}
+                                        />
                                     </div>
                                 </div>
 
@@ -248,38 +289,86 @@ export default function Maintenance_Admin(props){
             function createPhase() {
                 return(
                     <div>
-                        {PhaseIndex===-1? <div/>:
-                            <form className={"FormInfo"}>
-                                <div className={"InfoSection"}>
-                                    <div className={"InfoAttributeValueAndInput"}>
-                                        <label htmlFor="phaseName" className={"InfoAttribute"}>Phase Name</label>
-                                        <input type="text" id="phaseName" placeholder={"Phase Name"}/>
-                                    </div>
+                        <form className={"FormInfo"}>
+                            <div className={"FormInfoTitle"}>
+                                New Phase
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phaseName" className={"InfoAttribute"}>Phase Name</label>
+                                    <input type="text" id="phaseName" placeholder={"Phase Name"}/>
                                 </div>
-                                <div className={"InfoSection"}>
-                                    <div className={"InfoAttributeValueAndInput"}>
-                                        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>
-                                        <input type="checkbox" id="phaseRound"/>
-                                    </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>
+                                    <input type="checkbox" id="phaseRound"/>
                                 </div>
-                                <div className={"InfoSection"}>
-                                    <div className={"InfoAttributeValueAndInput"}>
-                                        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>
-                                        <input type="date" id="phaseBeginDeadline"/>
-                                    </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>
+                                    <input type="date" id="phaseBeginDeadline"/>
                                 </div>
-                                <div className={"InfoSection"}>
-                                    <div className={"InfoAttributeValueAndInput"}>
-                                        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>
-                                        <input type="date" id="phaseEndDeadline"/>
-                                    </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>
+                                    <input type="date" id="phaseEndDeadline"/>
                                 </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>
+                                    <input type="checkbox" id="phaseHide"/>
+                                </div>
+                            </div>
 
-                                {/*<input type="submit" value="Submit"/>*/}
-                            </form>
-                        }
+                            {/*<input type="submit" value="Submit"/>*/}
+                        </form>
                     </div>
                 )
+            }
+
+            const submitPhaseUpdate = async(e) => {
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/update/phase",
+                        data: {
+                            phaseName: FormValuePhase.phaseName,
+                            phaseRound: FormValuePhase.phaseRound,
+                            phaseEndDeadline: FormValuePhase.phaseEndDeadline,
+                            phaseBeginDeadline: FormValuePhase.phaseBeginDeadline,
+                            phaseHide: FormValuePhase.phaseHide
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+
+            function checkUpdatePhase() {
+                console.log(FormValuePhase);
+
+                if(FormValuePhase.phaseName === "")
+                    setFormValuePhase({
+                        ...FormValuePhase,
+                        phaseName: JSON.stringify(Phases[PhaseIndex].phaseName)
+                    });
+                //     FormValuePhase.phaseName = Phases[PhaseIndex].phaseName;
+                // if(FormValuePhase.phaseRound === null)
+                //     FormValuePhase.phaseRound = Phases[PhaseIndex].phaseRound;
+                // if(FormValuePhase.phaseEndDeadline === "")
+                //     FormValuePhase.phaseEndDeadline = Phases[PhaseIndex].phaseEndDeadline;
+                // if(FormValuePhase.phaseBeginDeadline === "")
+                //     FormValuePhase.phaseBeginDeadline = Phases[PhaseIndex].phaseBeginDeadline;
+                // if(FormValuePhase.phaseHide === null)
+                //     FormValuePhase.phaseHide = Phases[PhaseIndex].phaseHide;
+                console.log(Phases[PhaseIndex]);
+                console.log(FormValuePhase);
             }
 
             return (
@@ -313,15 +402,14 @@ export default function Maintenance_Admin(props){
                         <div className={"InfoButtonsBottom"}>
                             {PhaseCreate?
                                 <div>
-                                    <button className={"buttonMaintenance"}>Save</button>
+                                    <button className={"buttonMaintenance"} >Save</button>
                                     <button className={"buttonMaintenance"} onClick={() => setPhaseCreate(false)}>Cancel</button>
                                 </div>:
                                 <div>
                                     {PhaseIndex===-1? <div/>:
                                         <div>
                                             <button className={"buttonMaintenance"}>Delete</button>
-                                            <button className={"buttonMaintenance"}>Hide</button>
-                                            <button className={"buttonMaintenance"}>Update</button>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={checkUpdatePhase}>Update</button>
                                         </div>
                                     }
                                 </div>

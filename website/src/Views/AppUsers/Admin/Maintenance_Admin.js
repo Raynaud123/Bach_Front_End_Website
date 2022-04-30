@@ -7,17 +7,19 @@ import "../../../Styles/Maintenance.css"
 export default function Maintenance_Admin(props){
     const adminid = props.persoonid;
 
+    const [ErrorMessageForm, setErrorMessageForm] = useState("");
 
     const [Phases, setPhases] = useState([]);
     const [PhaseIndex, setPhaseIndex] = useState(-1);
     const [PhaseCreate, setPhaseCreate] = useState(false);
-    const [FormValuePhase, setFormValuePhase] = React.useState({
+    const [FormValuePhase, setFormValuePhase] = useState({
         phaseName: "",
         phaseRound: null,
         phaseEndDeadline: "",
         phaseBeginDeadline: "",
         phaseHide: null
     });
+
 
 
     const [Promotors, setPromotors] = useState([]);
@@ -48,8 +50,9 @@ export default function Maintenance_Admin(props){
                     url: "/phase/all",
                     signal: controller.signal
                 });
+                const myData = [].concat(response.data).sort((a, b) => a.phase_id > b.phase_id ? 1 : -1);
                 console.log(response.data);
-                isMounted && setPhases(response.data);
+                isMounted && setPhases(myData);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -201,13 +204,6 @@ export default function Maintenance_Admin(props){
             )
         }
         function showPhases() {
-            function getDate(end_deadline) {
-                let date = end_deadline.split('/');
-                const day = date[0];
-                const month = date[1];
-                const year = 20 + date[2];
-                return year + "-" + month + "-" + day;
-            }
             const handlePhaseChange = (event) => {
                 setFormValuePhase({
                     ...FormValuePhase,
@@ -229,7 +225,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="phaseName" className={"InfoAttribute"}>Phase Name</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Phases[PhaseIndex].phase_name}
+                                        {Phases[PhaseIndex].phase_name? Phases[PhaseIndex].phase_name:""}
                                         <input type="text" name="phaseName" placeholder={"Phase Name"}
                                                value={FormValuePhase.phaseName}
                                                onChange={handlePhaseChange}
@@ -240,16 +236,17 @@ export default function Maintenance_Admin(props){
                                     <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Phases[PhaseIndex].firstRound? "True":"False"}
-                                        <input type="checkbox" name="phaseRound"
-                                               value={!FormValuePhase.phaseRound}
-                                               onClick={handlePhaseChange}
-                                        />
+                                        <select name="phaseRound" onChange={handlePhaseChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
                                     <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Phases[PhaseIndex].begin_deadline}
+                                        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}
                                         <input type="date" name="phaseBeginDeadline"
                                                value={FormValuePhase.phaseBeginDeadline}
                                                onChange={handlePhaseChange}
@@ -259,7 +256,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Phases[PhaseIndex].end_deadline}
+                                        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}
                                         <input type="date" name="phaseEndDeadline"
                                                value={FormValuePhase.phaseEndDeadline}
                                                onChange={handlePhaseChange}
@@ -270,14 +267,13 @@ export default function Maintenance_Admin(props){
                                     <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Phases[PhaseIndex].hide? "True":"False"}
-                                        <input type="checkbox" name="phaseHide"
-                                               value={!FormValuePhase.phaseHide}
-                                               onClick={handlePhaseChange}
-                                        />
+                                        <select name="phaseHide" onChange={handlePhaseChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
                                     </div>
                                 </div>
-
-                                {/*<input type="submit" value="Submit"/>*/}
                             </form>
                         }
                     </div>
@@ -302,10 +298,11 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>
-                                    <input type="checkbox" name="phaseRound"
-                                           value={!FormValuePhase.phaseRound}
-                                           onClick={handlePhaseChange}
-                                    />
+                                    <select name="phaseRound" onChange={handlePhaseChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
@@ -329,10 +326,11 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>
-                                    <input type="checkbox" name="phaseHide"
-                                           value={!FormValuePhase.phaseHide}
-                                           onClick={handlePhaseChange}
-                                    />
+                                    <select name="phaseHide" onChange={handlePhaseChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
@@ -342,6 +340,7 @@ export default function Maintenance_Admin(props){
 
             const submitPhaseUpdate = async(e) => {
                 console.log(Phases[PhaseIndex]);
+                console.log(FormValuePhase);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
@@ -356,29 +355,65 @@ export default function Maintenance_Admin(props){
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
+                    setFormValuePhase(
+                        {phaseName: "",
+                            phaseRound: null,
+                            phaseEndDeadline: "",
+                            phaseBeginDeadline: "",
+                            phaseHide: null}
+                    );
                     await updatePhases();
                 } catch(error) {
                     console.log(error)
                 }
             }
             const submitPhaseCreate = async(e) => {
-                try {
-                    const response = await axiosPrivate({
-                        method: "post",
-                        url: "http://localhost:8080/admin/create/phase/",
-                        data: {
-                            phase_name: FormValuePhase.phaseName,
-                            firstRound: FormValuePhase.phaseRound,
-                            end_deadline: FormValuePhase.phaseEndDeadline,
-                            begin_deadline: FormValuePhase.phaseBeginDeadline,
-                            hide: FormValuePhase.phaseHide
-                        }
-                    });
-                    console.log(response)
-                    navigate("/maintenance", { replace: true });
-                    await updatePhases();
-                } catch(error) {
-                    console.log(error)
+                let FormValidPhase = true;
+                function checkFormValuePhase() {
+                    if (FormValuePhase.phaseName === ""){
+                        setErrorMessageForm("Invalid Phasename" + FormValuePhase.phaseName);
+                        FormValidPhase = false;
+                    }
+                    if (FormValuePhase.phaseBeginDeadline === ""){
+                        setErrorMessageForm("Invalid Phase Begin Deadline" + FormValuePhase.phaseBeginDeadline);
+                        FormValidPhase = false;
+                    }
+                    if (FormValuePhase.phaseEndDeadline === ""){
+                        setErrorMessageForm("Invalid Phase End Deadline" + FormValuePhase.phaseEndDeadline);
+                        FormValidPhase = false;
+                    }
+                    console.log("FormValid: " + FormValidPhase);
+                }
+                checkFormValuePhase();
+                if (FormValidPhase){
+                    setErrorMessageForm("");
+                    try {
+                        const response = await axiosPrivate({
+                            method: "post",
+                            url: "http://localhost:8080/admin/create/phase/",
+                            data: {
+                                phase_name: FormValuePhase.phaseName,
+                                firstRound: FormValuePhase.phaseRound,
+                                end_deadline: FormValuePhase.phaseEndDeadline,
+                                begin_deadline: FormValuePhase.phaseBeginDeadline,
+                                hide: FormValuePhase.phaseHide
+                            }
+                        });
+                        console.log(response)
+                        navigate("/maintenance", { replace: true });
+                        setPhaseIndex(-1);
+                        setPhaseCreate(false);
+                        setFormValuePhase(
+                            {phaseName: "",
+                                phaseRound: null,
+                                phaseEndDeadline: "",
+                                phaseBeginDeadline: "",
+                                phaseHide: null}
+                        );
+                        await updatePhases();
+                    } catch(error) {
+                        console.log(error)
+                    }
                 }
             }
             const submitPhaseDelete = async(e) => {
@@ -393,13 +428,19 @@ export default function Maintenance_Admin(props){
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
-                    await updatePhases();
                     setPhaseIndex(-1);
+                    setFormValuePhase({
+                        phaseName: "",
+                        phaseRound: null,
+                        phaseEndDeadline: "",
+                        phaseBeginDeadline: "",
+                        phaseHide: null}
+                    );
+                    await updatePhases();
                 } catch(error) {
                     console.log(error)
                 }
             }
-
             async function updatePhases() {
                 let isMounted = true;
                 const controller = new AbortController();
@@ -410,12 +451,20 @@ export default function Maintenance_Admin(props){
                         signal: controller.signal
                     });
                     console.log(response.data);
-                    isMounted && setPhases(response.data);
+                    const myData = [].concat(response.data).sort((a, b) => a.phase_id > b.phase_id ? 1 : -1);
+                    console.log(response.data);
+                    isMounted && setPhases(myData);
+
                 } catch (err) {
                     console.error(err);
                     navigate('/login', {state: {from: location}, replace: true});
                     console.log(errMsg);
                 }
+            }
+
+            function cancelCreatePhase() {
+                setPhaseCreate(false);
+                setErrorMessageForm("");
             }
 
             return (
@@ -449,13 +498,14 @@ export default function Maintenance_Admin(props){
                         <div className={"InfoButtonsBottom"}>
                             {PhaseCreate?
                                 <div>
+                                    <a className={"ErrorMessageForm"}>{ErrorMessageForm}</a>
                                     <button className={"buttonMaintenance"} type="submit" onClick={submitPhaseCreate}>Save</button>
-                                    <button className={"buttonMaintenance"} onClick={() => setPhaseCreate(false)}>Cancel</button>
+                                    <button className={"buttonMaintenance"} onClick={() => cancelCreatePhase()}>Cancel</button>
                                 </div>:
                                 <div>
                                     {PhaseIndex===-1? <div/>:
                                         <div>
-                                            <button className={"buttonMaintenance"}type="submit" onClick={submitPhaseDelete}>Delete</button>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitPhaseDelete}>Delete</button>
                                             <button className={"buttonMaintenance"} type="submit" onClick={submitPhaseUpdate}>Update</button>
                                         </div>
                                     }

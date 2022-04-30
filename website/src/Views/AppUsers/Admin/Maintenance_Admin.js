@@ -20,11 +20,34 @@ export default function Maintenance_Admin(props){
         phaseHide: null
     });
 
+    const [Students, setStudents] = useState([]);
+    const [StudentIndex, setStudentIndex] = useState(-1);
+    const [StudentCreate, setStudentCreate] = useState(false);
+    const [FormValueStudent, setFormValueStudent] = useState({
+        firstName: "",
+        lastName: "",
+        targetAudience: [],
+        top3Topic: [],
+        preferredTopics: [],
+        streetName: "",
+        streetNumber: -1,
+        postNumber: -1,
+        city: "",
+        country: "",
+        email: "",
+        assignedTopic: null,
+        master: null,
+        approved: null,
+        locked: null,
+        enabled: null,
+        userName: "",
+        password: ""
+    });
+
 
 
     const [Promotors, setPromotors] = useState([]);
     const [Topics, setTopics] = useState([]);
-    const [Students, setStudents] = useState([]);
     const [Masters, setMasters] = useState([]);
     const [Providers, setProviders] = useState([]);
     const [TargetAudiences, setTargetAudiences] = useState([]);
@@ -517,7 +540,379 @@ export default function Maintenance_Admin(props){
             )
         }
         function showStudents() {
-            return undefined;
+            const handleStudentChange = (event) => {
+                setFormValueStudent({
+                    ...FormValueStudent,
+                    [event.target.name]: event.target.value
+                });
+            }
+
+            function showStudentInfo() {
+                return(
+                    <div>
+                        {StudentIndex===-1? <div/>:
+                            <form className={"FormInfo"}>
+                                <div className={"FormInfoTitle"}>
+                                    Student
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <div className={"comment"}>Initial Value</div>
+                                    <div className={"comment"}>New Value</div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="firstName" className={"InfoAttribute"}>Student firstName</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].firstName? Students[StudentIndex].firstName:""}
+                                        <input type="text" name="firstName" placeholder={"Student firstName"}
+                                               value={FormValueStudent.firstName}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                {/*<div className={"InfoSection"}>*/}
+                                {/*    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>*/}
+                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                                {/*        {Phases[PhaseIndex].firstRound? "True":"False"}*/}
+                                {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
+                                {/*            <option value={"null"}>Null</option>*/}
+                                {/*            <option value={"false"}>False</option>*/}
+                                {/*            <option value={"true"}>True</option>*/}
+                                {/*        </select>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<div className={"InfoSection"}>*/}
+                                {/*    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
+                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                                {/*        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}*/}
+                                {/*        <input type="date" name="phaseBeginDeadline"*/}
+                                {/*               value={FormValuePhase.phaseBeginDeadline}*/}
+                                {/*               onChange={handlePhaseChange}*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<div className={"InfoSection"}>*/}
+                                {/*    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
+                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                                {/*        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}*/}
+                                {/*        <input type="date" name="phaseEndDeadline"*/}
+                                {/*               value={FormValuePhase.phaseEndDeadline}*/}
+                                {/*               onChange={handlePhaseChange}*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<div className={"InfoSection"}>*/}
+                                {/*    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
+                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                                {/*        {Phases[PhaseIndex].hide? "True":"False"}*/}
+                                {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
+                                {/*            <option value={"null"}>Null</option>*/}
+                                {/*            <option value={"false"}>False</option>*/}
+                                {/*            <option value={"true"}>True</option>*/}
+                                {/*        </select>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                            </form>
+                        }
+                    </div>
+                )
+            }
+            function createStudent() {
+                return(
+                    <div>
+                        <form className={"FormInfo"}>
+                            <div className={"FormInfoTitle"}>
+                                New Student
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="firstName" className={"InfoAttribute"}>Student Firstname</label>
+                                    <input type="text" name="firstName" placeholder={"Student Firstname"}
+                                           value={FormValueStudent.firstName}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            {/*<div className={"InfoSection"}>*/}
+                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                            {/*        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>*/}
+                            {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
+                            {/*            <option value={"null"}>Null</option>*/}
+                            {/*            <option value={"false"}>False</option>*/}
+                            {/*            <option value={"true"}>True</option>*/}
+                            {/*        </select>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {/*<div className={"InfoSection"}>*/}
+                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                            {/*        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
+                            {/*        <input type="date" name="phaseBeginDeadline"*/}
+                            {/*               value={FormValuePhase.phaseBeginDeadline}*/}
+                            {/*               onChange={handlePhaseChange}*/}
+                            {/*        />*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {/*<div className={"InfoSection"}>*/}
+                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                            {/*        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
+                            {/*        <input type="date" name="phaseEndDeadline"*/}
+                            {/*               value={FormValuePhase.phaseEndDeadline}*/}
+                            {/*               onChange={handlePhaseChange}*/}
+                            {/*        />*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {/*<div className={"InfoSection"}>*/}
+                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
+                            {/*        <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
+                            {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
+                            {/*            <option value={"null"}>Null</option>*/}
+                            {/*            <option value={"false"}>False</option>*/}
+                            {/*            <option value={"true"}>True</option>*/}
+                            {/*        </select>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                        </form>
+                    </div>
+                )
+            }
+
+            const submitStudentUpdate = async(e) => {
+                console.log(Students[StudentIndex]);
+                console.log(FormValueStudent);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/update/student/" + Students[StudentIndex].id,
+                        data: {
+                            firstName: FormValueStudent.firstName,
+                            lastName: FormValueStudent.lastName,
+                            targetAudience: FormValueStudent.targetAudience,
+                            top3Topic: FormValueStudent.top3Topic,
+                            preferredTopics: FormValueStudent.preferredTopics,
+                            streetName: FormValueStudent.streetName,
+                            streetNumber: FormValueStudent.streetNumber,
+                            postNumber: FormValueStudent.postNumber,
+                            city: FormValueStudent.city,
+                            country: FormValueStudent.country,
+                            email: FormValueStudent.email,
+                            assignedTopic: FormValueStudent.assignedTopic,
+                            master: FormValueStudent.master,
+                            approved: FormValueStudent.approved,
+                            locked: FormValueStudent.locked,
+                            enabled: FormValueStudent.enabled,
+                            userName: FormValueStudent.userName,
+                            password: FormValueStudent.password
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setFormValueStudent(
+                        {firstName: "",
+                            lastName: "",
+                            targetAudience: [],
+                            top3Topic: [],
+                            preferredTopics: [],
+                            streetName: "",
+                            streetNumber: -1,
+                            postNumber: -1,
+                            city: "",
+                            country: "",
+                            email: "",
+                            assignedTopic: null,
+                            master: null,
+                            approved: null,
+                            locked: null,
+                            enabled: null,
+                            userName: "",
+                            password: ""}
+                    );
+                    await updateStudents();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            const submitStudentCreate = async(e) => {
+                let FormValidStudent = true;
+                function checkFormValueStudent() {
+                    if (FormValueStudent.firstName === ""){
+                        setErrorMessageForm("Invalid firstname" + FormValueStudent.firstName);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.lastName === ""){
+                        setErrorMessageForm("Invalid lastname" + FormValueStudent.lastName);
+                        FormValidStudent = false;
+                    }
+                    console.log("FormValid: " + FormValidStudent);
+                }
+                checkFormValueStudent();
+                if (FormValidStudent){
+                    setErrorMessageForm("");
+                    try {
+                        const response = await axiosPrivate({
+                            method: "post",
+                            url: "http://localhost:8080/admin/create/student/",
+                            data: {
+                                firstName: FormValueStudent.firstName,
+                                lastName: FormValueStudent.lastName,
+                                targetAudience: FormValueStudent.targetAudience,
+                                top3Topic: FormValueStudent.top3Topic,
+                                preferredTopics: FormValueStudent.preferredTopics,
+                                streetName: FormValueStudent.streetName,
+                                streetNumber: FormValueStudent.streetNumber,
+                                postNumber: FormValueStudent.postNumber,
+                                city: FormValueStudent.city,
+                                country: FormValueStudent.country,
+                                email: FormValueStudent.email,
+                                assignedTopic: FormValueStudent.assignedTopic,
+                                master: FormValueStudent.master,
+                                approved: FormValueStudent.approved,
+                                locked: FormValueStudent.locked,
+                                enabled: FormValueStudent.enabled,
+                                userName: FormValueStudent.userName,
+                                password: FormValueStudent.password
+                            }
+                        });
+                        console.log(response)
+                        navigate("/maintenance", { replace: true });
+                        setStudentIndex(-1);
+                        setStudentCreate(false);
+                        setFormValueStudent(
+                            {firstName: "",
+                                lastName: "",
+                                targetAudience: [],
+                                top3Topic: [],
+                                preferredTopics: [],
+                                streetName: "",
+                                streetNumber: -1,
+                                postNumber: -1,
+                                city: "",
+                                country: "",
+                                email: "",
+                                assignedTopic: null,
+                                master: null,
+                                approved: null,
+                                locked: null,
+                                enabled: null,
+                                userName: "",
+                                password: ""}
+                        );
+                        await updateStudents();
+                    } catch(error) {
+                        console.log(error)
+                    }
+                }
+            }
+            const submitStudentDelete = async(e) => {
+                console.log(Students[StudentIndex]);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/delete/student",
+                        data: {
+                            student_id: Students[StudentIndex].id
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setStudentIndex(-1);
+                    setFormValueStudent({
+                        firstName: "",
+                        lastName: "",
+                        targetAudience: [],
+                        top3Topic: [],
+                        preferredTopics: [],
+                        streetName: "",
+                        streetNumber: -1,
+                        postNumber: -1,
+                        city: "",
+                        country: "",
+                        email: "",
+                        assignedTopic: null,
+                        master: null,
+                        approved: null,
+                        locked: null,
+                        enabled: null,
+                        userName: "",
+                        password: ""}
+                    );
+                    await updateStudents();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            async function updateStudents() {
+                let isMounted = true;
+                const controller = new AbortController();
+                try {
+                    const response = await axiosPrivate({
+                        method: "get",
+                        url: "/student/all",
+                        signal: controller.signal
+                    });
+                    console.log(response.data);
+                    const myData = [].concat(response.data).sort((a, b) => a.id > b.id ? 1 : -1);
+                    console.log(response.data);
+                    isMounted && setStudents(myData);
+
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg);
+                }
+            }
+            function cancelCreateStudent() {
+                setStudentCreate(false);
+                setErrorMessageForm("");
+            }
+
+            return (
+                <div className={"windowMainenance"}>
+                    <div className={"windowleftlist"}>
+                        <div className={"listitemsleft"}>
+                            {Students.map((student,index) =>(
+                                <div key={index} className={"ListItem"} onClick={() => setStudentIndex(index)}>
+                                    <div className={"ListItemTitle"}>
+                                        {StudentIndex===index? <div className={"ListItemSelected"}>{student.firstName} {student.lastName}</div>:<div>{student.firstName} {student.lastName}</div>}
+                                    </div>
+                                    {/*<div>*/}
+                                    {/*    {student.firstRound? <div>First Round</div>: <div>Second Round</div>}*/}
+                                    {/*</div>*/}
+                                    {/*<div>*/}
+                                    {/*    {student.begin_deadline} - {student.end_deadline}*/}
+                                    {/*</div>*/}
+                                </div>
+                            ))}
+                        </div>
+                        <div className={"leftUnderSidebalk"}>
+                            <button className={"buttonMaintenance"} onClick={() => setStudentCreate(true)}>Create</button>
+                        </div>
+
+                    </div>
+                    <div className={"borderinwindow"}/>
+                    <div className={"windowrightcrud"}>
+                        <div>
+                            {StudentCreate? createStudent(): showStudentInfo()}
+                        </div>
+                        <div className={"InfoButtonsBottom"}>
+                            {StudentCreate?
+                                <div>
+                                    <a className={"ErrorMessageForm"}>{ErrorMessageForm}</a>
+                                    <button className={"buttonMaintenance"} type="submit" onClick={submitStudentCreate}>Save</button>
+                                    <button className={"buttonMaintenance"} onClick={() => cancelCreateStudent}>Cancel</button>
+                                </div>:
+                                <div>
+                                    {StudentIndex===-1? <div/>:
+                                        <div>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitStudentDelete}>Delete</button>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitStudentUpdate}>Update</button>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            )
+            return null;
         }
         function showMasters() {
             return undefined;

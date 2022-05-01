@@ -9,59 +9,46 @@ export default function NormalHeader(props){
     const role = props.roles;
     const isLoggedIn = props.isLoggedIn;
 
-    const [Phases, setPhases] = useState([]);
+    const [PhaseFound, setPhaseFound] = useState(false);
+    const [PhaseId, setPhaseId] = useState(-1);
+
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
-        if (isLoggedIn){
-            const getPhases = async () => {
-                try {
-                    const response = await axiosPrivate({
-                        method: "get",
-                        url: "/phase/all",
-                        signal: controller.signal
-                    });
-                    const myData = [].concat(response.data).sort((a, b) => a.phase_id > b.phase_id ? 1 : -1);
-                    console.log(response.data);
-                    isMounted && setPhases(myData);
-                } catch (err) {
-                    console.error(err);
-                    navigate('/login', { state: { from: location }, replace: true });
-                    console.log(errMsg);
-                }
-            }
-            getPhases().then();
-        }
-        return () => {
-            isMounted = false;
-            controller.abort();
-        }
-    }, [])
-
-    function getPhase() {
-        const date = new Date();
-        console.log("Date: " + date);
-        console.log("Phases length: " + Phases.length);
-        for(let i = 0; i<Phases.length; i++){
-            const phase = JSON.parse(Phases[i]);
-            console.log("Phase: " + phase);
-            if(date.getFullYear() === phase.begin_deadline)
-                return phase.begin_deadline;
-            console.log("Phase begin: " + phase.begin_deadline);
+    let isMounted = true;
+    const controller = new AbortController();
+    const getPhase = async () => {
+        try {
+            const response = await axiosPrivate({
+                method: "get",
+                url: "/phase/now",
+                signal: controller.signal
+            });
+            // console.log(response.data);
+            isMounted && setPhaseId(response.data.phase_id);
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+            console.log(errMsg);
         }
     }
-    const phase = getPhase();
-
-
 
 
     if(!isLoggedIn || role === "NOTAPPROVED"){
+        if(!PhaseFound){
+            getPhase().then();
+            setPhaseFound(true);
+            return () => {
+                isMounted = false;
+                controller.abort();
+            }
+        }
+        else {
+            console.log("PhaseId: " + PhaseId);
+        }
         return(
             <div className={"header"}>
                 <a href='/'>
@@ -72,7 +59,8 @@ export default function NormalHeader(props){
                 <button><Link to="/register">Registreren</Link></button>
             </div>
         )
-    }else if(role === "ADMIN"){
+    }
+    else if(role === "ADMIN"){
         return(
             <div className={"header"}>
                 <a href='/'>
@@ -88,8 +76,26 @@ export default function NormalHeader(props){
                 </div>
             </div>
         )
-    }else if(role === "STUDENT"){
-        return(
+    }
+    else if(role === "STUDENT"){
+        if (PhaseId === 1){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/submittopicstudent">Submit Topics</Link></button> //TODO
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
+                </div>
+            )
+        }
+        if (PhaseId === 2 || PhaseId === 5){
+            return(
                 <div className={"header"}>
                     <a href='/'>
                         <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
@@ -103,56 +109,154 @@ export default function NormalHeader(props){
                         <GoPerson color='white' size={40}/>
                     </div>
                 </div>
-        )
-    }else if(role === "MASTER"){
-        return(
-            <div className={"header"}>
-                <a href='/'>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                </a>
-                <div className={"buttons"}>
-                    <button><Link to="/topic">Topics</Link></button>
-                    <button><Link to="/assign">Assign Topics</Link></button>
-                    <button><Link to="/approve">Approve Topics</Link></button>
+            )
+        }
+        if (PhaseId === 3 || PhaseId === 4 || PhaseId === 6 || PhaseId === 7){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/viewchoice">Choice</Link></button>       //TODO
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
                 </div>
-                <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}/>
-                    <GoPerson color='white' size={40}/>
+            )
+        }
+        else
+            return null;
+    }
+    else if(role === "MASTER"){
+        if (PhaseId === 1 || PhaseId === 2 || PhaseId === 3 || PhaseId === 5 || PhaseId === 6){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                        <button><Link to="/approve">Approve Topics</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
                 </div>
-            </div>
-        )
-    }else if(role === "COMPANY"){
-        return(
-            <div className={"header"}>
-                <a href='/'>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                </a>
-                <div className={"buttons"}>
-                    <button><Link to="/add">Add Topic</Link></button>
-                    <button><Link to="/topic">Topics</Link></button>
+            )
+        }
+        if (PhaseId === 4 || PhaseId === 7){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                        <button><Link to="/assign">Assign Topics</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
                 </div>
-                <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}/>
-                    <GoPerson color='white' size={40}/>
+            )
+        }
+        else
+            return null;
+    }
+    else if(role === "COMPANY"){
+        if (PhaseId === 2 || PhaseId === 3 || PhaseId === 4 || PhaseId === 5 || PhaseId === 6 || PhaseId === 7){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
                 </div>
-            </div>
-        )
-    }else if(role === "PROMOTOR"){
-        return(
-            <div className={"header"}>
-                <a href='/'>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                </a>
-                <div className={"buttons"}>
-                    <button><Link to="/topic">Topics</Link></button>
-                    <button><Link to="/add">Add Topic</Link></button>
-                    <button><Link to="/boost">Boost student</Link></button>
+            )
+        }
+        if (PhaseId === 1){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/add">Add Topic</Link></button>
+                        <button><Link to="/topic">Topics</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
                 </div>
-                <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}/>
-                    <GoPerson color='white' size={40}/>
+            )
+        }
+        else
+            return null;
+    }
+    else if(role === "PROMOTOR"){
+        if (PhaseId === 2 || PhaseId === 4 || PhaseId === 5 || PhaseId === 7){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
+        if (PhaseId === 1){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                        <button><Link to="/add">Add Topic</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
+                </div>
+            )
+        }
+        if (PhaseId === 3 || PhaseId === 6){
+            return(
+                <div className={"header"}>
+                    <a href='/'>
+                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+                    </a>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                        <button><Link to="/boost">Boost student</Link></button>
+                    </div>
+                    <div className={"icon"}>
+                        <IoIosNotificationsOutline color='white' size={50}/>
+                        <GoPerson color='white' size={40}/>
+                    </div>
+                </div>
+            )
+        }
+        else
+            return null;
     }
 }

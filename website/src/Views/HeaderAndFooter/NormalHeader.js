@@ -85,7 +85,7 @@ export default function NormalHeader(props){
                         <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                     </a>
                     <div className={"buttons"}>
-                        <button><Link to="/submittopicstudent">Submit Topics</Link></button> //TODO
+                        <button><Link to="/submittopicstudent">Submit Topics</Link></button>
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>
@@ -118,7 +118,7 @@ export default function NormalHeader(props){
                         <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
                     </a>
                     <div className={"buttons"}>
-                        <button><Link to="/viewchoice">Choice</Link></button>       //TODO
+                        <button><Link to="/viewchoice">Choice</Link></button>
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>

@@ -15,6 +15,8 @@ import TopicAssign_Masterproef from "../AppUsers/Masterproefcoordinator/TopicAss
 import Approve_Masterproef from "../AppUsers/Masterproefcoordinator/Approve_Masterproef";
 import BoostStudent_Promotor from "../AppUsers/Promotor/BoostStudent_Promotor";
 import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
+import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
+import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
 
 const AuthContext = createContext({});
 
@@ -62,6 +64,14 @@ export const AuthProvider = ({ children }) => {
                         roles={role}
                         persoonid = {id}
                     />}/>
+                    <Route path="viewchoice" element={<ViewChoice_Student
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="submittopicstudent" element={<SubmitTopic_Student
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
                     <Route path="assign" element={<TopicAssign_Masterproef
                         roles={role}
                         persoonid = {id}
@@ -78,7 +88,6 @@ export const AuthProvider = ({ children }) => {
                         roles={role}
                         persoonid = {id}
                     />}/>
-                    {/*Nog routes voor admin*/}
                 </Route>
 
 

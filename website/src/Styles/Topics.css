@@ -33,38 +33,63 @@
     align-self: flex-start;
 }
 .topicbox{
-    height: 200px;
-    width: 270px;
+    height: 400px;
+    width: 300px;
     border: lightgray solid 3px;
     mso-border-shadow: yes;
     border-radius: 15px;
     padding: 15px;
-}
-.topictitleinbox{
-    size: 28px;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-bottom: 10px;
-    max-width: 220px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
 }
 .topicmetheart{
-    justify-content: space-between;
     display: flex;
     flex-direction: row;
+    height: 28.75%;
+    width: 100%;
+}
+.topictitleinbox {
+    font-weight: bold;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    /* use this value to count block height */
+    line-height: 1.2em;
+    /* max-height = line-height (1.2) * lines max number (3) */
+    max-height: 7.2em;
+    /* place for '...' */
+    margin-right: -0.7em;
+    padding-right: 1em;
+}
+/* create the ... */
+.topictitleinbox:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+/* hide ... if we have text, which is less than or equal to max lines */
+.topictitleinbox:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: white;
 }
 .hearticoonfill{
     fill: darkred;
-    right: 0;
 }
 .hearticoon{
     fill: darkred;
-    right: 0;
 }
 .buttonheart{
+    /*background: white;*/
+    size: 1.2em;
+    vertical-align: top;
+    display: flex;
     background: white;
-    size: auto;
 }
 .hearticoon:hover{
     transform: translateY(-2px);
@@ -74,29 +99,45 @@
 }
 .contentintopicbow{
     size: 14px;
-    padding-left: 15px;
-    max-width: 240px;
+    width: 95%;
     overflow: hidden;
-    text-overflow: ellipsis;
+    position: relative;
+    line-height: 1.2em;
+    height: 2.4em;
+    margin-bottom: 10px;
 }
 .topicDescriptionbox{
     margin-top: 10px;
-    word-break: break-word;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    position: relative;
+    line-height: 1.2em;
+    height: 3.6em;
+    width: 100%;
 }
 .topicPromotorbox{
-    height: 22px;
+    height: 2.4em;
+    width: 100%;
+}
+.targetAudiencebox{
+    height: 4.8em;
+    width: 100%;
+}
+.targetAudienceOplijsting{
+    display: flex;
+    justify-content: space-between;
+}
+.keywordbox{
+    height: 2.4em;
+    width: 100%;
 }
 .topicAantalStudentenbox{
+    height: 1.2em;
     bottom: 0;
 }
 .studentenmetinfo{
     justify-content: space-between;
     display: flex;
     flex-direction: row;
-    margin-top: 80px;
 }
 .persoonicoontopic{
     color: black;
@@ -112,7 +153,7 @@
     border: lightgray solid 1px;
     background: #00407a;
     color: white;
-    height: 35px;
+    height: 2.4em;
     bottom: 0;
     left: 0;
 }

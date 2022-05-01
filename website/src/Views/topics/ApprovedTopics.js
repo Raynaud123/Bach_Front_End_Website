@@ -14,7 +14,7 @@ export default function ApprovedTopics(props){
     const navigate = useNavigate();
 
     const [Topic, setTopic] = useState([]);
-    //const [Promotor, setPromotor] = useState([]);
+    const [Promotors, setPromotors] = useState([]);
 
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function ApprovedTopics(props){
                     url: "/topic/approved",
                     signal: controller.signal
                 });
-                // console.log(response.data);
+                console.log(response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);
@@ -38,24 +38,24 @@ export default function ApprovedTopics(props){
                 console.log(errMsg);
             }
         }
-        // const getPromotor = async () => {
-        //     try {
-        //         const response = await axiosPrivate({
-        //             method: "get",
-        //             url: "/promotor/withtopic",
-        //             signal: controller.signal
-        //         });
-        //         // console.log(response.data);
-        //         isMounted && setPromotor(response.data);
-        //     } catch (err) {
-        //         console.error(err);
-        //         navigate('/login', {state: {from: location}, replace: true});
-        //         console.log(errMsg);
-        //     }
-        //
-        // }
-        getApprovedTopic();
-        //getPromotor();
+        const getPromotor = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/promotor/withtopic",
+                    signal: controller.signal
+                });
+                // console.log(response.data);
+                isMounted && setPromotors(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', {state: {from: location}, replace: true});
+                console.log(errMsg);
+            }
+
+        }
+        getApprovedTopic().then();
+        getPromotor().then();
 
 
         return () => {
@@ -63,13 +63,36 @@ export default function ApprovedTopics(props){
             controller.abort();
         }
     }, [])
-    // Topic.map(topic => console.log( topic ));
+    //Topic.map(topic => console.log( topic ));
 
-    // function getPromotorName(promotor_id) {
-    //     for(let i = 0; i<Promotor.length; i++){
-    //         if (Promotor[i].id === promotor_id) return Promotor[i].firstName + " " + Promotor[i].lastName;
-    //     }
-    // }
+    function getPromotorName(promotor_id) {
+        for(let i = 0; i<Promotors.length; i++){
+            if (Promotors[i].id === promotor_id) return Promotors[i].firstName + " " + Promotors[i].lastName;
+        }
+        return "No promotors";
+    }
+    function getTargetAudience(targetAudience_list) {
+        return (
+            <div>
+            {targetAudience_list? <div>{targetAudience_list.map((ta) => (
+                <div key={ta.targetAudience_id} className={"targetAudienceOplijsting"}>
+                    <div> {ta.campus.campus_name}</div>
+                    <div>{ta.course.abbriviationName}</div>
+                </div>
+                 ))}</div> : "No target audiences"}
+            </div>
+        )
+    }
+    function getKeywords(keyword_list) {
+        return (
+            <div>
+                {keyword_list && keyword_list.length>1?
+                    <div>{keyword_list.map((k,index) => (
+                    index===0? k.keyword_name: ", " + k.keyword_name
+                ))}</div> : "No keywords"}
+            </div>
+        )
+    }
 
     return(
             <div>
@@ -78,16 +101,22 @@ export default function ApprovedTopics(props){
                         <div key = {topic.id} className={"topicbox"}>
                             <div className={"topicmetheart"}>
                                 <div className={"topictitleinbox"}>
-                                    {topic.topicName}
+                                    {topic.topicName? topic.topicName: "No topic name"}
                                 </div>
                                 <PreferredTopic className={"buttonheart"} topic_id={topic.topic_id} studentid={studentid}/>
                             </div>
                             <div className={"topicDescriptionbox contentintopicbow"}>
-                                {topic.description_topic}
+                                {topic.description_topic? topic.description_topic: "No description"}
                             </div>
-                            {/*<div className={"topicPromotorbox contentintopicbow"} >*/}
-                            {/*    {getPromotorName(topic.promotor_id)}*/}
-                            {/*</div>*/}
+                            <div className={"topicPromotorbox contentintopicbow"} >
+                                {getPromotorName(topic.promotor)}
+                            </div>
+                            <div className={"targetAudiencebox contentintopicbow"} >
+                                {getTargetAudience(topic.targetAudience_list)}
+                            </div>
+                            <div className={"keywordbox contentintopicbow"} >
+                                {getKeywords(topic.keyword_list)}
+                            </div>
                             <div className={"studentenmetinfo"}>
                                 <div className={"topicAantalStudentenbox contentintopicbow"}>
                                     <HiUsers className={"persoonicoontopic"}/>

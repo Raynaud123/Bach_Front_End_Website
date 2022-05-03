@@ -10,7 +10,7 @@ export default function NormalHeader(props){
     const isLoggedIn = props.isLoggedIn;
 
     const [PhaseFound, setPhaseFound] = useState(false);
-    const [PhaseId, setPhaseId] = useState(1);
+    const [PhaseId, setPhaseId] = useState(2);
 
 
     const axiosPrivate = useAxiosPrivate();

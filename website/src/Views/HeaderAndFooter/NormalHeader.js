@@ -10,7 +10,7 @@ export default function NormalHeader(props){
     const isLoggedIn = props.isLoggedIn;
 
     const [PhaseFound, setPhaseFound] = useState(false);
-    const [PhaseId, setPhaseId] = useState(2);
+    const [PhaseId, setPhaseId] = useState(3);
 
 
     const axiosPrivate = useAxiosPrivate();
@@ -69,7 +69,7 @@ export default function NormalHeader(props){
                 </div>
                 <div className={"icon"}>
                     <IoIosNotificationsOutline color='white' size={50}/>
-                    <GoPerson color='white' size={50}/>
+                  <GoPerson color='white' size={50}/>
                 </div>
             </div>
         )
@@ -86,7 +86,7 @@ export default function NormalHeader(props){
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
+                        <Link to="/PersonInfo_Student"><GoPerson color='white' size={40}/></Link>
                     </div>
                 </div>
             )
@@ -103,7 +103,7 @@ export default function NormalHeader(props){
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
+                        <Link to="/PersonInfo_Student"><GoPerson color='white' size={40}/></Link>
                     </div>
                 </div>
             )
@@ -119,13 +119,12 @@ export default function NormalHeader(props){
                     </div>
                     <div className={"icon"}>
                         <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
+                        <Link to="/personalinfo"><GoPerson color='white' size={40}/></Link>
                     </div>
                 </div>
             )
         }
-        else
-            return null;
+        else return null;
     }
     else if(role === "MASTER"){
         if (PhaseId === 1 || PhaseId === 2 || PhaseId === 3 || PhaseId === 5 || PhaseId === 6){
@@ -162,8 +161,7 @@ export default function NormalHeader(props){
                 </div>
             )
         }
-        else
-            return null;
+        else return null;
     }
     else if(role === "COMPANY"){
         if (PhaseId === 2 || PhaseId === 3 || PhaseId === 4 || PhaseId === 5 || PhaseId === 6 || PhaseId === 7){
@@ -199,8 +197,7 @@ export default function NormalHeader(props){
                 </div>
             )
         }
-        else
-            return null;
+        else return null;
     }
     else if(role === "PROMOTOR"){
         if (PhaseId === 2 || PhaseId === 4 || PhaseId === 5 || PhaseId === 7){
@@ -253,7 +250,6 @@ export default function NormalHeader(props){
                 </div>
             )
         }
-        else
-            return null;
+        else return null;
     }
 }

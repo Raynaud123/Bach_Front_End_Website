@@ -17,6 +17,7 @@ import BoostStudent_Promotor from "../AppUsers/Promotor/BoostStudent_Promotor";
 import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
 import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
 import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
+import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
 
 const AuthContext = createContext({});
 
@@ -72,6 +73,11 @@ export const AuthProvider = ({ children }) => {
                         roles={role}
                         persoonid = {id}
                     />}/>
+                    <Route path="personalinfo" element={<PersonalInfo
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    PersonInfo_Student
                     <Route path="assign" element={<TopicAssign_Masterproef
                         roles={role}
                         persoonid = {id}

@@ -38,14 +38,14 @@ export default function NormalHeader(props){
 
 
     if(!isLoggedIn || role === "NOTAPPROVED"){
-        if(!PhaseFound){
-            getPhase().then();
-            setPhaseFound(true);
-            return () => {
-                isMounted = false;
-                controller.abort();
-            }
-        }
+        // if(!PhaseFound){
+        //     getPhase().then();
+        //     setPhaseFound(true);
+        //     return () => {
+        //         isMounted = false;
+        //         controller.abort();
+        //     }
+        // }
         return(
             <div className={"header"}>
                 <a href='/'>

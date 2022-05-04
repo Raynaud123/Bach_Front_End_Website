@@ -8,6 +8,7 @@ export default function Top3Pick_Student(props) {
     const [FirstChoice, setFirstChoice] = useState(0);
     const [SecondChoice, setSecondChoice] = useState(0);
     const [ThirdChoice, setThirdChoice] = useState(0);
+    const [Show, setShow] = useState(true);
     const [Requirement, setRequirement] = useState("");
     let from = "/choice";
 
@@ -25,6 +26,7 @@ export default function Top3Pick_Student(props) {
             });
             console.log(response)
             navigate(from, {replace: false});
+            setShow(false);
         } catch (error) {
             console.log(error)
         }
@@ -57,41 +59,42 @@ export default function Top3Pick_Student(props) {
 
     return(
         <div>
-            <form id={"formtop3"}>
+            {Show?
                 <div>
-                    <label>1st choice:</label>
-                    <select id="firstchoice" onChange={(e) => onFirstChoiceChange(e)}>
-                        <option>--None--</option>
-                        {Preferred.map((topic) => (
-                            <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label>2nd choice:</label>
-                    <select id="secondchoice" onChange={(e) => onSecondChoiceChange(e)}>
-                        <option>--None--</option>
-                        {Preferred.map((topic) => (
-                            <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label>3rd choice:</label>
-                    <select id="thirdchoice" onChange={(e) => onThirdChoiceChange(e)}>
-                        <option>--None--</option>
-                        {Preferred.map((topic) => (
-                            <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
-                        ))}
-                    </select>
-                </div>
-            </form>
-            <div>
-                <button onClick={submitTop3}> Save Choice </button>
-                &emsp;&emsp;<b>{Requirement}</b>
-            </div>
-
-
+                    <form id={"formtop3"}>
+                        <div>
+                            <label>1st choice:</label>
+                            <select id="firstchoice" onChange={(e) => onFirstChoiceChange(e)}>
+                                <option>--None--</option>
+                                {Preferred.map((topic) => (
+                                    <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label>2nd choice:</label>
+                            <select id="secondchoice" onChange={(e) => onSecondChoiceChange(e)}>
+                                <option>--None--</option>
+                                {Preferred.map((topic) => (
+                                    <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label>3rd choice:</label>
+                            <select id="thirdchoice" onChange={(e) => onThirdChoiceChange(e)}>
+                                <option>--None--</option>
+                                {Preferred.map((topic) => (
+                                    <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </form>
+                    <div>
+                        <button onClick={submitTop3}> Save Choice </button>
+                        &emsp;&emsp;<b>{Requirement}</b>
+                    </div>
+                </div>:""}
         </div>
     )
 }

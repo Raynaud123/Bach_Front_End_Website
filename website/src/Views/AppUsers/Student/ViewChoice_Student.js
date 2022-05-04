@@ -18,7 +18,7 @@ export default function ViewChoice_Student(props) {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/student/" + 10 + "/top3",
+                    url: "/student/" + studentid + "/top3",
                     signal: controller.signal
                 });
                 console.log("Top3: " + response.data);
@@ -35,6 +35,7 @@ export default function ViewChoice_Student(props) {
             controller.abort();
         }
     }, [])
+    Top3.map(topic => console.log( topic ));
 
     function showNoTop3() {
         return (
@@ -44,13 +45,26 @@ export default function ViewChoice_Student(props) {
         );
     }
 
+    function showChoice(topic, choice) {
+        return (
+            <div key={topic.topic_id}>
+                <div>
+                    {choice}: {topic.topicName}
+                </div>
+                {/*<div>*/}
+                {/*    &emsp;{topic.promotor.name}*/}
+                {/*</div>*/}
+            </div>
+        );
+    }
+
     return(
         <div>
-            {!Top3[0]? Top3.map((topic,index) => (
+            {Top3.length!==0? Top3.map((topic,index) => (
                 <div key={topic.topic_id}>
-                    {index===0? "First Choice:" + topic.topic_name:
-                      index===1? "Second Choice:" + topic.topic_name:
-                        index===2? "Third Choice:" + topic.topic_name: "No Top 3 chosen"}
+                    {index===0? showChoice(topic, "First Choice"):
+                      index===1? showChoice(topic, "Second Choice"):
+                        index===2? showChoice(topic, "Third Choice"): "No Top 3 chosen"}
                 </div>
             )): showNoTop3()}
         </div>

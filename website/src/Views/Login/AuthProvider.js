@@ -18,6 +18,8 @@ import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
 import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
 import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
 import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
+import Notifications from "../HeaderAndFooter/Notifications";
+
 
 const AuthContext = createContext({});
 
@@ -74,6 +76,10 @@ export const AuthProvider = ({ children }) => {
                         persoonid = {id}
                     />}/>
                     <Route path="personalinfo" element={<PersonalInfo
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="notifications" element={<Notifications
                         roles={role}
                         persoonid = {id}
                     />}/>

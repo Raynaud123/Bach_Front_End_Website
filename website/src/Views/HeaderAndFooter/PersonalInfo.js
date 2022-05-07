@@ -8,7 +8,7 @@ import PersonalInfo_Promotor from "../AppUsers/Promotor/PersonalInfo_Promotor"
 
 
 
-export default function Topic(props){
+export default function PersonalInfo(props){
 
     switch(props.roles) {
         case "STUDENT":

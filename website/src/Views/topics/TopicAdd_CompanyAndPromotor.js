@@ -101,7 +101,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         try {
             const response = await axiosPrivate({
                 method: "post",
-                url: "http://localhost:8080/topic",
+                url: "/topic",
                 data: {
                     topicName: formValue.Question,
                     description_topic: formValue.Description,

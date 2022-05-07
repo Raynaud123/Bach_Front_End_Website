@@ -5,6 +5,7 @@ import Topic_Admin from "../AppUsers/Admin/Topic_Admin";
 import Topic_Masterproef from "../AppUsers/Masterproefcoordinator/Topic_Masterproef";
 import Topic_Promotor from "../AppUsers/Promotor/Topic_Promotor";
 import Topic_Not from "./Topic_Not"
+import BoostStudent_Promotor from "../AppUsers/Promotor/BoostStudent_Promotor";
 
 
 export default function Topic(props){
@@ -19,7 +20,7 @@ export default function Topic(props){
         case "COMPANY":
             return <Topic_Company companyid={props.persoonid}/>
         case "PROMOTOR":
-            return <Topic_Promotor promotorid={props.persoonid}/>
+            return <BoostStudent_Promotor promotorid={props.persoonid}/>
         case "NOTAPPROVED":
             return <Topic_Not/>
         default:

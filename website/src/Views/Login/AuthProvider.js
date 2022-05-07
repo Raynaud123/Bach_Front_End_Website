@@ -2,7 +2,7 @@ import React, {createContext, useState} from "react";
 import Header from "../HeaderAndFooter/Header";
 import Footer from "../HeaderAndFooter/Footer";
 import {Route, Routes} from "react-router-dom";
-import Home from "../Home";
+import Home from "../HeaderAndFooter/Home";
 import Login from "./Login";
 import Register from "./Register";
 import RequireAuth from "../RequireAuth";
@@ -51,6 +51,10 @@ export const AuthProvider = ({ children }) => {
 
 
                 <Route element={<RequireAuth/>}>
+                    <Route path="/home" element={<Home
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
                     <Route path="/topic" element={<Topic
                             roles={role}
                             persoonid = {id}

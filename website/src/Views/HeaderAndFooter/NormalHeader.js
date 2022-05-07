@@ -14,6 +14,14 @@ function Icons() {
     );
 }
 
+function HomeButton() {
+    return (
+        <Link to="/Home">
+            <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+        </Link>
+    );
+}
+
 export default function NormalHeader(props){
     const role = props.roles;
     const isLoggedIn = props.isLoggedIn;
@@ -69,9 +77,7 @@ export default function NormalHeader(props){
     else if(role === "ADMIN"){
         return(
             <div className={"header"}>
-                <a href='/'>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                </a>
+                <HomeButton/>
                 <div className={"buttons"}>
                     <button><Link to="/maintenance">Maintenance</Link></button>
                     <button><Link to="/topic">Topics</Link></button>
@@ -84,9 +90,7 @@ export default function NormalHeader(props){
         if (PhaseId === 1){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/submittopicstudent">Submit Topics</Link></button>
                     </div>
@@ -97,9 +101,7 @@ export default function NormalHeader(props){
         if (PhaseId === 2 || PhaseId === 5){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/choice">Choice</Link></button>
                         <button><Link to="/topic">Topics</Link></button>
@@ -111,9 +113,7 @@ export default function NormalHeader(props){
         if (PhaseId === 3 || PhaseId === 4 || PhaseId === 6 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/viewchoice">Choice</Link></button>
                     </div>
@@ -127,9 +127,7 @@ export default function NormalHeader(props){
         if (PhaseId === 1 || PhaseId === 2 || PhaseId === 3 || PhaseId === 5 || PhaseId === 6){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/approve">Approve Topics</Link></button>
@@ -141,9 +139,7 @@ export default function NormalHeader(props){
         if (PhaseId === 4 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/assign">Assign Topics</Link></button>
@@ -158,9 +154,7 @@ export default function NormalHeader(props){
         if (PhaseId === 2 || PhaseId === 3 || PhaseId === 4 || PhaseId === 5 || PhaseId === 6 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
@@ -171,9 +165,7 @@ export default function NormalHeader(props){
         if (PhaseId === 1){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/add">Add Topic</Link></button>
                         <button><Link to="/topic">Topics</Link></button>
@@ -188,9 +180,7 @@ export default function NormalHeader(props){
         if (PhaseId === 2 || PhaseId === 4 || PhaseId === 5 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
@@ -201,9 +191,7 @@ export default function NormalHeader(props){
         if (PhaseId === 1){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/add">Add Topic</Link></button>
@@ -215,9 +203,7 @@ export default function NormalHeader(props){
         if (PhaseId === 3 || PhaseId === 6){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/boost">Boost student</Link></button>

@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
-export default function PersonalInfo_Student(props) {
-    const studentid = props.studentid;
+export default function Notifications_Student(props) {
+    const studentid = props.persoonid;
     const [Student, setStudent] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
@@ -38,7 +38,7 @@ export default function PersonalInfo_Student(props) {
 
     return(
         <div>
-            {Student.firstName}
+            Notifications: {Student.firstName}
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React, {createContext, useState} from "react";
 import Header from "../HeaderAndFooter/Header";
 import Footer from "../HeaderAndFooter/Footer";
 import {Route, Routes} from "react-router-dom";
-import Home from "../Home";
+import Home from "../HeaderAndFooter/Home";
 import Login from "./Login";
 import Register from "./Register";
 import RequireAuth from "../RequireAuth";
@@ -18,6 +18,8 @@ import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
 import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
 import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
 import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
+import Notifications from "../HeaderAndFooter/Notifications";
+
 
 const AuthContext = createContext({});
 
@@ -49,6 +51,10 @@ export const AuthProvider = ({ children }) => {
 
 
                 <Route element={<RequireAuth/>}>
+                    <Route path="/home" element={<Home
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
                     <Route path="/topic" element={<Topic
                             roles={role}
                             persoonid = {id}
@@ -74,6 +80,10 @@ export const AuthProvider = ({ children }) => {
                         persoonid = {id}
                     />}/>
                     <Route path="personalinfo" element={<PersonalInfo
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="notifications" element={<Notifications
                         roles={role}
                         persoonid = {id}
                     />}/>

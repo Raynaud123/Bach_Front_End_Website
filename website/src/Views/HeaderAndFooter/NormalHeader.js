@@ -5,6 +5,23 @@ import KULeuvenLogo from '../../assets/KULeuvenLogo.png'
 import {GoPerson, IoIosNotificationsOutline} from "react-icons/all";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
+function Icons() {
+    return (
+    <div className={"icon"}>
+        <Link to="/Notifications"><IoIosNotificationsOutline color='white' size={50}/></Link>
+        <Link to="/PersonalInfo"><GoPerson color='white' size={40}/></Link>
+    </div>
+    );
+}
+
+function HomeButton() {
+    return (
+        <Link to="/Home">
+            <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
+        </Link>
+    );
+}
+
 export default function NormalHeader(props){
     const role = props.roles;
     const isLoggedIn = props.isLoggedIn;
@@ -60,17 +77,12 @@ export default function NormalHeader(props){
     else if(role === "ADMIN"){
         return(
             <div className={"header"}>
-                <a href='/'>
-                    <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                </a>
+                <HomeButton/>
                 <div className={"buttons"}>
                     <button><Link to="/maintenance">Maintenance</Link></button>
                     <button><Link to="/topic">Topics</Link></button>
                 </div>
-                <div className={"icon"}>
-                    <IoIosNotificationsOutline color='white' size={50}/>
-                  <GoPerson color='white' size={50}/>
-                </div>
+                <Icons/>
             </div>
         )
     }
@@ -78,49 +90,34 @@ export default function NormalHeader(props){
         if (PhaseId === 1){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/submittopicstudent">Submit Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <Link to="/PersonInfo_Student"><GoPerson color='white' size={40}/></Link>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
         if (PhaseId === 2 || PhaseId === 5){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/choice">Choice</Link></button>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <Link to="/PersonInfo_Student"><GoPerson color='white' size={40}/></Link>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
         if (PhaseId === 3 || PhaseId === 4 || PhaseId === 6 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/viewchoice">Choice</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <Link to="/personalinfo"><GoPerson color='white' size={40}/></Link>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
@@ -130,34 +127,24 @@ export default function NormalHeader(props){
         if (PhaseId === 1 || PhaseId === 2 || PhaseId === 3 || PhaseId === 5 || PhaseId === 6){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/approve">Approve Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
         if (PhaseId === 4 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/assign">Assign Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
@@ -167,33 +154,23 @@ export default function NormalHeader(props){
         if (PhaseId === 2 || PhaseId === 3 || PhaseId === 4 || PhaseId === 5 || PhaseId === 6 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
         if (PhaseId === 1){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/add">Add Topic</Link></button>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
@@ -203,50 +180,35 @@ export default function NormalHeader(props){
         if (PhaseId === 2 || PhaseId === 4 || PhaseId === 5 || PhaseId === 7){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
         if (PhaseId === 1){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/add">Add Topic</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }
         if (PhaseId === 3 || PhaseId === 6){
             return(
                 <div className={"header"}>
-                    <a href='/'>
-                        <img className={"Logo"} src={KULeuvenLogo} alt={"KU Leuven logo"}/>
-                    </a>
+                    <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/boost">Boost student</Link></button>
                     </div>
-                    <div className={"icon"}>
-                        <IoIosNotificationsOutline color='white' size={50}/>
-                        <GoPerson color='white' size={40}/>
-                    </div>
+                    <Icons/>
                 </div>
             )
         }

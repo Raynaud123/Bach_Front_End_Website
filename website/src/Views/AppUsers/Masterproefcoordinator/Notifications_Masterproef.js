@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
-export default function PersonalInfo_Student(props) {
-    const studentid = props.studentid;
-    const [Student, setStudent] = useState([]);
+export default function Notifications_Master(props) {
+    const masterid = props.persoonid;
+    const [Master, setMaster] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
@@ -14,22 +14,22 @@ export default function PersonalInfo_Student(props) {
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
-        const getStudent = async () => {
+        const getMaster = async () => {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/student/" + studentid,
+                    url: "/master/" + masterid,
                     signal: controller.signal
                 });
-                //console.log("Student: " + response.data);
-                isMounted && setStudent(response.data);
+                //console.log("Master: " + response.data);
+                isMounted && setMaster(response.data);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
                 console.log(errMsg);
             }
         }
-        getStudent().then();
+        getMaster().then();
         return () => {
             isMounted = false;
             controller.abort();
@@ -38,7 +38,7 @@ export default function PersonalInfo_Student(props) {
 
     return(
         <div>
-            {Student.firstName}
+            Notifications: {Master.firstName}
         </div>
     )
 }

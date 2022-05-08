@@ -20,6 +20,7 @@ import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
 import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
 import Notifications from "../HeaderAndFooter/Notifications";
 import NotificationInfo from "../Notification/NotificationInfo";
+import Home_Standaard from "../Home_Standaard";
 
 
 
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }) => {
             <Routes>
 
                 <Route path="/" element={
-                    <Home/>
+                    <Home_Standaard/>
                 }/>
 
                 <Route path="/login" element={

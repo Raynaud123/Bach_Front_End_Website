@@ -21,7 +21,7 @@ export default function ViewChoice_Student(props) {
                     url: "/student/" + studentid + "/top3",
                     signal: controller.signal
                 });
-                console.log("Top3: " + response.data);
+                //console.log("Top3: " + response.data);
                 isMounted && setTop3(response.data);
             } catch (err) {
                 console.error(err);
@@ -49,7 +49,8 @@ export default function ViewChoice_Student(props) {
         return (
             <div key={topic.topic_id}>
                 <div>
-                    {choice}: {topic.topicName}
+                    <h4>{choice}</h4>
+                    <div>{topic.topicName}</div>
                 </div>
                 {/*<div>*/}
                 {/*    &emsp;{topic.promotor.name}*/}

@@ -19,6 +19,8 @@ import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
 import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
 import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
 import Notifications from "../HeaderAndFooter/Notifications";
+import NotificationInfo from "../Notification/NotificationInfo";
+
 
 
 const AuthContext = createContext({});
@@ -48,8 +50,6 @@ export const AuthProvider = ({ children }) => {
                 <Route path="/register" element={
                     <Register/>
                 }/>
-
-
                 <Route element={<RequireAuth/>}>
                     <Route path="/home" element={<Home
                         roles={role}
@@ -64,6 +64,10 @@ export const AuthProvider = ({ children }) => {
                         persoonid = {id}
                     />}/>
                     <Route path="topics/info/:topicid" element={<TopicInfo
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="approve/:notification_id/:object_name/:object_id" element={<NotificationInfo
                         roles={role}
                         persoonid = {id}
                     />}/>

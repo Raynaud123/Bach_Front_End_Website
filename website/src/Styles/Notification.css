@@ -1,0 +1,122 @@
+.showNot {
+    height: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 45px;
+}
+.titel{
+    height: auto;
+}
+.topicTitle{
+    text-align: left;
+}
+.ronde{
+    size: 10px;
+    font-weight: normal;
+}
+.balkNotification{
+    height: 60px;
+    margin: 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: lightgray solid 3px;
+    mso-border-shadow: yes;
+    border-radius: 15px;
+    flex-direction: row;
+}
+.OverflowAuto{
+    overflow: auto;
+}
+.NotButtons{
+    height: 3.6em;
+    display: flex;
+    align-items: center;
+}
+.NotButtons > button{
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+}
+.NotInfoBalk{
+    width: 100%;
+}
+.NotInfo{
+    display: flex;
+    flex-direction: row;
+}
+.TopicName {
+    width: 55%;
+}
+.AddedDate{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+.TopicProviderName{
+    width: 25%;
+}
+.ButtonV{
+    background: forestgreen;
+}
+.ButtonX{
+    background: #eb3223;
+}
+
+/*-----------------TopicInfo--------------*/
+.showTopicInfo {
+    height: auto;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 4.95%;
+
+}
+.topicTitleInfo{
+    text-align: left;
+    height: auto;
+}
+.topicinfocontainer{
+    border: lightgray solid 3px;
+    mso-border-shadow: yes;
+    border-radius: 15px;
+    padding: 20px 40px 40px 40px;
+    margin-right: 10px;
+    display: inline-block;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.sectie{
+    text-align: left;
+    font-weight: bold;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.content{
+    font-weight: normal;
+}
+.topicmetButtons{
+    display: flex;
+    flex-direction: row;
+    height: 28.75%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.Approved{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 0;
+}

@@ -139,7 +139,7 @@ export default function MobileHeader(props){
                     {navbarOpen && <ul className={"menuNav"}>
                         <div className={"hamburgerbuttons"}>
                             <Link to="/topic">Topics</Link>
-                            <Link to="/approve">Approve Topics</Link>
+                            <Link to="/approve">Approve</Link>
                             <div className={"iconshamburger"}>
                                 <IoIosNotificationsOutline color='white' size={50}/>
                                 <GoPerson color='white' size={40}/>

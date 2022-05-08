@@ -130,7 +130,7 @@ export default function NormalHeader(props){
                     <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
-                        <button><Link to="/approve">Approve Topics</Link></button>
+                        <button><Link to="/approve">Approve</Link></button>
                     </div>
                     <Icons/>
                 </div>

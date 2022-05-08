@@ -66,13 +66,14 @@ export default function Approve_Masterproef(props){
             {
                 MasterNotifications.map((not) => (
                     <div key={not.notification_id}>
+                        {not.notification_msg === "AWAITAPPROVED"?
                         <NotificationApprove
                             notification_msg={not.notification_msg}
                             object_name={not.object_name}
                             object_id={not.object_id}
                             notification_id={not.notification_id}
                             addedDate={not.addedDate}
-                        />
+                        />: ""}
                     </div>
                 ))
             }

@@ -7,14 +7,16 @@ import TopicsPromotor  from "../../../Styles/TopicsPromotor.css";
 
 export default function TopicInfo_Promotor(props) {
 
-    const studentid = props.promotorid;
+    const promotorid = props.promotorid;
     const topicid = useParams().topicid;
     const [Topic, setTopic] = useState([]);
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
     const [TargetAudience, setTargetAudience] = useState([]);
-    // const [Coordinator, setCoordinator] = useState([]);
+    const [Students, setStudents] = useState([]);
     const [Keyword, setKeyword] = useState([]);
+    const [SelectStudent, setSelectStudent] = useState();
+    const [BoostedStudent, setBoostedStudent] = useState([]);
 
 
     const axiosPrivate = useAxiosPrivate();
@@ -22,9 +24,14 @@ export default function TopicInfo_Promotor(props) {
     const location = useLocation();
     const navigate = useNavigate();
 
+    let from = `/topics/info/${topicid}`;
+
     useEffect(async () => {
         let isMounted = true;
         const controller = new AbortController();
+
+
+
 
         const getTopic = async () => {
             try {
@@ -35,12 +42,14 @@ export default function TopicInfo_Promotor(props) {
                 });
                 console.log(response.data);
                 isMounted && setTopic(response.data);
-                await getProvider(response.data.provider_id);
-                // await getPromotor(response.data.promotor_id);
-                // getCoordinator(response.data.coordinator_id);
+                await getProvider(response.data.provider);
                 await getTargetAudience(response.data.targetAudience_list);
                 await getKeywords(response.data.keyword_list);
-                await getPromotor(response.data.promotor)
+                await getPromotor(response.data.promotor);
+                await getStudents();
+                if(response.data.boostedStudent !== "undefined"){
+                    setBoostedStudent(response.data.boostedStudent);
+                }
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -55,8 +64,7 @@ export default function TopicInfo_Promotor(props) {
                         url: "/topicprovider/" + provid,
                         signal: controller.signal
                     });
-                    // console.log(response.data[0]);
-                    isMounted && setProvider(response.data[0]);
+                    isMounted && setProvider(response.data);
                 } catch (err) {
                     console.error(err);
                     navigate('/login', {state: {from: location}, replace: true});
@@ -66,7 +74,6 @@ export default function TopicInfo_Promotor(props) {
         }
 
         const getTargetAudience = async (targetAudienceList) => {
-            // console.log(targetAudienceList);
             try {
                 setTargetAudience(targetAudienceList);
             } catch (err) {
@@ -76,7 +83,6 @@ export default function TopicInfo_Promotor(props) {
             }
         }
         const getKeywords = async (keywords) => {
-            // console.log(keywords);
             try {
                 setKeyword(keywords);
             } catch (err) {
@@ -85,13 +91,12 @@ export default function TopicInfo_Promotor(props) {
                 console.log(errMsg);
             }
         }
-        const getPromotor = async (id) => {
-            console.log(id);
+        const getPromotor = async () => {
             try {
-                if(id){
+                if(promotorid !== "undefined"){
                     const response = await axiosPrivate({
                         method: "get",
-                        url: `/promotor/${id}`,
+                        url: `/promotor/` + promotorid,
                         signal: controller.signal
                     });
                     console.log(response);
@@ -106,6 +111,22 @@ export default function TopicInfo_Promotor(props) {
                 console.log(errMsg);
             }
         }
+        const getStudents = async () => {
+            try {
+                    const response = await axiosPrivate({
+                        method: "get",
+                        url: `/student/all`,
+                        signal: controller.signal
+                    });
+                    console.log(response);
+                    setStudents(response.data);
+            }catch (err){
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log(errMsg);
+            }
+
+        }
 
         await getTopic();
 
@@ -115,6 +136,53 @@ export default function TopicInfo_Promotor(props) {
             controller.abort();
         }
     }, [])
+
+/*    useEffect(
+
+        async () =>{
+            const handleBoost = async () => {
+                try {
+                    const response = await axiosPrivate({
+                        method: "PUT",
+                        url: `/topic/boost/${topicid}`,
+                        data: JSON.stringify({'studentid': SelectStudent})
+                    });
+                    console.log(response.data);
+                    navigate(`/topics/info/${topicid}`, {replace: true});
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg);
+                }
+        }
+        await handleBoost();
+
+    },[submit])*/
+
+
+    const handleOnclick = async (e) => {
+        e.preventDefault();
+        console.log(SelectStudent);
+        const handleBoost = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "PUT",
+                    url: `/topic/boost/${topicid}`,
+                    data: JSON.stringify({'studentId': SelectStudent})
+                });
+                setBoostedStudent(SelectStudent);
+                console.log(response.data);
+                navigate(`/topics/info/${topicid}`, {replace: true});
+            } catch (err) {
+                console.error(err);
+                navigate('/login', {state: {from: location}, replace: true});
+                console.log(errMsg);
+            }
+        }
+        await handleBoost();
+    }
+
+
 
 
     function PromInfo() {
@@ -186,7 +254,27 @@ export default function TopicInfo_Promotor(props) {
                 </div>
 
             </div>
-            <button>Boost Student</button>
+            {!BoostedStudent && <form>
+
+                <select
+                    name="boost"
+                    onChange={(e) => {
+                        setSelectStudent(e.target.value);
+                    }}
+
+                >
+                    <option key={0}/>
+                    {Students.map((variable) => <option key={variable.id} value={variable.id}>
+                        {variable.firstName + " " + variable.lastName}
+                    </option>)}
+                </select>
+
+                <button
+                    onClick={handleOnclick}
+                >Boost Student</button>
+            </form>}
+            {BoostedStudent && <p>{BoostedStudent}</p>}
+
 
         </div>
     )

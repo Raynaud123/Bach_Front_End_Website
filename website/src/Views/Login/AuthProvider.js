@@ -100,10 +100,10 @@ export const AuthProvider = ({ children }) => {
                         roles={role}
                         persoonid = {id}
                     />}/>
-                    <Route path="boost" element={<BoostStudent_Promotor
-                        roles={role}
-                        persoonid = {id}
-                    />}/>
+                    {/*<Route path="boost" element={<BoostStudent_Promotor*/}
+                    {/*    roles={role}*/}
+                    {/*    persoonid = {id}*/}
+                    {/*/>}/>*/}
                     <Route path="maintenance" element={<Maintenance_Admin
                         roles={role}
                         persoonid = {id}

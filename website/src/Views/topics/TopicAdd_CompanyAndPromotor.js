@@ -16,14 +16,17 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
     const [targetData, setTargetData] = useState([]);
     const [selectTarget, setSelectTarget] = useState();
-    const [target, setTarget] = useState([]);
+    const [Target, setTarget] = useState([]);
     const [targetId, setTargetId] = useState([]);
 
     const [keywordData, setKeywordData] = useState([]);
     const [selectKeyword, setSelectKeyword] = useState();
-    const [keyword, setKeyword] = useState([]);
+    const [Keyword, setKeyword] = useState([]);
     const [keywordId, setKeywordId] = useState([]);
 
+
+    const target = [];
+    const keyword = [];
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -70,6 +73,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         getTarget();
         getKeyword();
 
+
         return () => {
             isMounted = false;
             controller.abort();
@@ -78,38 +82,45 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
 
 
-        target.map((test) => {
+
+        Target.map((test) => {
             var parsed=JSON.parse(test);
+            console.log(parsed);
             const {id} = parsed;
-            const rara = () => setTargetId((oldArray) => oldArray.concat(test.id));
+            const rara = () =>{
+                setTargetId(targetId.concat(id))
+                console.log(targetId + "tes")
+            };
             rara();
         })
 
         keyword.map((test) => {
             var parsed=JSON.parse(test);
             const {id} = parsed;
-            const rara = () => setKeywordId((oldArray) => oldArray.concat(test.id));
+            const rara = () => setKeywordId((oldArray) => oldArray.concat(id));
             rara();
         })
 
-        console.log(props.id);
-        console.log(targetId);
+        console.log(props.persoonid);
+        console.log("test"  + targetId);
         console.log(keywordId);
 
         try {
             const response = await axiosPrivate({
                 method: "post",
                 url: "/topic",
-                data: {
-                    topicName: formValue.Question,
-                    description_topic: formValue.Description,
-                    aantal_studenten: formValue.StudentsAmount,
-                    targetAudience: targetId,
-                    keywords: keywordId,
-                    provider_id: props.id
-                }
+                data: JSON.stringify({
+
+                    'topicName': formValue.Question,
+                    'description_topic': formValue.Description,
+                    'aantal_studenten': formValue.StudentsAmount,
+                    'targetAudience': targetId,
+                    'keywords': keywordId,
+                    'provider_id': props.persoonid
+                })
             });
             console.log("response submit:"  + response)
             navigate(from, {replace: true});
@@ -122,44 +133,59 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
 
         console.log(selectTarget);
-        const {id, name} = JSON.parse(selectTarget);
+        const {id} = JSON.parse(selectTarget);
         var bool = false;
-        for(const i of target){
+        if(Target.length !== 0){
+            for(const i of Target){
 
-            console.log(id);
-            var parsed = JSON.parse(i);
-            console.log(parsed.id);
-            if(id === parsed.id){
-                bool = true;
+                console.log(id);
+                var parsed = JSON.parse(i);
+                console.log(parsed.id);
+                if(id === parsed.id){
+                    bool = true;
+                }
             }
+            if(!bool){
+                const test = () => setTarget(Target.concat(...selectTarget));
+                test();
+            }
+        }else{
+           const test = () => setTarget((oldArray) => oldArray.concat(...selectTarget));
+           test();
         }
-        if(!bool){
-            const test = () => setTarget((oldArray) => oldArray.concat(selectTarget));
-            test();
-        }
-        console.log(target);
+
+        console.log("test" + Target);
     }
 
 
     const handleSelectButtonKeyword = (event) => {
         console.log(selectKeyword);
         const {id, name} = JSON.parse(selectKeyword);
+        console.log(id);
         var bool = false;
-        for(const i of keyword){
-
-            console.log(id);
-            var parsed = JSON.parse(i);
-            console.log(parsed.id);
-            if(id === parsed.id){
-                bool = true;
+        console.log("lengte" + keyword.length);
+        if(keyword.length !== 0){
+            for(const i of Target) {
+                console.log(id);
+                var parsed = JSON.parse(i);
+                console.log(parsed.id);
+                if (id === parsed.id) {
+                    bool = true;
+                }
+                if (!bool) {
+                    const test = () => setKeyword((oldArray) => oldArray.concat(selectKeyword));
+                    test();
+                }
             }
-        }
-        if(!bool){
+        }else{
             const test = () => setKeyword((oldArray) => oldArray.concat(selectKeyword));
             test();
         }
-        console.log(keyword);
+
+        console.log("uitkomst" +  keyword);
     }
+
+
 
 
 
@@ -199,6 +225,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                         value={formValue.StudentsAmount}
                         onChange={handleChange}
                     >
+                        <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </select>
@@ -211,6 +238,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                             setSelectTarget(e.target.value);
                         }}
                     >
+                        <option key={0}/>
                         {targetData.map((variable) => <option key={variable.targetAudience_id}
                                                               value={JSON.stringify({"campus_name": variable.campus.campus_name,"course_name" : variable.course.course_name,"id":variable.targetAudience_id})}>
                             {variable.campus.campus_name} {variable.course.course_name}
@@ -220,12 +248,15 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                         Add TargetAudience
                     </button>
                     <ul>
-                        {target.map((name) =>{
-                            var parsed=JSON.parse(name);
-                            const {campus_name,course_name, id} = parsed;
-                            return(
-                            <li key={id}>{campus_name + " " + course_name}</li>
-                            )})}
+                        {Target.map((name) =>{
+                            if(name !== null){
+                                console.log(name);
+                                var parsed=JSON.parse(name);
+                                const {campus_name,course_name, id} = parsed;
+                                return(
+                                    <li key={id}>{campus_name + " " + course_name}</li>)
+                            }
+                            })}
                     </ul>
                 </div>
                 <div className={"inputgroup"}>
@@ -236,6 +267,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                             setSelectKeyword(e.target.value);
                         }}
                     >
+                        <option key={0}></option>
                         {keywordData.map((variable) => <option key={variable.keyword_id} value={JSON.stringify({"name": variable.keyword_name,"id":variable.keyword_id})}>
                             {variable.keyword_name}
                         </option>)}

@@ -7,6 +7,7 @@ import Login from "./Login";
 import Register from "./Register";
 import RequireAuth from "../RequireAuth";
 import Topic from "../topics/Topic";
+import Logout from "../Login/Logout"
 import TopicAdd_CompanyAndPromotor from "../topics/TopicAdd_CompanyAndPromotor";
 import TopicInfo from "../topics/TopicInfo";
 import Error404 from "../Error404";
@@ -21,11 +22,20 @@ import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
 import Notifications from "../HeaderAndFooter/Notifications";
 import NotificationInfo from "../Notification/NotificationInfo";
 import Home_Standaard from "../Home_Standaard";
+import * as PropTypes from "prop-types";
 
 
 
 const AuthContext = createContext({});
 
+// function Logout(props) {
+//     return null;
+// }
+//
+// Logout.propTypes = {
+//     roles: PropTypes.any,
+//     persoonid: PropTypes.any
+// };
 export const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({});
@@ -51,6 +61,9 @@ export const AuthProvider = ({ children }) => {
                 <Route path="/register" element={
                     <Register/>
                 }/>
+                <Route path="/logout" element={
+                    <Logout/>
+                }/>
                 <Route element={<RequireAuth/>}>
                     <Route path="/home" element={<Home
                         roles={role}
@@ -60,6 +73,7 @@ export const AuthProvider = ({ children }) => {
                             roles={role}
                             persoonid = {id}
                     />}/>
+
                     <Route path="/add" element={<TopicAdd_CompanyAndPromotor
                         roles={role}
                         persoonid = {id}

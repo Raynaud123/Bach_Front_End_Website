@@ -18,7 +18,7 @@ export default function Notifications_Company(props) {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/topicprovider/" + companyid,
+                    url: "/topicprovider/approved/" + companyid,
                     signal: controller.signal
                 });
                 //console.log("Company: " + response.data);

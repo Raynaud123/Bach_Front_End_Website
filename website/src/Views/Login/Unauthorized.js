@@ -6,7 +6,7 @@ export default function Home_Company(props) {
 
     return(
         <div>
-            <p>You are not authorized to do this, return to <Link to="/home">Home</Link></p>
+            <p>You are not approved yet return to <Link to="/home">Home</Link></p>
         </div>
     )
 }

@@ -13,13 +13,6 @@ export default function Logout(){
     const errRef = useRef();
 
     const navigate = useNavigate();
-    const location = useLocation();
-    let from = "/";
-
-    if(!(location.state === undefined || location.state === null)){
-        from =  location.state.from.pathname;
-    }
-
 
 
     const [user, setUser] = useState('');
@@ -32,23 +25,21 @@ export default function Logout(){
 
 
 
-    useEffect(() => {
-        const accesTokenVar = accesToken;
-        console.log(role);
-        setAuth({ user, pwd, loggedIn, accesTokenVar, role, id});
-    }, [loggedIn])
-
-
-    const handleLogout = (event) => {
-        console.log("test");
+    function handleLogout(event){
         setUser(null);
         setPwd(null);
         setRole(null);
         setAccesToken(null);
         setId(null);
         setloggedIn(false);
+        const accesTokenVar = accesToken;
+        console.log(role);
+        setAuth({ user, pwd, loggedIn, accesTokenVar, role, id});
         navigate("/login", { replace: true });
     }
+
+
+
 
     return(
            <div>
@@ -59,6 +50,4 @@ export default function Logout(){
                </button>
            </div>
        )
-
-
 }

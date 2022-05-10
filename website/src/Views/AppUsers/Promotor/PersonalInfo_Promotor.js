@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import Logout from "../../Login/Logout";
 
 export default function PersonalInfo_Promotor(props) {
     const promotorid = props.promotorid;

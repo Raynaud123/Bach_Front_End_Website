@@ -20,7 +20,12 @@ export default function PersonalInfo(props){
                 </div>
             )
         case "ADMIN":
-             return (<PersonalInfo_Admin adminid={props.persoonid}/>)
+             return (
+                 <div>
+                     <PersonalInfo_Admin adminid={props.persoonid}/>
+                     <Logout/>
+                 </div>
+             )
         case "MASTER":
              return (<div>
                      <PersonalInfo_Masterproef masterid={props.persoonid}/>
@@ -36,7 +41,7 @@ export default function PersonalInfo(props){
         case "PROMOTOR":
              return (<div>
                      <PersonalInfo_Promotor promotorid={props.persoonid}/>
-                    <Logout/>
+                 <Logout/>
              </div>)
 
         case "NOTAPPROVED":

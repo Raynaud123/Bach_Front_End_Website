@@ -70,6 +70,7 @@ export default function Maintenance_Admin(props){
         password: ""
     });
 
+    //Attributen nakijken!!!!!!!!!!!!
     const [Promotors, setPromotors] = useState([]);
     const [PromotorIndex, setPromotorIndex] = useState(-1);
     const [PromotorCreate, setPromotorCreate] = useState(false);
@@ -119,9 +120,15 @@ export default function Maintenance_Admin(props){
     const [TargetAudienceIndex, setTargetAudienceIndex] = useState(-1);
     const [TargetAudienceCreate, setTargetAudienceCreate] = useState(false);
     const [FormValueTargetAudience, setFormValueTargetAudience] = useState({
-        campus: [],
-        course: [],
-        hide_targetAudience: null,
+        campus_name: "",
+        city: "",
+        country: "",
+        postNumber:-1,
+        streetName: "",
+        streetNumber:-1,
+        course_name: "",
+        abbriviationName: "",
+        hide: null
     });
 
     const [Keywords, setKeywords] = useState([]);
@@ -129,10 +136,16 @@ export default function Maintenance_Admin(props){
     const [KeywordCreate, setKeywordCreate] = useState(false);
     const [FormValueKeyword, setFormValueKeyword] = useState({
         keyword_name: "",
+        hide: null,
     });
 
     const [Topics, setTopics] = useState([]);
-
+    const [TopicIndex, setTopicIndex] = useState(-1);
+    const [TopicCreate, setTopicCreate] = useState(false);
+    const [FormValueTopic, setFormValueTopic] = useState({
+        topicName: "",
+        hide: null,
+    });
 
 
     const [Show, setShow] = useState("");           // "Phases,Promotors,Students,Masters,Providers,TargetAudiences,Keywords"
@@ -276,13 +289,14 @@ export default function Maintenance_Admin(props){
 
         }
         getTopics().then(r => null);
-        //getPromotors().then(r => null);
+        getPromotors().then(r => null);
         getPhases().then(r => null);
         getStudents().then(r => null);
         getMasters().then(r => null);
         getProviders().then(r => null);
         getTargetAudiences().then(r => null);
-        getKeywords().then(r => null);
+        getKeywords().then();
+        getTopics().then();
 
         return () => {
             isMounted = false;
@@ -483,9 +497,15 @@ export default function Maintenance_Admin(props){
                         setErrorMessageForm("Invalid Phase Begin Deadline" + FormValuePhase.phaseBeginDeadline);
                         FormValidPhase = false;
                     }
+                    else {
+                        FormValuePhase.phaseBeginDeadline = FormValuePhase.phaseBeginDeadline + " 00:00:00";
+                    }
                     if (FormValuePhase.phaseEndDeadline === ""){
                         setErrorMessageForm("Invalid Phase End Deadline" + FormValuePhase.phaseEndDeadline);
                         FormValidPhase = false;
+                    }
+                    else {
+                        FormValuePhase.phaseEndDeadline = FormValuePhase.phaseEndDeadline + " 23:55:55";
                     }
                     console.log("FormValid: " + FormValidPhase);
                 }
@@ -597,7 +617,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div className={"windowrightcrudForm"}>
                             {PhaseCreate? createPhase(): showPhaseInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>
@@ -1382,7 +1402,280 @@ export default function Maintenance_Admin(props){
             return null;
         }
         function showPromotors() {
-            return undefined;
+            const handlePromotorChange = (event) => {
+                setFormValuePromotor({
+                    ...FormValuePromotor,
+                    [event.target.name]: event.target.value
+                });
+            }
+
+            function showPromotorInfo() {
+                return(
+                    <div>
+                        {PromotorIndex===-1? <div/>:
+                            <form className={"FormInfo"}>
+                                <div className={"FormInfoTitle"}>
+                                    Promotor
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <div className={"comment"}>Initial Value</div>
+                                    <div className={"comment"}>New Value</div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="name" className={"InfoAttribute"}>Promotor name</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].firstName? Promotors[PromotorIndex].firstName:""}
+                                        <input type="text" name="name" placeholder={"Promotor name"}
+                                               value={FormValuePromotor.firstName}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                )
+            }
+            function createPromotor() {
+                return(
+                    <div>
+                        <form className={"FormInfo"}>
+                            <div className={"FormInfoTitle"}>
+                                New Promotor
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="name" className={"InfoAttribute"}>Promotor name</label>
+                                    <input type="text" name="name" placeholder={"Promotor name"}
+                                           value={FormValuePromotor.firstName}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                )
+            }
+
+            const submitPromotorUpdate = async(e) => {
+                console.log(Promotors[PromotorIndex]);
+                console.log(FormValuePromotor);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/update/promotor/" + Promotors[PromotorIndex].id,
+                        data: {
+                            name: FormValueProvider.name,
+                            campus: FormValueProvider.campus,
+                            topic_list: FormValueProvider.topic_list,
+                            streetName: FormValueProvider.streetName,
+                            streetNumber: FormValueProvider.streetNumber,
+                            postNumber: FormValueProvider.postNumber,
+                            phoneNumber: FormValueProvider.phoneNumber,
+                            city: FormValueProvider.city,
+                            country: FormValueProvider.country,
+                            email: FormValueProvider.email,
+                            approved: FormValueProvider.approved,
+                            locked: FormValueProvider.locked,
+                            enabled: FormValueProvider.enabled,
+                            userName: FormValuePromotor.userName,
+                            password: FormValuePromotor.password
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setFormValuePromotor({
+                        name: "",
+                        campus: [],
+                        topic_list: [],
+                        streetName: "",
+                        streetNumber: -1,
+                        postNumber: -1,
+                        phoneNumber: -1,
+                        city: "",
+                        country: "",
+                        email: "",
+                        approved: null,
+                        locked: null,
+                        enabled: null,
+                        isCompany: null,
+                        company: null,
+                        userName: "",
+                        password: ""}
+                    );
+                    await updatePromotors();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            const submitPromotorCreate = async(e) => {
+                let FormValidPromotor = true;
+                function checkFormValuePromotor() {
+                    if (FormValuePromotor.firstName === ""){
+                        setErrorMessageForm("Invalid name" + FormValuePromotor.firstName);
+                        FormValidPromotor = false;
+                    }
+                    console.log("FormValid: " + FormValidPromotor);
+                }
+                checkFormValuePromotor();
+                if (FormValidPromotor){
+                    setErrorMessageForm("");
+                    try {
+                        const response = await axiosPrivate({
+                            method: "post",
+                            url: "http://localhost:8080/admin/create/promotor/",
+                            data: {
+                                name: FormValueProvider.name,
+                                campus: FormValueProvider.campus,
+                                topic_list: FormValueProvider.topic_list,
+                                streetName: FormValueProvider.streetName,
+                                streetNumber: FormValueProvider.streetNumber,
+                                postNumber: FormValueProvider.postNumber,
+                                phoneNumber: FormValueProvider.phoneNumber,
+                                city: FormValueProvider.city,
+                                country: FormValueProvider.country,
+                                email: FormValueProvider.email,
+                                approved: FormValueProvider.approved,
+                                locked: FormValueProvider.locked,
+                                enabled: FormValueProvider.enabled,
+                                userName: FormValuePromotor.userName,
+                                password: FormValuePromotor.password
+
+                            }
+                        });
+                        console.log(response)
+                        navigate("/maintenance", { replace: true });
+                        setPromotorIndex(-1);
+                        setPromotorCreate(false);
+                        setFormValuePromotor({
+                            name: "",
+                            campus: [],
+                            topic_list: [],
+                            streetName: "",
+                            streetNumber: -1,
+                            postNumber: -1,
+                            phoneNumber: -1,
+                            city: "",
+                            country: "",
+                            email: "",
+                            approved: null,
+                            locked: null,
+                            enabled: null,
+                            isCompany: null,
+                            company: null,
+                            userName: "",
+                            password: ""}
+                        );
+                        await updatePromotors();
+                    } catch(error) {
+                        console.log(error)
+                    }
+                }
+            }
+            const submitPromotorDelete = async(e) => {
+                console.log(Promotors[PromotorIndex]);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/delete/promotor",
+                        data: {
+                            id: Promotors[PromotorIndex].id
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setPromotorIndex(-1);
+                    setFormValuePromotor({
+                        name: "",
+                        campus: [],
+                        topic_list: [],
+                        streetName: "",
+                        streetNumber: -1,
+                        postNumber: -1,
+                        phoneNumber: -1,
+                        city: "",
+                        country: "",
+                        email: "",
+                        approved: null,
+                        locked: null,
+                        enabled: null,
+                        isCompany: null,
+                        company: null,
+                        userName: "",
+                        password: ""}
+                    );
+                    await updatePromotors();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            async function updatePromotors() {
+                let isMounted = true;
+                const controller = new AbortController();
+                try {
+                    const response = await axiosPrivate({
+                        method: "get",
+                        url: "/promotor/all",
+                        signal: controller.signal
+                    });
+                    console.log(response.data);
+                    const myData = [].concat(response.data).sort((a, b) => a.id > b.id ? 1 : -1);
+                    console.log(response.data);
+                    isMounted && setPromotors(myData);
+
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg);
+                }
+            }
+            function cancelCreatePromotor() {
+                setPromotorCreate(false);
+                setErrorMessageForm("");
+            }
+
+            return (
+                <div className={"windowMainenance"}>
+                    <div className={"windowleftlist"}>
+                        <div className={"listitemsleft"}>
+                            {Promotors.map((prom,index) =>(
+                                <div key={index} className={"ListItem"} onClick={() => setPromotorIndex(index)}>
+                                    <div className={"ListItemTitle"}>
+                                        {PromotorIndex===index? <div className={"ListItemSelected"}>{prom.firstName}</div>:<div>{prom.firstName}</div>}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={"leftUnderSidebalk"}>
+                            <button className={"buttonMaintenance"} onClick={() => setPromotorCreate(true)}>Create</button>
+                        </div>
+
+                    </div>
+                    <div className={"borderinwindow"}/>
+                    <div className={"windowrightcrud"}>
+                        <div>
+                            {PromotorCreate? createPromotor(): showPromotorInfo()}
+                        </div>
+                        <div className={"InfoButtonsBottom"}>
+                            {PromotorCreate?
+                                <div>
+                                    <a className={"ErrorMessageForm"}>{ErrorMessageForm}</a>
+                                    <button className={"buttonMaintenance"} type="submit" onClick={submitPromotorCreate}>Save</button>
+                                    <button className={"buttonMaintenance"} onClick={() => cancelCreatePromotor()}>Cancel</button>
+                                </div>:
+                                <div>
+                                    {PromotorIndex===-1? <div/>:
+                                        <div>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitPromotorDelete}>Delete</button>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitPromotorUpdate}>Update</button>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            )
         }
         function showProviders() {
             const handleProviderChange = (event) => {
@@ -1748,6 +2041,7 @@ export default function Maintenance_Admin(props){
         }
         function showTargetAudiences() {
             const handleTargetAudienceChange = (event) => {
+                console.log(event.target.name + ": " + event.target.value)
                 setFormValueTargetAudience({
                     ...FormValueTargetAudience,
                     [event.target.name]: event.target.value
@@ -1767,57 +2061,95 @@ export default function Maintenance_Admin(props){
                                     <div className={"comment"}>New Value</div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="name" className={"InfoAttribute"}>TargetAudience campus</label>
+                                    <label htmlFor="campus_name" className={"InfoAttribute"}>Campus Name</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {TargetAudiences[TargetAudienceIndex].campus? TargetAudiences[TargetAudienceIndex].campus:""}
-                                        <input type="text" name="name" placeholder={"TargetAudience campus"}
-                                               value={FormValueTargetAudience.campus}
+                                        {TargetAudiences[TargetAudienceIndex].campus.campus_name? TargetAudiences[TargetAudienceIndex].campus.campus_name:""}
+                                        <input type="text" name="campus_name" placeholder={"Campus name"}
+                                               value={FormValueTargetAudience.campus_name}
                                                onChange={handleTargetAudienceChange}
                                         />
                                     </div>
                                 </div>
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].firstRound? "True":"False"}*/}
-                                {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseBeginDeadline"*/}
-                                {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseEndDeadline"*/}
-                                {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].hide? "True":"False"}*/}
-                                {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Campus Country</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].campus.country? TargetAudiences[TargetAudienceIndex].campus.country:""}
+                                        <input type="text" name="country" placeholder={"Campus country"}
+                                               value={FormValueTargetAudience.country}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>Campus City</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].campus.city? TargetAudiences[TargetAudienceIndex].campus.city:""}
+                                        <input type="text" name="city" placeholder={"Campus city"}
+                                               value={FormValueTargetAudience.city}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Campus Postnumber</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].campus.postNumber? TargetAudiences[TargetAudienceIndex].campus.postNumber:""}
+                                        <input type="number" name="postNumber" placeholder={0}
+                                               value={FormValueTargetAudience.postNumber}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Campus Streetname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].campus.streetName? TargetAudiences[TargetAudienceIndex].campus.streetName:""}
+                                        <input type="text" name="streetName" placeholder={"Campus streetname"}
+                                               value={FormValueTargetAudience.streetName}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Campus Streetnumber</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].campus.streetNumber? TargetAudiences[TargetAudienceIndex].campus.streetNumber:""}
+                                        <input type="number" name="streetNumber" placeholder={0}
+                                               value={FormValueTargetAudience.streetNumber}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="course_name" className={"InfoAttribute"}>Course Name</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].course.course_name? TargetAudiences[TargetAudienceIndex].course.course_name:""}
+                                        <input type="text" name="course_name" placeholder={"Course name"}
+                                               value={FormValueTargetAudience.course_name}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div></div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="abbriviationName" className={"InfoAttribute"}>Course Abbriviation</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].course.abbriviationName? TargetAudiences[TargetAudienceIndex].course.abbriviationName:""}
+                                        <input type="text" name="abbriviationName" placeholder={"Course abbriviation"}
+                                               value={FormValueTargetAudience.abbriviationName}
+                                               onChange={handleTargetAudienceChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {TargetAudiences[TargetAudienceIndex].hide? "True":"False"}
+                                        <select name="hide" onChange={handleTargetAudienceChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                         }
                     </div>
@@ -1831,52 +2163,78 @@ export default function Maintenance_Admin(props){
                                 New TargetAudience
                             </div>
                             <div className={"InfoSection"}>
+                                Campus
                                 <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="campus" className={"InfoAttribute"}>TargetAudience campus</label>
-                                    <input type="text" name="campus" placeholder={"TargetAudience campus"}
-                                           value={FormValueTargetAudience.campus}
+                                    <label htmlFor="campus_name" className={"InfoAttribute"}>Campus name</label>
+                                    <input type="text" name="campus_name" placeholder={"Campus name"}
+                                           value={FormValueTargetAudience.campus_name}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Campus country</label>
+                                    <input type="text" name="country" placeholder={"Campus country"}
+                                           value={FormValueTargetAudience.country}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>Campus city</label>
+                                    <input type="text" name="city" placeholder={"Campus city"}
+                                           value={FormValueTargetAudience.city}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Campus postnumber</label>
+                                    <input type="number" name="postNumber" placeholder={0}
+                                           value={FormValueTargetAudience.postNumber}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Campus streetname</label>
+                                    <input type="text" name="streetName" placeholder={"Campus streetname"}
+                                           value={FormValueTargetAudience.streetName}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Campus streetnumber</label>
+                                    <input type="number" name="streetNumber" placeholder={0}
+                                           value={FormValueTargetAudience.streetNumber}
                                            onChange={handleTargetAudienceChange}
                                     />
                                 </div>
                             </div>
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>*/}
-                            {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                            {/*        <input type="date" name="phaseBeginDeadline"*/}
-                            {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                            {/*        <input type="date" name="phaseEndDeadline"*/}
-                            {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                            {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                            <div className={"InfoSection"}>
+                                Course
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="course_name" className={"InfoAttribute"}>Course name</label>
+                                    <input type="text" name="course_name" placeholder={"Course name"}
+                                           value={FormValueTargetAudience.course_name}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="abbriviationName" className={"InfoAttribute"}>Course abbriviation name</label>
+                                    <input type="text" name="abbriviationName" placeholder={"Course abbriviation"}
+                                           value={FormValueTargetAudience.abbriviationName}
+                                           onChange={handleTargetAudienceChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                Hide
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide TargetAudience</label>
+                                    <select name="hide" onChange={handleTargetAudienceChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 )
@@ -1890,17 +2248,34 @@ export default function Maintenance_Admin(props){
                         method: "post",
                         url: "http://localhost:8080/admin/update/targetaudience/" + TargetAudiences[TargetAudienceIndex].targetAudience_id,
                         data: {
-                            campus: FormValueTargetAudience.campus,
-                            course: FormValueTargetAudience.course,
-                            hide_targetAudience: FormValueTargetAudience.hide_targetAudience
+                            campus: {
+                                campus_name: FormValueTargetAudience.campus_name,
+                                city: FormValueTargetAudience.city,
+                                country: FormValueTargetAudience.country,
+                                postNumber: FormValueTargetAudience.postNumber,
+                                streetName: FormValueTargetAudience.streetName,
+                                streetNumber: FormValueTargetAudience.streetNumber
+                            },
+                            course: {
+                                course_name: FormValueTargetAudience.course_name,
+                                abbriviationName: FormValueTargetAudience.abbriviationName
+                            },
+                            hide: FormValueTargetAudience.hide,
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueTargetAudience({
-                        campus: [],
-                        course: [],
-                        hide_targetAudience: null,}
+                        campus_name: "",
+                        city: "",
+                        country: "",
+                        postNumber:-1,
+                        streetName: "",
+                        streetNumber:-1,
+                        course_name: "",
+                        abbriviationName: "",
+                        hide: null
+                    }
                     );
                     await updateTargetAudiences();
                 } catch(error) {
@@ -1910,8 +2285,32 @@ export default function Maintenance_Admin(props){
             const submitTargetAudienceCreate = async(e) => {
                 let FormValidTargetAudience = true;
                 function checkFormValueTargetAudience() {
-                    if (FormValueTargetAudience.campus === null){
-                        setErrorMessageForm("Invalid campus" + FormValueTargetAudience.campus);
+                    if (FormValueTargetAudience.campus_name === ""){
+                        setErrorMessageForm("Invalid campus name: " + FormValueTargetAudience.campus_name);
+                        FormValidTargetAudience = false;
+                    }
+                    else if (FormValueTargetAudience.country === ""){
+                        setErrorMessageForm("Invalid campus country: " + FormValueTargetAudience.country);
+                        FormValidTargetAudience = false;
+                    }
+                    else if (FormValueTargetAudience.city === ""){
+                        setErrorMessageForm("Invalid campus city: " + FormValueTargetAudience.city);
+                        FormValidTargetAudience = false;
+                    }
+                    else if (FormValueTargetAudience.streetName === ""){
+                        setErrorMessageForm("Invalid campus streetname: " + FormValueTargetAudience.streetName);
+                        FormValidTargetAudience = false;
+                    }
+                    else if (FormValueTargetAudience.course_name === ""){
+                        setErrorMessageForm("Invalid course name: " + FormValueTargetAudience.course_name);
+                        FormValidTargetAudience = false;
+                    }
+                    else if (FormValueTargetAudience.abbriviationName === ""){
+                        setErrorMessageForm("Invalid course abbriviation name: " + FormValueTargetAudience.abbriviationName);
+                        FormValidTargetAudience = false;
+                    }
+                    else if (FormValueTargetAudience.hide === null){
+                        setErrorMessageForm("Invalid course abbriviation name: " + FormValueTargetAudience.abbriviationName);
                         FormValidTargetAudience = false;
                     }
                     console.log("FormValid: " + FormValidTargetAudience);
@@ -1924,9 +2323,19 @@ export default function Maintenance_Admin(props){
                             method: "post",
                             url: "http://localhost:8080/admin/create/targetaudience/",
                             data: {
-                                campus: FormValueTargetAudience.campus,
-                                course: FormValueTargetAudience.course,
-                                hide_targetAudience: FormValueTargetAudience.hide_targetAudience,
+                                campus: {
+                                    campus_name: FormValueTargetAudience.campus_name,
+                                    city: FormValueTargetAudience.city,
+                                    country: FormValueTargetAudience.country,
+                                    postNumber: FormValueTargetAudience.postNumber,
+                                    streetName: FormValueTargetAudience.streetName,
+                                    streetNumber: FormValueTargetAudience.streetNumber
+                                },
+                                course: {
+                                    course_name: FormValueTargetAudience.course_name,
+                                    abbriviationName: FormValueTargetAudience.abbriviationName
+                                },
+                                hide: FormValueTargetAudience.hide,
                             }
                         });
                         console.log(response)
@@ -1936,7 +2345,7 @@ export default function Maintenance_Admin(props){
                         setFormValueTargetAudience({
                             campus: [],
                             course: [],
-                            hide_targetAudience: null,
+                            hide: null,
                             }
                         );
                         await updateTargetAudiences();
@@ -1946,22 +2355,30 @@ export default function Maintenance_Admin(props){
                 }
             }
             const submitTargetAudienceDelete = async(e) => {
+                console.log("TA: " + TargetAudienceIndex);
                 console.log(TargetAudiences[TargetAudienceIndex]);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/delete/targetaudience",
                         data: {
-                            targetaudience_id: TargetAudiences[TargetAudienceIndex].targetAudience_id
+                            targetAudience_id: TargetAudiences[TargetAudienceIndex].targetAudience_id
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setTargetAudienceIndex(-1);
                     setFormValueTargetAudience({
-                        campus: [],
-                        course: [],
-                        hide_targetAudience: null,}
+                        campus_name: "",
+                        city: "",
+                        country: "",
+                        postNumber:-1,
+                        streetName: "",
+                        streetNumber:-1,
+                        course_name: "",
+                        abbriviationName: "",
+                        hide: null
+                    }
                     );
                     await updateTargetAudiences();
                 } catch(error) {
@@ -2000,14 +2417,11 @@ export default function Maintenance_Admin(props){
                             {TargetAudiences.map((ta,index) =>(
                                 <div key={index} className={"ListItem"} onClick={() => setTargetAudienceIndex(index)}>
                                     <div className={"ListItemTitle"}>
-                                        {TargetAudienceIndex===index? <div className={"ListItemSelected"}>{ta.campus}</div>:<div>{ta.campus}</div>}
+                                        {TargetAudienceIndex===index? <div className={"ListItemSelected"}>{ta.campus.campus_name} - {ta.course.abbriviationName}</div>:<div>{ta.campus.campus_name} - {ta.course.abbriviationName}</div>}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*    {student.firstRound? <div>First Round</div>: <div>Second Round</div>}*/}
-                                    {/*</div>*/}
-                                    {/*<div>*/}
-                                    {/*    {student.begin_deadline} - {student.end_deadline}*/}
-                                    {/*</div>*/}
+                                    <div>
+                                        {ta.campus.city} {ta.campus.postNumber}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -2018,7 +2432,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div  className={"windowrightcrudForm"}>
                             {TargetAudienceCreate? createTargetAudience(): showTargetAudienceInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>
@@ -2044,6 +2458,7 @@ export default function Maintenance_Admin(props){
         }
         function showKeywords() {
             const handleKeywordChange = (event) => {
+                console.log(event.target.name + ": " + event.target.value);
                 setFormValueKeyword({
                     ...FormValueKeyword,
                     [event.target.name]: event.target.value
@@ -2063,57 +2478,27 @@ export default function Maintenance_Admin(props){
                                     <div className={"comment"}>New Value</div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="name" className={"InfoAttribute"}>Keyword name</label>
+                                    <label htmlFor="keyword_name" className={"InfoAttribute"}>Keyword name</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Keywords[KeywordIndex].keyword_name? Keywords[KeywordIndex].keyword_name:""}
-                                        <input type="text" name="name" placeholder={"Keyword name"}
+                                        <input type="text" name="keyword_name" placeholder={"Keyword name"}
                                                value={FormValueKeyword.keyword_name}
                                                onChange={handleKeywordChange}
                                         />
                                     </div>
                                 </div>
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].firstRound? "True":"False"}*/}
-                                {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseBeginDeadline"*/}
-                                {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseEndDeadline"*/}
-                                {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].hide? "True":"False"}*/}
-                                {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Keywords[KeywordIndex].hide? "True":"False"}
+                                        <select name="hide" onChange={handleKeywordChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </form>
                         }
                     </div>
@@ -2128,51 +2513,23 @@ export default function Maintenance_Admin(props){
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="name" className={"InfoAttribute"}>Keyword name</label>
-                                    <input type="text" name="name" placeholder={"Keyword name"}
+                                    <label htmlFor="keyword_name" className={"InfoAttribute"}>Keyword name</label>
+                                    <input type="text" name="keyword_name" placeholder={"Keyword name"}
                                            value={FormValueKeyword.keyword_name}
                                            onChange={handleKeywordChange}
                                     />
                                 </div>
                             </div>
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>*/}
-                            {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                            {/*        <input type="date" name="phaseBeginDeadline"*/}
-                            {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                            {/*        <input type="date" name="phaseEndDeadline"*/}
-                            {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                            {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
+                                    <select name="hide" onChange={handleKeywordChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 )
@@ -2187,12 +2544,14 @@ export default function Maintenance_Admin(props){
                         url: "http://localhost:8080/admin/update/keyword/" + Keywords[KeywordIndex].keyword_id,
                         data: {
                             keyword_name: FormValueKeyword.keyword_name,
+                            hide: FormValueKeyword.hide,
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueKeyword({
                         keyword_name: "",
+                        hide: null,
                         }
                     );
                     await updateKeywords();
@@ -2207,6 +2566,10 @@ export default function Maintenance_Admin(props){
                         setErrorMessageForm("Invalid name" + FormValueKeyword.keyword_name);
                         FormValidKeyword = false;
                     }
+                    if (FormValueKeyword.hide === null){
+                        setErrorMessageForm("Invalid hide" + FormValueKeyword.hide);
+                        FormValidKeyword = false;
+                    }
                     console.log("FormValid: " + FormValidKeyword);
                 }
                 checkFormValueKeyword();
@@ -2218,6 +2581,7 @@ export default function Maintenance_Admin(props){
                             url: "http://localhost:8080/admin/create/keyword/",
                             data: {
                                 keyword_name: FormValueKeyword.keyword_name,
+                                hide: FormValueKeyword.hide,
                             }
                         });
                         console.log(response)
@@ -2226,6 +2590,7 @@ export default function Maintenance_Admin(props){
                         setKeywordCreate(false);
                         setFormValueKeyword({
                             keyword_name: "",
+                            hide: null,
                             }
                         );
                         await updateKeywords();
@@ -2249,6 +2614,7 @@ export default function Maintenance_Admin(props){
                     setKeywordIndex(-1);
                     setFormValueKeyword({
                         keyword_name: "",
+                        hide: null,
                         }
                     );
                     await updateKeywords();
@@ -2290,12 +2656,6 @@ export default function Maintenance_Admin(props){
                                     <div className={"ListItemTitle"}>
                                         {KeywordIndex===index? <div className={"ListItemSelected"}>{k.keyword_name}</div>:<div>{k.keyword_name}</div>}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*    {student.firstRound? <div>First Round</div>: <div>Second Round</div>}*/}
-                                    {/*</div>*/}
-                                    {/*<div>*/}
-                                    {/*    {student.begin_deadline} - {student.end_deadline}*/}
-                                    {/*</div>*/}
                                 </div>
                             ))}
                         </div>
@@ -2306,7 +2666,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div className={"windowrightcrudForm"}>
                             {KeywordCreate? createKeyword(): showKeywordInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>
@@ -2330,6 +2690,240 @@ export default function Maintenance_Admin(props){
                 </div>
             )
         }
+        function showTopics() {
+            const handleTopicChange = (event) => {
+                console.log(event.target.name + ": " + event.target.value);
+                setFormValueTopic({
+                    ...FormValueTopic,
+                    [event.target.name]: event.target.value
+                });
+            }
+
+            function showTopicInfo() {
+                return(
+                    <div>
+                        {TopicIndex===-1? <div/>:
+                            <form className={"FormInfo"}>
+                                <div className={"FormInfoTitle"}>
+                                    Topic
+                                </div>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <div className={"comment"}>Initial Value</div>
+                                    <div className={"comment"}>New Value</div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="topicName" className={"InfoAttribute"}>Topic name</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].topicName? Topics[TopicIndex].topicName:""}
+                                        <input type="text" name="topicName" placeholder={"Topic name"}
+                                               value={FormValueTopic.topicName}
+                                               onChange={handleTopicChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].hide? "True":"False"}
+                                        <select name="hide" onChange={handleTopicChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        }
+                    </div>
+                )
+            }
+            function createTopic() {
+                return(
+                    <div>
+                        <form className={"FormInfo"}>
+                            <div className={"FormInfoTitle"}>
+                                New Topic
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="topicName" className={"InfoAttribute"}>Topic name</label>
+                                    <input type="text" name="topicName" placeholder={"Topic name"}
+                                           value={FormValueTopic.topicName}
+                                           onChange={handleTopicChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
+                                    <select name="hide" onChange={handleTopicChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                )
+            }
+
+            const submitTopicUpdate = async(e) => {
+                console.log(Topics[TopicIndex]);
+                console.log(FormValueTopic);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/update/topic/" + Topics[TopicIndex].topic_id,
+                        data: {
+                            topicName: FormValueTopic.topicName,
+                            hide: FormValueTopic.hide,
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setFormValueTopic({
+                            topicName: "",
+                            hide: null,
+                        }
+                    );
+                    await updateTopics();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            const submitTopicCreate = async(e) => {
+                let FormValidTopic = true;
+                function checkFormValueTopic() {
+                    if (FormValueTopic.topicName === ""){
+                        setErrorMessageForm("Invalid name" + FormValueTopic.topicName);
+                        FormValidTopic = false;
+                    }
+                    if (FormValueTopic.hide === null){
+                        setErrorMessageForm("Invalid hide" + FormValueTopic.hide);
+                        FormValidTopic = false;
+                    }
+                    console.log("FormValid: " + FormValidTopic);
+                }
+                checkFormValueTopic();
+                if (FormValidTopic){
+                    setErrorMessageForm("");
+                    try {
+                        const response = await axiosPrivate({
+                            method: "post",
+                            url: "http://localhost:8080/admin/create/topic/",
+                            data: {
+                                topicName: FormValueTopic.topicName,
+                                hide: FormValueTopic.hide,
+                            }
+                        });
+                        console.log(response)
+                        navigate("/maintenance", { replace: true });
+                        setTopicIndex(-1);
+                        setTopicCreate(false);
+                        setFormValueTopic({
+                                topicName: "",
+                                hide: null,
+                            }
+                        );
+                        await updateTopics();
+                    } catch(error) {
+                        console.log(error)
+                    }
+                }
+            }
+            const submitTopicDelete = async(e) => {
+                console.log(Topics[TopicIndex]);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/delete/topic",
+                        data: {
+                            topic_id: Topics[TopicIndex].topic_id
+                        }
+                    });
+                    console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setTopicIndex(-1);
+                    setFormValueTopic({
+                            topicName: "",
+                            hide: null,
+                        }
+                    );
+                    await updateTopics();
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+            async function updateTopics() {
+                let isMounted = true;
+                const controller = new AbortController();
+                try {
+                    const response = await axiosPrivate({
+                        method: "get",
+                        url: "/topic/all",
+                        signal: controller.signal
+                    });
+                    console.log(response.data);
+                    const myData = [].concat(response.data).sort((a, b) => a.topic_id > b.topic_id ? 1 : -1);
+                    console.log(response.data);
+                    isMounted && setTopics(myData);
+
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg);
+                }
+            }
+            function cancelCreateTopic() {
+                setTopicCreate(false);
+                setErrorMessageForm("");
+            }
+
+            return (
+                <div className={"windowMainenance"}>
+                    <div className={"windowleftlist"}>
+                        <div className={"listitemsleft"}>
+                            {Topics.map((t,index) =>(
+                                <div key={index} className={"ListItem"} onClick={() => setTopicIndex(index)}>
+                                    <div className={"ListItemTitle"}>
+                                        {TopicIndex===index? <div className={"ListItemSelected"}>{t.topicName}</div>:<div>{t.topicName}</div>}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={"leftUnderSidebalk"}>
+                            <button className={"buttonMaintenance"} onClick={() => setTopicCreate(true)}>Create</button>
+                        </div>
+
+                    </div>
+                    <div className={"borderinwindow"}/>
+                    <div className={"windowrightcrud"}>
+                        <div className={"windowrightcrudForm"}>
+                            {TopicCreate? createTopic(): showTopicInfo()}
+                        </div>
+                        <div className={"InfoButtonsBottom"}>
+                            {TopicCreate?
+                                <div>
+                                    <a className={"ErrorMessageForm"}>{ErrorMessageForm}</a>
+                                    <button className={"buttonMaintenance"} type="submit" onClick={submitTopicCreate}>Save</button>
+                                    <button className={"buttonMaintenance"} onClick={() => cancelCreateTopic()}>Cancel</button>
+                                </div>:
+                                <div>
+                                    {TopicIndex===-1? <div/>:
+                                        <div>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitTopicDelete}>Delete</button>
+                                            <button className={"buttonMaintenance"} type="submit" onClick={submitTopicUpdate}>Update</button>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            )
+        }
 
 
         return(
@@ -2342,6 +2936,7 @@ export default function Maintenance_Admin(props){
                     <button onClick={() => setShow("Phases")}>Phases</button>
                     <button onClick={() => setShow("TargetAudiences")}>TargetAudiences</button>
                     <button onClick={() => setShow("Keywords")}>Keywords</button>
+                    <button onClick={() => setShow("Topics")}>Topics</button>
                 </div>
                 {Show===""?                 showStandaard()         :   <div/>  }
                 {Show==="Students"?         showStudents()          :   <div/>  }
@@ -2351,6 +2946,7 @@ export default function Maintenance_Admin(props){
                 {Show==="Phases"?           showPhases()            :   <div/>  }
                 {Show==="TargetAudiences"?  showTargetAudiences()   :   <div/>  }
                 {Show==="Keywords"?         showKeywords()          :   <div/>  }
+                {Show==="Topics"?           showTopics()            :   <div/>  }
             </div>
         )
     }

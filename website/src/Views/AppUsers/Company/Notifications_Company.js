@@ -3,7 +3,8 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
 export default function Notifications_Company(props) {
-    const companyid = props.persoonid;
+//    const companyid = props.persoonid;
+    const companyid = 15;
     const [Company, setCompany] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
@@ -24,9 +25,14 @@ export default function Notifications_Company(props) {
                 //console.log("Company: " + response.data);
                 isMounted && setCompany(response.data);
             } catch (err) {
-                console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
-                console.log(errMsg);
+                if(err.response.status == 401){
+                    navigate('/unauthorized',{replace:true});
+                    console.log(err);
+                }
+                else {
+                    console.log(err);
+                    navigate('/login', { state: { from: location }, replace: true });
+                }
             }
         }
         getCompany().then();

@@ -22,6 +22,7 @@ import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
 import Notifications from "../HeaderAndFooter/Notifications";
 import NotificationInfo from "../Notification/NotificationInfo";
 import Home_Standaard from "../Home_Standaard";
+import Unauthorized from "../Login/Unauthorized"
 import * as PropTypes from "prop-types";
 
 
@@ -68,6 +69,10 @@ export const AuthProvider = ({ children }) => {
                     <Route path="/home" element={<Home
                         roles={role}
                         persoonid = {id}
+                    />}/>
+                    <Route path="/unauthorized" element={<Unauthorized
+                        roles={role}
+                        persoonid ={id}
                     />}/>
                     <Route path="/topic" element={<Topic
                             roles={role}

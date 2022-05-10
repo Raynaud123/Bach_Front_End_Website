@@ -47,6 +47,11 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
+.windowrightcrudForm{
+    height: 600px;
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
 .emptyListItem{
     height: 120px;
     border: rgba(211, 211, 211, 0.47) solid;

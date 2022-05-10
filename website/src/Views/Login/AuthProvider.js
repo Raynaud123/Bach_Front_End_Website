@@ -19,7 +19,7 @@ import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
 import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
 import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
 import PersonalInfo from "../HeaderAndFooter/PersonalInfo";
-import Notifications from "../HeaderAndFooter/Notifications";
+import Notifications from "../Notification/Notifications";
 import NotificationInfo from "../Notification/NotificationInfo";
 import Home_Standaard from "../Home_Standaard";
 import Unauthorized from "../Login/Unauthorized"

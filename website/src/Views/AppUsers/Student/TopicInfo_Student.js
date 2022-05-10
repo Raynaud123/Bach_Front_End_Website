@@ -39,9 +39,16 @@ export default function TopicInfo_Student(props) {
                 await getTargetAudience(response.data.targetAudience_list);
                 await getKeywords(response.data.keyword_list);
             } catch (err) {
-                console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
-                console.log(errMsg);
+                if(err.response.status == 401){
+                    navigate("/unauthorized");
+                    console.error(err);
+                }
+                else{
+                    console.error(err);
+                    navigate('/login', { state: { from: location }, replace: true });
+                    console.log(errMsg);
+                }
+
             }
         }
         const getProvider = async (provid) => {
@@ -49,15 +56,21 @@ export default function TopicInfo_Student(props) {
                 try {
                     const response = await axiosPrivate({
                         method: "get",
-                        url: "/topicprovider/" + provid,
+                        url: "/topicprovider/approved/" + provid,
                         signal: controller.signal
                     });
                     // console.log(response.data[0]);
                     isMounted && setProvider(response.data[0]);
                 } catch (err) {
-                    console.error(err);
-                    navigate('/login', {state: {from: location}, replace: true});
-                    console.log(errMsg);
+                    if(err.response.status == 401){
+                        navigate("/unauthorized");
+                        console.error(err);
+                    }
+                    else{
+                        console.error(err);
+                        navigate('/login', {state: {from: location}, replace: true});
+                        console.log(errMsg);
+                    }
                 }
             }
         }

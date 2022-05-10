@@ -25,7 +25,7 @@ export default function TopicFilter (){
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/targetaudience/all",
+                    url: "/targetaudience/hided/all",
                     signal: controller.signal
                 });
                 // console.log(response.data);

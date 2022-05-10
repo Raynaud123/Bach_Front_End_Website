@@ -3,8 +3,7 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
 export default function Notifications_Company(props) {
-//    const companyid = props.persoonid;
-    const companyid = 15;
+    const companyid = props.persoonid;
     const [Company, setCompany] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();

@@ -4,7 +4,10 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 export default function TopicAssign_Masterproef(props){
 
+    const id = props.persoonid;
+
     const [Studenten,SetStudenten] = useState([]);
+    const [Topics,SetTopics] = useState([]);
 
 
     const axiosPrivate = useAxiosPrivate();
@@ -22,7 +25,7 @@ export default function TopicAssign_Masterproef(props){
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/student/hided/1",
+                    url: "/student/hided/" + id,
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -40,7 +43,34 @@ export default function TopicAssign_Masterproef(props){
 
             }
         }
+        const getTopics =async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/topic/hided/" + id,
+                    signal: controller.signal
+                });
+                console.log(response.data);
+                SetTopics(response.data);
+                console.log(Topics);
+            }catch (err){
+                console.error(err);
+                if(err.response.status === 500){
+                    //          TO-DO: Server Failed pagina?
+                }
+                else {
+                    navigate('/login', { state: { from: location }, replace: true });
+                    console.log(errMsg);
+                }
+
+            }
+        }
+
+
+
+
         getStudenten();
+        getTopics();
     },[])
 
 
@@ -50,8 +80,11 @@ export default function TopicAssign_Masterproef(props){
             <h4>Studenten zonder topic</h4>
             {Studenten.map((student) => {
                 return(<p>{student.username}</p>)
-            })};
+            })}
             <h4>Topics zonder student</h4>
+            {Topics.map((topic) => {
+                return(<p>{topic.topicName}</p>)
+            })};
         </div>
     )
 }

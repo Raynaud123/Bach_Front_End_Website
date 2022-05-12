@@ -70,7 +70,7 @@ export default function Maintenance_Admin(props){
         password: ""
     });
 
-    //Attributen nakijken!!!!!!!!!!!!
+    //Attributen nakijken!!!!!!!!!!!! // TODO
     const [Promotors, setPromotors] = useState([]);
     const [PromotorIndex, setPromotorIndex] = useState(-1);
     const [PromotorCreate, setPromotorCreate] = useState(false);

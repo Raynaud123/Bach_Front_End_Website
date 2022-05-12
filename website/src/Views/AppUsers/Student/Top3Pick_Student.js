@@ -5,6 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 export default function Top3Pick_Student(props) {
     const studentid = props.studentid;
     const [Preferred] = useState(props.preferred);
+    console.log(Preferred);
     const [FirstChoice, setFirstChoice] = useState(0);
     const [SecondChoice, setSecondChoice] = useState(0);
     const [ThirdChoice, setThirdChoice] = useState(0);
@@ -27,6 +28,9 @@ export default function Top3Pick_Student(props) {
             console.log(response)
             navigate(from, {replace: false});
             setShow(false);
+            setFirstChoice(0);
+            setSecondChoice(0);
+            setThirdChoice(0);
         } catch (error) {
             console.log(error)
         }

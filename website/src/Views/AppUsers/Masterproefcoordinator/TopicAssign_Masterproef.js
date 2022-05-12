@@ -22,28 +22,28 @@ export default function TopicAssign_Masterproef(props){
         //cancel request if component is unmountend
         const controller = new AbortController();
 
-        const getStudenten =async () => {
-            try {
-                const response = await axiosPrivate({
-                    method: "get",
-                    url: "/student/hided/" + id,
-                    signal: controller.signal
-                });
-                console.log(response.data);
-                SetStudenten(response.data);
-                console.log(Studenten);
-            }catch (err){
-                console.error(err);
-                if(err.response.status === 500){
-          //          TO-DO: Server Failed pagina?
-                }
-                else {
-                    navigate('/login', { state: { from: location }, replace: true });
-                    console.log(errMsg);
-                }
-
-            }
-        }
+        // const getStudenten =async () => {
+        //     try {
+        //         const response = await axiosPrivate({
+        //             method: "get",
+        //             url: "/student/hided/" + id,
+        //             signal: controller.signal
+        //         });
+        //         console.log(response.data);
+        //         SetStudenten(response.data);
+        //         console.log(Studenten);
+        //     }catch (err){
+        //         console.error(err);
+        //         if(err.response.status === 500){
+        //   //          TO-DO: Server Failed pagina?
+        //         }
+        //         else {
+        //             navigate('/login', { state: { from: location }, replace: true });
+        //             console.log(errMsg);
+        //         }
+        //
+        //     }
+        // }
         const getTopics =async () => {
             try {
                 const response = await axiosPrivate({
@@ -67,7 +67,7 @@ export default function TopicAssign_Masterproef(props){
             }
         }
 
-        getStudenten();
+//        getStudenten();
         getTopics();
     },[])
 
@@ -102,7 +102,7 @@ export default function TopicAssign_Masterproef(props){
                             </div>
                             <button className={"info_topic_button"}>
                                 <Link to={{
-                                    pathname: `/topics/assign/${topic.topic_id}`,
+                                    pathname: `/topic/assign/${topic.topic_id}`,
                                 }}
                                 >Assign</Link></button>
                         </div>

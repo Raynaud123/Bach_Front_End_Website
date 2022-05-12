@@ -23,6 +23,7 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
     "react-scripts": "^2.1.8",
+    "react-select": "^5.3.2",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4",
     "webkit": "^0.0.0"

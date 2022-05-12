@@ -51,6 +51,7 @@ export default function TopicInfo_Promotor(props) {
                     setBoostedStudent(response.data.boostedStudent);
                 }
             } catch (err) {
+
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
                 console.log(errMsg);
@@ -61,14 +62,21 @@ export default function TopicInfo_Promotor(props) {
                 try {
                     const response = await axiosPrivate({
                         method: "get",
-                        url: "/topicprovider/" + provid,
+                        url: "/topicprovider/approved/" + provid,
                         signal: controller.signal
                     });
                     isMounted && setProvider(response.data);
                 } catch (err) {
-                    console.error(err);
-                    navigate('/login', {state: {from: location}, replace: true});
-                    console.log(errMsg);
+                    if(err.response.status == 401){
+                        navigate('/unauthorized',{replace:true});
+                        console.log(err);
+                    }
+                    else{
+                        console.error(err);
+                        navigate('/login', {state: {from: location}, replace: true});
+                        console.log(errMsg);
+                    }
+
                 }
             }
         }
@@ -115,7 +123,7 @@ export default function TopicInfo_Promotor(props) {
             try {
                     const response = await axiosPrivate({
                         method: "get",
-                        url: `/student/all`,
+                        url: `/student/hided/all`,
                         signal: controller.signal
                     });
                     console.log(response);

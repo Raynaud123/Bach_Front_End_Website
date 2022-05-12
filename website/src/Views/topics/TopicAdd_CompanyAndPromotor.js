@@ -42,7 +42,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/targetaudience/all",
+                    url: "/targetaudience/hided/all",
                     signal: controller.signal
                 });
                 console.log("response getTarget:" + response.data);

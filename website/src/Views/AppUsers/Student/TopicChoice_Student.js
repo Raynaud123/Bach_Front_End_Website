@@ -4,6 +4,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {HiUsers} from "react-icons/all";
 import PreferredTopic from "../../topics/PreferredTopic";
 import Top3Pick_Student from "../Student/Top3Pick_Student";
+import "../../../Styles/Topics.css";
 
 export default function TopicChoice_Student(props) {
     const studentid = props.persoonid;
@@ -88,7 +89,7 @@ export default function TopicChoice_Student(props) {
     }
 
     return(
-        <div>
+        <div className={"showTopics"}>
             <div>
                 {
                     Top3!==[]? top3possible():<div>Already made top 3 choice</div>

@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import "../../../Styles/Topics.css";
+
 
 export default function Top3Pick_Student(props) {
     const studentid = props.studentid;
@@ -68,16 +70,16 @@ export default function Top3Pick_Student(props) {
                     <form id={"formtop3"}>
                         <div>
                             <label>1st choice:</label>
-                            <select id="firstchoice" onChange={(e) => onFirstChoiceChange(e)}>
+                            <select className={"SelectTop3"} id="firstchoice" onChange={(e) => onFirstChoiceChange(e)}>
                                 <option>--None--</option>
                                 {Preferred.map((topic) => (
-                                    <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
+                                    <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id} className={"SelectTop3"}>{topic.topicName}</option>
                                 ))}
                             </select>
                         </div>
                         <div>
                             <label>2nd choice:</label>
-                            <select id="secondchoice" onChange={(e) => onSecondChoiceChange(e)}>
+                            <select className={"SelectTop3"} id="secondchoice" onChange={(e) => onSecondChoiceChange(e)}>
                                 <option>--None--</option>
                                 {Preferred.map((topic) => (
                                     <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>
@@ -86,7 +88,7 @@ export default function Top3Pick_Student(props) {
                         </div>
                         <div>
                             <label>3rd choice:</label>
-                            <select id="thirdchoice" onChange={(e) => onThirdChoiceChange(e)}>
+                            <select className={"SelectTop3"} id="thirdchoice" onChange={(e) => onThirdChoiceChange(e)}>
                                 <option>--None--</option>
                                 {Preferred.map((topic) => (
                                     <option value={topic.topic_id} key={topic.topic_id} data-key={topic.topic_id}>{topic.topicName}</option>

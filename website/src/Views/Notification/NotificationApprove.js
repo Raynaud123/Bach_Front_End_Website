@@ -51,12 +51,12 @@ export default function NotificationApprove(props){
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/topic/" + object_id,
+                    url: "/topic/master/" + object_id,
                     signal: controller.signal
                 });
                 console.log(response.data);
                 isMounted && setObj(response.data);
-                await getProvider(response.data.provider.id);
+                await getProvider(response.data.provider);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });

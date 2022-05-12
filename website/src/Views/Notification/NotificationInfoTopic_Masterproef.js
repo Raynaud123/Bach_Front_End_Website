@@ -28,7 +28,7 @@ export default function TopicInfo_Student(props) {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/topic/" + topicid,
+                    url: "/topic/master/" + topicid,
                     signal: controller.signal
                 });
                 console.log(response.data);

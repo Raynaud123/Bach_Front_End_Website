@@ -13,7 +13,7 @@ export default function Assign_Masterproef(props){
 
     const [Topic,setTopic] = useState([]);
     const [Studenten,setStudenten] = useState([]);
-    const [Options,setOptions] = useState([])
+    const [Value,setValue] = useState([])
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
@@ -78,6 +78,16 @@ export default function Assign_Masterproef(props){
 
 
 
+    const handleChange = (e) =>{
+        console.log(e);
+        setValue(e);
+        // e.map(value => {
+        //     console.log(value);
+        //     setValue({id:value.value,name:value.label});
+        // })
+    }
+
+
 
     if(props.roles !== "MASTER"){
         return <Unauthorized/>
@@ -99,7 +109,28 @@ export default function Assign_Masterproef(props){
                                 placeholder="Select studenten"
                                 isSearchable
                                 isMulti
+                                onChange={handleChange}
                             />
+                            <div> You have chosen for
+                            {
+
+                                Object.entries(Value).map(([key,test]) =>{
+                                    console.log(key);
+                                    if(key == "0"){
+                                        const jep = JSON.stringify(test);
+                                        console.log(jep);
+                                        const {label,value} = JSON.parse(jep);
+                                        console.log(label);
+                                        return (` ${label} `)
+                                    }else{
+                                        const jep = JSON.stringify(test);
+                                        console.log(jep);
+                                        const {label,value} = JSON.parse(jep);
+                                        return(`and ${label}`);
+                                    }
+                                })
+                            }
+                            </div>
                         </div>
                         <div>
                             <h2>Studenten zonder Topic, met dit topic niet in hun top 3</h2>
@@ -123,7 +154,9 @@ export default function Assign_Masterproef(props){
                                 options={Studenten.map(e=>({label: e.username, value: e.id}))}
                                 placeholder="Select studenten"
                                 isSearchable
+                                onChange={handleChange}
                                 />
+                                <p> You have chosen {Value.name} for this topic</p>
                             </div>
                             <div>
                                 <h2>Studenten zonder Topic, met dit topic niet in hun top 3</h2>
@@ -134,7 +167,4 @@ export default function Assign_Masterproef(props){
         }
 
     }
-
-
-
-}
+                    }

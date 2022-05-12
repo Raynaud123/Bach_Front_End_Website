@@ -6,7 +6,9 @@ import PreferredTopic from "../../topics/PreferredTopic";
 
 export default function TopicInfo_Student(props) {
     const studentid = props.studentid;
+    console.log(useParams().topicid);
     const topicid = useParams().topicid;
+    console.log(topicid);
     const [Topic, setTopic] = useState([]);
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
@@ -33,13 +35,13 @@ export default function TopicInfo_Student(props) {
                 });
                 console.log(response.data);
                 isMounted && setTopic(response.data);
-                await getProvider(response.data.provider_id);
+                await getProvider(response.data.provider);
                 // await getPromotor(response.data.promotor_id);
                 // getCoordinator(response.data.coordinator_id);
-                await getTargetAudience(response.data.targetAudience_list);
+                await getTargetAudience(response.data.targetAudience);
                 await getKeywords(response.data.keyword_list);
             } catch (err) {
-                if(err.response.status == 401){
+                if(err.response.status === 401){
                     navigate("/unauthorized");
                     console.error(err);
                 }
@@ -156,6 +158,7 @@ export default function TopicInfo_Student(props) {
     function ProvInfo() {
         return(
             <div>
+                {Provider?
                 <div>
                     {Provider.name}
                     <br/>
@@ -168,7 +171,7 @@ export default function TopicInfo_Student(props) {
                     <div>
                         &emsp;  Address: {(Provider.country && Provider.city && Provider.streetName)? <div>&emsp;&emsp;{Provider.streetName} {Provider.streetNumber} <br/>&emsp;&emsp;{Provider.country} {Provider.city} {Provider.postNumber}</div> : "None"}
                     </div>
-                </div>
+                </div>:<div/>}
                 <br/>
                 <div>
                     {Promotor? PromInfo(): "No Promotor"}
@@ -198,9 +201,9 @@ export default function TopicInfo_Student(props) {
                         <br/>
                         Promotor: {Promotor? <div>&emsp;  {Promotor.firstName} {Promotor.lastName}</div> : "None"}
                         <br/>
-                        TargetAudience: {TargetAudience.map((target) => (
+                        TargetAudience: {TargetAudience? TargetAudience.map((target) => (
                         <div key={target.id}> &emsp; {target.campus.campus_name} - {target.course.course_name}</div>
-                        ))}
+                        )):<div/>}
                         {/*Coordinator: */}
                         <br/>
                         {KeywordInfo()}

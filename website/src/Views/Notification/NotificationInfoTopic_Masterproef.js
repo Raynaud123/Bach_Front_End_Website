@@ -11,7 +11,6 @@ export default function TopicInfo_Student(props) {
     const [Topic, setTopic] = useState([]);
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
-    const [TargetAudience, setTargetAudience] = useState([]);
     const [Keyword, setKeyword] = useState([]);
 
 
@@ -33,17 +32,7 @@ export default function TopicInfo_Student(props) {
                 });
                 console.log(response.data);
                 isMounted && setTopic(response.data);
-                await getTargetAudience(response.data.targetAudience_list);
                 await getKeywords(response.data.keyword_list);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
-                console.log(errMsg);
-            }
-        }
-        const getTargetAudience = async (targetAudienceList) => {
-            try {
-                setTargetAudience(targetAudienceList);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -113,10 +102,10 @@ export default function TopicInfo_Student(props) {
                             <div>{Topic.promotor.approved? "Promotor is approved":"Promotor is not apprroved"}</div>
                         </div> : "None"}
                         <br/>
-                        TargetAudience: {TargetAudience.map((target) => (
+                        TargetAudience: {Topic.targetAudiences? Topic.targetAudiences.map((target) => (
                             <div key={target.id} className={"content sectie"}>
                                 &emsp; {target.campus.campus_name} & {target.course.course_name}</div>
-                        ))}
+                        )):<div/>}
                         <br/>
                     </div>
                 </div>

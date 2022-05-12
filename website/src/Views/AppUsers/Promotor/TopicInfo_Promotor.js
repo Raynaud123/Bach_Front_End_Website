@@ -43,7 +43,7 @@ export default function TopicInfo_Promotor(props) {
                 console.log(response.data);
                 isMounted && setTopic(response.data);
                 await getProvider(response.data.provider);
-                await getTargetAudience(response.data.targetAudience_list);
+                await getTargetAudience(response.data.targetAudiences);
                 await getKeywords(response.data.keyword_list);
                 await getPromotor(response.data.promotor);
                 await getStudents();
@@ -67,7 +67,7 @@ export default function TopicInfo_Promotor(props) {
                     });
                     isMounted && setProvider(response.data);
                 } catch (err) {
-                    if(err.response.status == 401){
+                    if(err.response.status === 401){
                         navigate('/unauthorized',{replace:true});
                         console.log(err);
                     }
@@ -248,9 +248,9 @@ export default function TopicInfo_Promotor(props) {
                             <h3>Promotor:</h3> {Promotor? <div className={"inline"}>&emsp;  {Promotor.firstName} {Promotor.lastName}</div> : "None"}
                         </div>
                         <div className={"tekst"}>
-                            <h3>TargetAudience:</h3> {TargetAudience.map((target) => (
+                            <h3>TargetAudience:</h3> {Topic.targetAudiences? Topic.targetAudiences.map((target) => (
                             <div key={target.id}> &emsp; {target.campus.campus_name} - {target.course.course_name}</div>
-                        ))}
+                        )):<div/>}
                         </div>
                         {KeywordInfo()}
                     </div>

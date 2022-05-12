@@ -143,8 +143,19 @@ export default function Maintenance_Admin(props){
     const [TopicIndex, setTopicIndex] = useState(-1);
     const [TopicCreate, setTopicCreate] = useState(false);
     const [FormValueTopic, setFormValueTopic] = useState({
-        topicName: "",
-        hide: null,
+        aantal_studenten: 2,
+        approved_topic: null,
+        boostedStudent: null,
+        description_topic: "",
+        hide_topic: null,
+        keyword_list: [],
+        promotor: null,
+        provider: -1,
+        release_date: "",
+        student_list: [],
+        tags: [],
+        targetAudiences: [],
+        topicName: ""
     });
 
 
@@ -2698,8 +2709,30 @@ export default function Maintenance_Admin(props){
                     [event.target.name]: event.target.value
                 });
             }
+            const handleTopicChangeArray = (event) => {
+                setFormValueTopic({
+                    ...FormValueTopic,
+                    [event.target.name]: Array.from(event.target.selectedOptions, item => item.value)
+                });
+                console.log(Array.from(event.target.selectedOptions, item => item.value));
+            }
 
             function showTopicInfo() {
+                function getProvider(provider) {
+                    return <div>{Providers.map((prov) =>(
+                        prov.id===provider? prov.name:""
+                    ))}
+                    </div>
+                }
+                function getStudent(student) {
+                    return <div>{Students.map((a) =>(
+                        a.id===student? a.firstName:<div/>
+                    ))}
+                    </div>
+                }
+                function getReleaseDate(date) {
+                    return date.slice(0,10)
+                }
                 return(
                     <div>
                         {TopicIndex===-1? <div/>:
@@ -2714,11 +2747,160 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="topicName" className={"InfoAttribute"}>Topic name</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].topicName? Topics[TopicIndex].topicName:""}
+                                        {Topics[TopicIndex].topicName? Topics[TopicIndex].topicName:<div/>}
                                         <input type="text" name="topicName" placeholder={"Topic name"}
                                                value={FormValueTopic.topicName}
                                                onChange={handleTopicChange}
                                         />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="description_topic" className={"InfoAttribute"}>Topic description</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].description_topic? Topics[TopicIndex].description_topic:<div/>}
+                                        <input type="text" name="description_topic" placeholder={"Topic description"}
+                                               value={FormValueTopic.description_topic}
+                                               onChange={handleTopicChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="promotor" className={"InfoAttribute"}>Topic promotor</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].promotor? Topics[TopicIndex].promotor.firstName + " " +Topics[TopicIndex].promotor.lastName:<div/>}
+                                        <input type="text" name="promotor" placeholder={"Topic promotor"}
+                                               value={FormValueTopic.promotor}
+                                               onChange={handleTopicChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="provider" className={"InfoAttribute"}>Topic provider</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].provider? getProvider(Topics[TopicIndex].provider):<div/>}
+                                        <select name="provider" onChange={handleTopicChange} >
+                                            <option value={"null"}>--None--</option>
+                                            {Providers.map((p) => (
+                                                <option value={p.id}>{p.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="release_date" className={"InfoAttribute"}>Topic release date</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].release_date? getReleaseDate(Topics[TopicIndex].release_date):<div/>}
+                                        <input type="date" name="release_date" placeholder={"Topic release date"}
+                                               value={FormValueTopic.release_date}
+                                               onChange={handleTopicChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="aantal_studenten" className={"InfoAttribute"}>Topic number of students (1 or 2)</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].aantal_studenten? Topics[TopicIndex].aantal_studenten:<div/>}
+                                        <input type="range" name="aantal_studenten" min={1} max={2}
+                                               value={FormValueTopic.aantal_studenten}
+                                               onChange={handleTopicChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="boostedStudent" className={"InfoAttribute"}>Boosted Student</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].boostedStudent? Topics[TopicIndex].boostedStudent:<div>No boosted student(s)</div>}
+                                        <select name="boostedStudent" onChange={handleTopicChange}>
+                                            <option value={"null"}>--None--</option>
+                                            {Students.map((student) => (
+                                                <option value={student.id}>{student.firstName} {student.lastName}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="student_list" className={"InfoAttribute"}>AssignedStudent(s)</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].boostedStudent?
+                                            <div>
+                                            {Topics[TopicIndex].boostedStudent.map((s) => (
+                                                <div key={s.id}>{s.firstName} {s.lastName}
+                                                </div>))}
+                                            </div>:<div>No assigned students</div>}
+                                        <select name="student_list" onChange={handleTopicChangeArray} multiple>
+                                            <option value={"null"}>--None--</option>
+                                            {Students.map((s) => (
+                                                <option value={s.id}>{s.firstName} {s.lastName}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="keyword_list" className={"InfoAttribute"}>Keywords</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].keyword_list?
+                                            <div>
+                                                {Topics[TopicIndex].keyword_list.map((s) => (
+                                                    <div key={s.keyword_id}>{s.keyword_name}
+                                                    </div>))}
+                                            </div>:<div>No keywords</div>}
+                                        <select name="keyword_list" onChange={handleTopicChangeArray} multiple={"multiple"}>
+                                            <option value={"null"}>--None--</option>
+                                            {Keywords.map((k) => (
+                                                <option value={k.keyword_id}>{k.keyword_name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="targetAudiences" className={"InfoAttribute"}>Target Audiences</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].targetAudiences?
+                                            <div>
+                                                {Topics[TopicIndex].targetAudiences.map((ta) => (
+                                                    <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
+                                                    </div>))}
+                                            </div>:<div>No target audiences</div>}
+                                        <select name="targetAudiences" onChange={handleTopicChangeArray} multiple>
+                                            <option value={"null"}>--None--</option>
+                                            {TargetAudiences.map((ta) => (
+                                                <option key={ta.targetAudience_id}
+                                                        value={ta.targetAudience_id}>
+                                                    {ta.campus.campus_name} {ta.course.abbriviationName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="tags" className={"InfoAttribute"}>Students with topic as first choice</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].tags?
+                                            <div>
+                                                {Topics[TopicIndex].tags.map((a) => (
+                                                    <div key={a.id}>{getStudent(a.student)}
+                                                    </div>))}
+                                            </div>:<div>No students with topic as first choice</div>}
+                                        <select name="tags" onChange={handleTopicChangeArray} multiple >
+                                            <option value={"null"}>--None--</option>
+                                            {Students.map((s) => (
+                                                <option key={s.id}
+                                                        value={s.id}>
+                                                    {s.firstName} {s.lastName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="approved_topic" className={"InfoAttribute"}>Approved</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Topics[TopicIndex].approved_topic? "True":"False"}
+                                        <select name="approved_topic" onChange={handleTopicChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
@@ -2732,7 +2914,6 @@ export default function Maintenance_Admin(props){
                                         </select>
                                     </div>
                                 </div>
-
                             </form>
                         }
                     </div>
@@ -2752,6 +2933,130 @@ export default function Maintenance_Admin(props){
                                            value={FormValueTopic.topicName}
                                            onChange={handleTopicChange}
                                     />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="description_topic" className={"InfoAttribute"}>Topic description</label>
+                                    <input type="text" name="description_topic" placeholder={"Topic description"}
+                                           value={FormValueTopic.description_topic}
+                                           onChange={handleTopicChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="promotor" className={"InfoAttribute"}>Topic promotor</label>
+                                    <select name="promotor" onChange={handleTopicChange} >
+                                        <option value={"null"}>--None--</option>
+                                        {Promotors.map((p) => (
+                                            <option value={p.id}>{p.firstName} {p.lastName}</option>
+                                        ))}
+                                    </select>
+                                    {/*<input type="text" name="promotor" placeholder={"Topic promotor"}*/}
+                                    {/*       value={FormValueTopic.promotor}*/}
+                                    {/*       onChange={handleTopicChange}*/}
+                                    {/*/>*/}
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="provider" className={"InfoAttribute"}>Topic provider</label>
+                                    <select name="provider" onChange={handleTopicChange} >
+                                        <option value={"null"}>--None--</option>
+                                        {Providers.map((p) => (
+                                            <option value={p.id}>{p.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="release_date" className={"InfoAttribute"}>Topic release date</label>
+                                    <input type="date" name="release_date" placeholder={"Topic release date"}
+                                           value={FormValueTopic.release_date}
+                                           onChange={handleTopicChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="aantal_studenten" className={"InfoAttribute"}>Topic number of students (1 or 2)</label>
+                                    <input type="range" name="aantal_studenten" min={1} max={2}
+                                           value={FormValueTopic.aantal_studenten}
+                                           onChange={handleTopicChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="boostedStudent" className={"InfoAttribute"}>Boosted Student</label>
+                                    <select name="boostedStudent" onChange={handleTopicChange}>
+                                        <option value={"null"}>--None--</option>
+                                        {Students.map((student) => (
+                                            <option value={student.id}>{student.firstName} {student.lastName}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="student_list" className={"InfoAttribute"}>Assigned Student(s)</label>
+                                    <select name="student_list" onChange={handleTopicChangeArray} multiple>
+                                        <option value={"null"}>--None--</option>
+                                        {Students.map((s) => (
+                                            <option value={s.id}>{s.firstName} {s.lastName}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="keyword_list" className={"InfoAttribute"}>Keywords</label>
+                                    <select name="keyword_list" onChange={handleTopicChangeArray} multiple={"multiple"}>
+                                        <option value={"null"}>--None--</option>
+                                        {Keywords.map((k) => (
+                                            <option value={k.keyword_id}>{k.keyword_name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="targetAudiences" className={"InfoAttribute"}>Target Audiences</label>
+                                    <select name="targetAudiences" onChange={handleTopicChangeArray} multiple>
+                                        <option value={"null"}>--None--</option>
+                                        {TargetAudiences.map((ta) => (
+                                            <option key={ta.targetAudience_id}
+                                                    value={ta.targetAudience_id}>
+                                                {ta.campus.campus_name} {ta.course.course_name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="tags" className={"InfoAttribute"}>Students with topic as first choice</label>
+                                    <select name="tags" onChange={handleTopicChangeArray} multiple >
+                                        <option value={"null"}>--None--</option>
+                                        {Students.map((s) => (
+                                            <option key={s.id}
+                                                    value={s.id}>
+                                                {s.firstName} {s.lastName}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="approved_topic" className={"InfoAttribute"}>Approve</label>
+                                    <select name="approved_topic" onChange={handleTopicChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
@@ -2793,6 +3098,51 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
+
+            function getStudentJSON(boostedStudent) {
+                for(var i = 0; i < Students.length; i++) {
+                    if (Students[i].id === boostedStudent) {
+                        console.log(Students[i])
+                        return Students[i]
+                    }
+                }
+                return null;
+            }
+            function getKeywords(klist) {
+                let temp = [];
+                for(var i = 0; i < Keywords.length; i++) {
+                    for(var j=0; j<klist;j++){
+                        if (Keywords[i].keyword_id === klist[j]) {
+                            console.log(Keywords[i])
+                            temp.push(Keywords[i]);
+                        }
+                    }
+                }
+                return temp;
+            }
+            function getPromotorJSON(p) {
+                for(var i = 0; i < Promotors.length; i++) {
+                    if (Promotors[i].id === p) {
+                        console.log(Promotors[i])
+                        return Promotors[i]
+                    }
+                }
+                return null;
+            }
+            function getTargetAsJSON(a) {
+                let temp = [];
+                for(var i = 0; i < TargetAudiences.length; i++) {
+                    for(var j=0; j<a;j++){
+                        if (TargetAudiences[i].keyword_id === a[j]) {
+                            console.log(TargetAudiences[i])
+                            temp.push(TargetAudiences[i]);
+                        }
+                    }
+                }
+                return temp;
+            }
+
+
             const submitTopicCreate = async(e) => {
                 let FormValidTopic = true;
                 function checkFormValueTopic() {
@@ -2808,77 +3158,116 @@ export default function Maintenance_Admin(props){
                 }
                 checkFormValueTopic();
                 if (FormValidTopic){
+                    let boostedStudent = getStudentJSON(FormValueTopic.boostedStudent);
+                    let keywords = getKeywords(FormValueTopic.keyword_list);
+                    let promotor = getPromotorJSON(FormValueTopic.promotor);
+                    let tas = getTargetAsJSON(FormValueTopic.targetAudiences);
+
                     setErrorMessageForm("");
-                    try {
-                        const response = await axiosPrivate({
-                            method: "post",
-                            url: "http://localhost:8080/admin/create/topic/",
-                            data: {
-                                topicName: FormValueTopic.topicName,
-                                hide: FormValueTopic.hide,
-                            }
-                        });
-                        console.log(response)
-                        navigate("/maintenance", { replace: true });
-                        setTopicIndex(-1);
-                        setTopicCreate(false);
-                        setFormValueTopic({
-                                topicName: "",
-                                hide: null,
-                            }
-                        );
-                        await updateTopics();
-                    } catch(error) {
-                        console.log(error)
-                    }
+                    // try {
+                    //     const response = await axiosPrivate({
+                    //         method: "post",
+                    //         url: "http://localhost:8080/admin/create/topic/",
+                    //         data: {
+                    //             topicName: FormValueTopic.topicName,
+                    //             aantal_studenten: FormValueTopic.aantal_studenten,
+                    //             approved_topic: FormValueTopic.approved_topic,
+                    //             boostedStudent: boostedStudent,
+                    //             description_topic: FormValueTopic.description_topic,
+                    //             hide_topic: FormValueTopic.hide_topic,
+                    //             keyword_list: keywords,
+                    //             promotor: promotor,
+                    //             provider: FormValueTopic.provider,
+                    //             release_date: FormValueTopic.release_date,
+                    //             student_list: FormValueTopic.student_list,
+                    //             tags: FormValueTopic.tags,
+                    //             targetAudiences: tas
+                    //         }
+                    //     });
+                    //     console.log(response)
+                    //     navigate("/maintenance", { replace: true });
+                    //     setTopicIndex(-1);
+                    //     setTopicCreate(false);
+                    //     setFormValueTopic({
+                    //         aantal_studenten: 2,
+                    //         approved_topic: null,
+                    //         boostedStudent: null,
+                    //         description_topic: "",
+                    //         hide_topic: null,
+                    //         keyword_list: [],
+                    //         promotor: null,
+                    //         provider: -1,
+                    //         release_date: "",
+                    //         student_list: [],
+                    //         tags: [],
+                    //         targetAudiences: [],
+                    //         topicName: ""
+                    //         }
+                    //     );
+                    //     await updateTopics();
+                    // } catch(error) {
+                    //     console.log(error)
+                    // }
                 }
             }
             const submitTopicDelete = async(e) => {
                 console.log(Topics[TopicIndex]);
-                try {
-                    const response = await axiosPrivate({
-                        method: "post",
-                        url: "http://localhost:8080/admin/delete/topic",
-                        data: {
-                            topic_id: Topics[TopicIndex].topic_id
-                        }
-                    });
-                    console.log(response)
-                    navigate("/maintenance", { replace: true });
-                    setTopicIndex(-1);
-                    setFormValueTopic({
-                            topicName: "",
-                            hide: null,
-                        }
-                    );
-                    await updateTopics();
-                } catch(error) {
-                    console.log(error)
-                }
+                // try {
+                //     const response = await axiosPrivate({
+                //         method: "post",
+                //         url: "http://localhost:8080/admin/delete/topic",
+                //         data: {
+                //             topic_id: Topics[TopicIndex].topic_id
+                //         }
+                //     });
+                //     console.log(response)
+                //     navigate("/maintenance", { replace: true });
+                //     setTopicIndex(-1);
+                //     setFormValueTopic({
+                //             topicName: "",
+                //             hide: null,
+                //         }
+                //     );
+                //     await updateTopics();
+                // } catch(error) {
+                //     console.log(error)
+                // }
             }
             async function updateTopics() {
                 let isMounted = true;
                 const controller = new AbortController();
-                try {
-                    const response = await axiosPrivate({
-                        method: "get",
-                        url: "/topic/all",
-                        signal: controller.signal
-                    });
-                    console.log(response.data);
-                    const myData = [].concat(response.data).sort((a, b) => a.topic_id > b.topic_id ? 1 : -1);
-                    console.log(response.data);
-                    isMounted && setTopics(myData);
-
-                } catch (err) {
-                    console.error(err);
-                    navigate('/login', {state: {from: location}, replace: true});
-                    console.log(errMsg);
-                }
+                // try {
+                //     const response = await axiosPrivate({
+                //         method: "get",
+                //         url: "/topic/all",
+                //         signal: controller.signal
+                //     });
+                //     console.log(response.data);
+                //     const myData = [].concat(response.data).sort((a, b) => a.topic_id > b.topic_id ? 1 : -1);
+                //     console.log(response.data);
+                //     isMounted && setTopics(myData);
+                //
+                // } catch (err) {
+                //     console.error(err);
+                //     navigate('/login', {state: {from: location}, replace: true});
+                //     console.log(errMsg);
+                // }
             }
             function cancelCreateTopic() {
                 setTopicCreate(false);
                 setErrorMessageForm("");
+            }
+
+            function getProviderVanTopic(provider) {
+                return (
+                    <div>
+                        {Providers.map((prov) => (
+                            <div key={prov.id}>
+                                {prov.id === provider? <div>{prov.name} </div>:<div/>}
+                            </div>
+                        ))}
+                    </div>
+                )
             }
 
             return (
@@ -2886,9 +3275,15 @@ export default function Maintenance_Admin(props){
                     <div className={"windowleftlist"}>
                         <div className={"listitemsleft"}>
                             {Topics.map((t,index) =>(
-                                <div key={index} className={"ListItem"} onClick={() => setTopicIndex(index)}>
+                                <div key={index} className={"ListItemTopic"} onClick={() => setTopicIndex(index)}>
                                     <div className={"ListItemTitle"}>
-                                        {TopicIndex===index? <div className={"ListItemSelected"}>{t.topicName}</div>:<div>{t.topicName}</div>}
+                                        {TopicIndex===index? <div className={"ListItemSelected "}>{t.topicName}</div>:<div>{t.topicName}</div>}
+                                    </div>
+                                    <div>
+                                        {getProviderVanTopic(t.provider)}
+                                    </div>
+                                    <div>
+                                        {t.promotor.firstName} {t.promotor.lastName}
                                     </div>
                                 </div>
                             ))}

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {HiUsers} from "react-icons/all";
 
 export default function TopicAssign_Masterproef(props){
 
@@ -66,9 +67,6 @@ export default function TopicAssign_Masterproef(props){
             }
         }
 
-
-
-
         getStudenten();
         getTopics();
     },[])
@@ -77,14 +75,40 @@ export default function TopicAssign_Masterproef(props){
     return(
         <div >
             <h1>Assign</h1>
-            <h4>Studenten zonder topic</h4>
-            {Studenten.map((student) => {
-                return(<p>{student.username}</p>)
-            })}
+            {/*<h4>Studenten zonder topic</h4>*/}
+            {/*{Studenten.map((student) => {*/}
+            {/*    return(<p>{student.username}</p>)*/}
+            {/*})}*/}
+            {/* zoekfunctie */}
+            <div>
+
+            </div>
             <h4>Topics zonder student</h4>
             {Topics.map((topic) => {
-                return(<p>{topic.topicName}</p>)
-            })};
+                return(<div className={"topiccontainer"}>
+                    <div key={topic.id} className={"topicbox"}>
+                        <div className={"topicmetheart"}>
+                            <div className={"topictitleinbox"}>
+                                {topic.topicName}
+                            </div>
+                        </div>
+                        <div className={"topicDescriptionbox contentintopicbow"}>
+                            {topic.description_topic}
+                        </div>
+                        <div className={"studentenmetinfo"}>
+                            <div className={"topicAantalStudentenbox contentintopicbow"}>
+                                <HiUsers className={"persoonicoontopic"}/>
+                                <p>number of students: {topic.aantal_studenten}</p>
+                            </div>
+                            <button className={"info_topic_button"}>
+                                <Link to={{
+                                    pathname: `/topics/assign/${topic.topic_id}`,
+                                }}
+                                >Assign</Link></button>
+                        </div>
+                    </div>
+                </div>)
+            })}
         </div>
     )
 }

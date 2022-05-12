@@ -23,20 +23,14 @@ import Notifications from "../Notification/Notifications";
 import NotificationInfo from "../Notification/NotificationInfo";
 import Home_Standaard from "../Home_Standaard";
 import Unauthorized from "../Login/Unauthorized"
+import Assign_Masterproef from "../AppUsers/Masterproefcoordinator/Assign_Masterproef";
 import * as PropTypes from "prop-types";
 
 
 
 const AuthContext = createContext({});
 
-// function Logout(props) {
-//     return null;
-// }
-//
-// Logout.propTypes = {
-//     roles: PropTypes.any,
-//     persoonid: PropTypes.any
-// };
+
 export const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useState({});
@@ -113,6 +107,10 @@ export const AuthProvider = ({ children }) => {
                     />}/>
                     PersonInfo_Student
                     <Route path="assign" element={<TopicAssign_Masterproef
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="topic/assign/:topicid" element={<Assign_Masterproef
                         roles={role}
                         persoonid = {id}
                     />}/>

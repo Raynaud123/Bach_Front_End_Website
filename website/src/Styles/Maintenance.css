@@ -66,12 +66,21 @@
 .ListItem:active {
     background: rgba(211, 211, 211, 0.18);
 }
+.ListItemTopic{
+    height: 160px;
+    border: rgba(211, 211, 211, 0.47) solid;
+}
 .ListItemTitle{
-    font-size: 25px;
+    font-size: 20px;
+    display: flex;
+    text-align: left;
+    overflow: hidden;
+    height: 3.8em;
+    width: 100%;
 }
 @media only screen and (max-width: 650px) {
     .ListItemTitle {
-        font-size: 20px;
+        font-size: 15px;
     }
 }
 .ListItemSelected{

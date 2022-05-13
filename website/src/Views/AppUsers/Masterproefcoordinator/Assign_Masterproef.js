@@ -14,6 +14,7 @@ export default function Assign_Masterproef(props){
     const [Topic,setTopic] = useState([]);
     const [Studenten,setStudenten] = useState([]);
     const [Value,setValue] = useState([]);
+    const [Null,setNull] = useState(false);
     const [Vol,setVol] = useState(false);
     const [Twee,setTwee] = useState(false);
     const [Display,setDisplay] = useState(false);
@@ -60,7 +61,7 @@ export default function Assign_Masterproef(props){
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: "/student/hided/" + id,
+                    url: "/student/hided/" + id + "/" + topic_id,
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -86,31 +87,44 @@ export default function Assign_Masterproef(props){
 
 
     const handleChange = (e) =>{
-        if (e.length === 2 && Twee){
-            setVol(true);
-        }else if (e.length == 1 && !Twee){
-            setVol(true);
+        console.log(e);
+        if(e !== null){
+            setNull(false);
+            if (e.length === 2 && Twee){
+                setVol(true);
+            }else if (!Twee){
+                setVol(true);
+            }
+            else {
+                setVol(false);
+            }
         }
-        else {
-            setVol(false);
+        else{
+            setNull(true);
         }
+
         setValue(e);
-        // e.map(value => {
-        //     console.log(value);
-        //     setValue({id:value.value,name:value.label});
-        // })
     }
 
     const handleOnclick = async (e) => {
         const ids = [];
-        Object.entries(Value).map(([key,test]) =>{
-            console.log(key);
-            const jep = JSON.stringify(test);
-            console.log(jep);
-            const {label,value} = JSON.parse(jep);
-            console.log(value);
-            ids.push(value);
-        })
+        if (Twee && Vol){
+            Object.entries(Value).map(([key,test]) =>{
+                console.log(key);
+                const jep = JSON.stringify(test);
+                console.log(jep);
+                const {label,value} = JSON.parse(jep);
+                console.log(value);
+                ids.push(value);
+            })
+        }else if(!Twee && Vol){
+            Object.entries(Value).map((test) => {
+                if(test[0] === "value"){
+                    ids.push(test[1])
+                }
+            })
+        }
+
         if(Vol){
             setDisplay(false);
             try {
@@ -159,6 +173,7 @@ export default function Assign_Masterproef(props){
                     <div>
                         <h1>Topic name: {Topic.topicName}</h1>
                         <p>Description: {Topic.description_topic}</p>
+                        <p>Students Amount: {Topic.aantal_studenten}</p>
                     </div>
                     <div>
                         <div>
@@ -209,15 +224,27 @@ export default function Assign_Masterproef(props){
                     </div>
                         <div>
                             <div>
-                                <h2>Studenten zonder Topic, met dit topic in hun top 3</h2>
+                                <h2>Students without Topic</h2>
+                                {Display && <p>Not Full</p>}
                                 <Select
                                 name="secondSelectt"
                                 options={Studenten.map(e=>({label: e.username, value: e.id}))}
-                                placeholder="Select studenten"
+                                placeholder="Select Students"
                                 isSearchable
+                                isClearable
                                 onChange={handleChange}
                                 />
-                                <p> You have chosen {Value.name} for this topic</p>
+                                {!Null && <p> You have chosen
+                                    {
+                                        Object.entries(Value).map((test) => {
+                                            console.log(test);
+                                            if(test[0] === "label"){
+                                                return (` ${test[1]}`)
+                                            }
+                                        })
+                                    } for this topic
+                                </p>}
+                                <button onClick={handleOnclick}>Submit here</button>
                             </div>
                         </div>
                 </div>

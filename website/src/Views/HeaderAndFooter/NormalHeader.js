@@ -26,7 +26,8 @@ export default function NormalHeader(props){
     const role = props.roles;
     const isLoggedIn = props.isLoggedIn;
 
-    const [PhaseId, setPhaseId] = useState(3);
+    const [PhaseFound, setPhaseFound] = useState(false);
+    const [PhaseId, setPhaseId] = useState(1);
 
 
     const axiosPrivate = useAxiosPrivate();

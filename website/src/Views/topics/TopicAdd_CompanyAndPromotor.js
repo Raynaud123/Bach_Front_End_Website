@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom"
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import Select from "react-select";
 
 
 export default function TopicAdd_CompanyAndPromotor(props) {
@@ -15,18 +16,10 @@ export default function TopicAdd_CompanyAndPromotor(props) {
     });
 
     const [targetData, setTargetData] = useState([]);
-    const [selectTarget, setSelectTarget] = useState();
     const [Target, setTarget] = useState([]);
-    const [targetId, setTargetId] = useState([]);
 
     const [keywordData, setKeywordData] = useState([]);
-    const [selectKeyword, setSelectKeyword] = useState();
     const [Keyword, setKeyword] = useState([]);
-    const [keywordId, setKeywordId] = useState([]);
-
-
-    const target = [];
-    const keyword = [];
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -61,7 +54,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     url: "/keyword/all",
                     signal: controller.signal
                 });
-                console.log("response getKey:" + response.data);
+                console.log(response.data);
                 isMounted && setKeywordData(response.data);
             } catch (err) {
                 console.error(err);
@@ -84,29 +77,46 @@ export default function TopicAdd_CompanyAndPromotor(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const keywordIds = [];
+        const targetIds = [];
 
+        // Target.map((test) => {
+        //     var parsed=JSON.parse(test);
+        //     console.log(parsed);
+        //     const {id} = parsed;
+        //     const rara = () =>{
+        //         setTargetId(targetId.concat(id))
+        //         console.log(targetId + "tes")
+        //     };
+        //     rara();
+        // })
 
-        Target.map((test) => {
-            var parsed=JSON.parse(test);
-            console.log(parsed);
-            const {id} = parsed;
-            const rara = () =>{
-                setTargetId(targetId.concat(id))
-                console.log(targetId + "tes")
-            };
-            rara();
+        // keyword.map((test) => {
+        //     var parsed=JSON.parse(test);
+        //     const {id} = parsed;
+        //     const rara = () => setKeywordId((oldArray) => oldArray.concat(id));
+        //     rara();
+        // })
+
+        Object.entries(Target).map(([key,test]) =>{
+            console.log(key);
+            const jep = JSON.stringify(test);
+            console.log(jep);
+            const {label,value} = JSON.parse(jep);
+            console.log(value);
+            targetIds.push(value);
         })
 
-        keyword.map((test) => {
-            var parsed=JSON.parse(test);
-            const {id} = parsed;
-            const rara = () => setKeywordId((oldArray) => oldArray.concat(id));
-            rara();
+
+        Object.entries(Keyword).map(([key,test]) =>{
+            console.log(key);
+            const jep = JSON.stringify(test);
+            console.log(jep);
+            const {label,value} = JSON.parse(jep);
+            console.log(value);
+            keywordIds.push(value);
         })
 
-        console.log(props.persoonid);
-        console.log("test"  + targetId);
-        console.log(keywordId);
 
         try {
             const response = await axiosPrivate({
@@ -117,8 +127,8 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     'topicName': formValue.Question,
                     'description_topic': formValue.Description,
                     'aantal_studenten': formValue.StudentsAmount,
-                    'targetAudience': targetId,
-                    'keywords': keywordId,
+                    'targetAudience': targetIds,
+                    'keywords': keywordIds,
                     'provider_id': props.persoonid
                 })
             });
@@ -129,64 +139,19 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         }
     }
 
-    const handleSelectButtonTarget = (event) => {
-
-
-        console.log(selectTarget);
-        const {id} = JSON.parse(selectTarget);
-        var bool = false;
-        if(Target.length !== 0){
-            for(const i of Target){
-
-                console.log(id);
-                var parsed = JSON.parse(i);
-                console.log(parsed.id);
-                if(id === parsed.id){
-                    bool = true;
-                }
-            }
-            if(!bool){
-                const test = () => setTarget(Target.concat(...selectTarget));
-                test();
-            }
-        }else{
-           const test = () => setTarget((oldArray) => oldArray.concat(...selectTarget));
-           test();
-        }
-
-        console.log("test" + Target);
+    const handleTargetAudienceChange = (e) => {
+        console.log(e);
+        if(e !== null){
+            setTarget(e)
+        };
     }
 
-
-    const handleSelectButtonKeyword = (event) => {
-        console.log(selectKeyword);
-        const {id, name} = JSON.parse(selectKeyword);
-        console.log(id);
-        var bool = false;
-        console.log("lengte" + keyword.length);
-        if(keyword.length !== 0){
-            for(const i of Target) {
-                console.log(id);
-                var parsed = JSON.parse(i);
-                console.log(parsed.id);
-                if (id === parsed.id) {
-                    bool = true;
-                }
-                if (!bool) {
-                    const test = () => setKeyword((oldArray) => oldArray.concat(selectKeyword));
-                    test();
-                }
-            }
-        }else{
-            const test = () => setKeyword((oldArray) => oldArray.concat(selectKeyword));
-            test();
-        }
-
-        console.log("uitkomst" +  keyword);
+    const handleKeywordsChange = (e) => {
+        console.log(e);
+        if(e !== null){
+            setKeyword(e)
+        };
     }
-
-
-
 
 
     const handleChange = (event) => {
@@ -231,59 +196,26 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     </select>
                 </div>
                 <div className={"inputgroup"}>
-                    <label>Select TargetAudience:</label>
-                    <select
-                        name="targetAudience"
-                        onChange={(e) => {
-                            setSelectTarget(e.target.value);
-                        }}
-                    >
-                        <option key={0}/>
-                        {targetData.map((variable) => <option key={variable.targetAudience_id}
-                                                              value={JSON.stringify({"campus_name": variable.campus.campus_name,"course_name" : variable.course.course_name,"id":variable.targetAudience_id})}>
-                            {variable.campus.campus_name} {variable.course.course_name}
-                        </option>)}
-                    </select>
-                    <button type="button" onClick={handleSelectButtonTarget}>
-                        Add TargetAudience
-                    </button>
-                    <ul>
-                        {Target.map((name) =>{
-                            if(name !== null){
-                                console.log(name);
-                                var parsed=JSON.parse(name);
-                                const {campus_name,course_name, id} = parsed;
-                                return(
-                                    <li key={id}>{campus_name + " " + course_name}</li>)
-                            }
-                            })}
-                    </ul>
+                    <Select
+                        name="secondSelectt"
+                        options={targetData.map(e=>({label: e.campus.campus_name +"  "+e.course.course_name, value: e.targetAudience_id}))}
+                        placeholder="Select TargetAudiences"
+                        isSearchable
+                        isMulti
+                        isClearable
+                        onChange={handleTargetAudienceChange}
+                />
                 </div>
                 <div className={"inputgroup"}>
-                    <label>Select Keywords:</label>
-                    <select
-                        name="keywords"
-                        onChange={(e) => {
-                            setSelectKeyword(e.target.value);
-                        }}
-                    >
-                        <option key={0}></option>
-                        {keywordData.map((variable) => <option key={variable.keyword_id} value={JSON.stringify({"name": variable.keyword_name,"id":variable.keyword_id})}>
-                            {variable.keyword_name}
-                        </option>)}
-                    </select>
-                    <button type="button" onClick={handleSelectButtonKeyword}>
-                        Add keyword
-                    </button>
-                    <ul>
-                        {keyword.map((test) => {
-                            var parsed=JSON.parse(test);
-                            const {name, id} = parsed;
-                            return(
-                                <li key={id}>{name}</li>
-                            )
-                        })}
-                    </ul>
+                    <Select
+                        name="secondSelectt"
+                        options={keywordData.map(e=>({label: e.keyword_name , value: e.keyword_id}))}
+                        placeholder="Select Keywords"
+                        isSearchable
+                        isMulti
+                        isClearable
+                        onChange={handleKeywordsChange}
+                    />
                 </div>
                 <button type="submit">
                     Add question

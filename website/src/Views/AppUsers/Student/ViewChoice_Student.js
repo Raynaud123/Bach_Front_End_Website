@@ -52,9 +52,6 @@ export default function ViewChoice_Student(props) {
                     <h4>{choice}</h4>
                     <div>{topic.topicName}</div>
                 </div>
-                {/*<div>*/}
-                {/*    &emsp;{topic.promotor.name}*/}
-                {/*</div>*/}
             </div>
         );
     }

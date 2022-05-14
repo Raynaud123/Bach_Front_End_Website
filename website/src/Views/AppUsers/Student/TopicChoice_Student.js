@@ -23,38 +23,33 @@ export default function TopicChoice_Student(props) {
         let isMounted = true;
         const controller = new AbortController();
         const getPreferred = async () => {
-            try {
-                const response = await axiosPrivate({
-                    method: "get",
-                    url: "/student/" + studentid + "/preferred/all" ,
-                    signal: controller.signal
-                });
-                console.log("Response preferred: " + response.data);
-                isMounted && setPreferred(response.data);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
-                console.log(errMsg + " fout bij preferred");
-            }
-        }
-        const getTop3 = async () => {
-            if (Top3===[]) {
                 try {
                     const response = await axiosPrivate({
                         method: "get",
-                        url: "/student/" + studentid + "/top3" ,
+                        url: "/student/" + studentid + "/preferred/all",
                         signal: controller.signal
                     });
-                    //console.log("Response top3: " + response.data);
-                    isMounted && setTop3(response.data);
+                    console.log("Response preferred: " + response.data);
+                    isMounted && setPreferred(response.data);
                 } catch (err) {
                     console.error(err);
-                    navigate('/login', { state: { from: location }, replace: true });
-                    console.log(errMsg + " fout bij top3: " + studentid + " top3: " + Top3);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg + " fout bij preferred");
                 }
-            }
-            else {
-                console.log("Top3 groter dan 0");
+        }
+        const getTop3 = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/student/" + studentid + "/top3" ,
+                    signal: controller.signal
+                });
+                console.log("Response top3: " + response.data);
+                isMounted && setTop3(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log(errMsg + " fout bij top3: " + studentid + " top3: " + Top3);
             }
         }
         getPreferred();
@@ -88,11 +83,29 @@ export default function TopicChoice_Student(props) {
         )
     }
 
+    function showTop3Made() {
+        return (
+            <div>
+                <div>Already made top 3 choice</div>
+                {Top3.map((t) => (
+                    <div>
+                        <div>
+                            {t.topicName}
+                        </div>
+                        <div>
+                            {t.description_topic}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
     return(
         <div className={"showTopics"}>
             <div>
                 {
-                    Top3!==[]? top3possible():<div>Already made top 3 choice</div>
+                    Top3.length!==3? top3possible(): showTop3Made()
                 }
             </div>
             <div>

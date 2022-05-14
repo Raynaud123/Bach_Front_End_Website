@@ -21,16 +21,6 @@ export default function NotificationInfo_Student(props) {
                     topic? topic.topicName: "Something went wrong..."
                 }
 
-                {/*{notification.notification_msg==="ASSIGNED"?*/}
-                {/*    <div className={"topicmetButtons"}>*/}
-                {/*        <h2 className={"OverflowAuto"}>You are assigned to a Thesis Topic!</h2>*/}
-                {/*        <div className={"NotButtons"}>*/}
-                {/*            <button className={"ButtonV"}>*/}
-                {/*                <NotificationInfoTopic_Student topicid={student}/>*/}
-                {/*            </button>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    :""}*/}
             </div>
         </div>
     )

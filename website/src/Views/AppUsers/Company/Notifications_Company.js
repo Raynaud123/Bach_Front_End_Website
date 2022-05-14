@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import NotificationInfo_Company from "../../Notification/NotificationInfo_Company";
 
 export default function Notifications_Company(props) {
     const companyid = props.persoonid;
     const [Company, setCompany] = useState([]);
+    const [NotificationList, setNotificationList] = useState([]);
+
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
@@ -23,8 +26,9 @@ export default function Notifications_Company(props) {
                 });
                 //console.log("Company: " + response.data);
                 isMounted && setCompany(response.data);
+                if (response.data !== []) setNotificationList(response.data.notification_list);
             } catch (err) {
-                if(err.response.status == 401){
+                if(err.response.status === 401){
                     navigate('/unauthorized',{replace:true});
                     console.log(err);
                 }
@@ -44,6 +48,11 @@ export default function Notifications_Company(props) {
     return(
         <div>
             Notifications: {Company.name}
+            <div>
+                {NotificationList.map((n) => (
+                    <NotificationInfo_Company notification={n} company={Company}/>
+                ))}
+            </div>
         </div>
     )
 }

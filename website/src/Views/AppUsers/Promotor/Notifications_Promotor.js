@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import NotificationInfo_Promotor from "../../Notification/NotificationInfo_Promotor";
 
 export default function Notifications_Promotor(props) {
     const promotorid = props.persoonid;
     const [Promotor, setPromotor] = useState([]);
+    const [NotificationList, setNotificationList] = useState([]);
+
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
@@ -23,6 +26,7 @@ export default function Notifications_Promotor(props) {
                 });
                 //console.log("Promotor: " + response.data);
                 isMounted && setPromotor(response.data);
+                if (response.data !== []) setNotificationList(response.data.notification_list);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -39,6 +43,11 @@ export default function Notifications_Promotor(props) {
     return(
         <div>
             Notifications: {Promotor.firstName}
+            <div>
+                {NotificationList.map((n) => (
+                    <NotificationInfo_Promotor notification={n} promotor={Promotor}/>
+                ))}
+            </div>
         </div>
     )
 }

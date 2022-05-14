@@ -33,6 +33,7 @@ export default function TopicInfo_Student(props) {
                 console.log(response.data);
                 isMounted && setTopic(response.data);
                 await getKeywords(response.data.keyword_list);
+                await getProvider(response.data.provider);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -42,6 +43,21 @@ export default function TopicInfo_Student(props) {
         const getKeywords = async (keywords) => {
             try {
                 setKeyword(keywords);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log(errMsg);
+            }
+        }
+        const getProvider = async (provid) => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/appuser/" + provid,
+                    signal: controller.signal
+                });
+                console.log(response.data);
+                isMounted && setProvider(response.data);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -90,10 +106,10 @@ export default function TopicInfo_Student(props) {
                     <div className={"sectie"}>
                         <div>Description: <div className={"content sectie"}>&emsp;{Topic.description_topic}</div></div>
                         <br/>
-                        Provider: {Topic.provider?
+                        Provider: {Provider?
                         <div className={"Approved content sectie"}>
-                            <div>&emsp;{Topic.provider.name} </div>
-                            <div>{Topic.provider.approved? "Provider is approved":"Provider is not apprroved"}</div>
+                            <div>&emsp;{Provider.name?Provider.name:""}{Provider.firstName?Provider.firstName:""} {Provider.lastName?Provider.lastName:""}</div>
+                            <div>{Provider.approved? "Provider is approved":"Provider is not apprroved"}</div>
                         </div> : "None"}
                         <br/>
                         Promotor: {Topic.promotor?

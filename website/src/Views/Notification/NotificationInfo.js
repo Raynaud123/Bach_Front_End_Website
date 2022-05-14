@@ -1,9 +1,6 @@
 import React from 'react';
-import NotificationInfo_Student from "../Notification/NotificationInfo_Student";
-import TopicInfo_Admin from "../AppUsers/Admin/TopicInfo_Admin";
 import NotificationInfoPerObjSort_MasterProef from "./NotificationInfoPerObjSort_MasterProef";
-import TopicInfo_Company from "../AppUsers/Company/TopicInfo_Company";
-import TopicInfo_Promotor from "../AppUsers/Promotor/TopicInfo_Promotor";
+import NotificationInfo_Company from "./NotificationInfo_Company";
 
 
 export default function NotificationInfo(props){

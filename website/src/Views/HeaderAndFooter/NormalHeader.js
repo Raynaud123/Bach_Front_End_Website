@@ -26,8 +26,7 @@ export default function NormalHeader(props){
     const role = props.roles;
     const isLoggedIn = props.isLoggedIn;
 
-    const [PhaseFound, setPhaseFound] = useState(false);
-    const [PhaseId, setPhaseId] = useState(4);
+    const [PhaseId, setPhaseId] = useState(1);
 
 
     const axiosPrivate = useAxiosPrivate();
@@ -80,7 +79,6 @@ export default function NormalHeader(props){
                 <HomeButton/>
                 <div className={"buttons"}>
                     <button><Link to="/maintenance">Maintenance</Link></button>
-                    <button><Link to="/topic">Topics</Link></button>
                 </div>
                 <Icons/>
             </div>

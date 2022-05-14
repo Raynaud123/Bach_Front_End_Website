@@ -6,13 +6,20 @@ import Select from "react-select";
 
 export default function TopicAdd_CompanyAndPromotor(props) {
 
+    
+    const id = props.persoonid;
+    const roles = props.roles;
 
     const [errMsg, setErrMsg] = useState('');
     const axiosPrivate = useAxiosPrivate();
     const [formValue, setformValue] = React.useState({
         Question: '',
         Description: '',
-        StudentsAmount: 0
+        StudentsAmount: 0,
+        Email:"",
+        FirstName:"",
+        LastName:"",
+        Tel:""
     });
 
     const [targetData, setTargetData] = useState([]);
@@ -20,6 +27,8 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
     const [keywordData, setKeywordData] = useState([]);
     const [Keyword, setKeyword] = useState([]);
+    
+    const [CompanyComponent, setCompanyComponent] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -66,6 +75,11 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         getTarget();
         getKeyword();
 
+        if(roles === "COMPANY"){
+            setCompanyComponent(true);
+        }else {
+            setCompanyComponent(false)
+        }
 
         return () => {
             isMounted = false;
@@ -79,24 +93,6 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
         const keywordIds = [];
         const targetIds = [];
-
-        // Target.map((test) => {
-        //     var parsed=JSON.parse(test);
-        //     console.log(parsed);
-        //     const {id} = parsed;
-        //     const rara = () =>{
-        //         setTargetId(targetId.concat(id))
-        //         console.log(targetId + "tes")
-        //     };
-        //     rara();
-        // })
-
-        // keyword.map((test) => {
-        //     var parsed=JSON.parse(test);
-        //     const {id} = parsed;
-        //     const rara = () => setKeywordId((oldArray) => oldArray.concat(id));
-        //     rara();
-        // })
 
         Object.entries(Target).map(([key,test]) =>{
             console.log(key);
@@ -117,19 +113,22 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             keywordIds.push(value);
         })
 
-
-        try {
+        if (CompanyComponent){
+            try{
             const response = await axiosPrivate({
                 method: "post",
                 url: "/topic",
                 data: JSON.stringify({
-
                     'topicName': formValue.Question,
                     'description_topic': formValue.Description,
                     'aantal_studenten': formValue.StudentsAmount,
                     'targetAudience': targetIds,
                     'keywords': keywordIds,
-                    'provider_id': props.persoonid
+                    'provider_id': props.persoonid,
+                    'Firstname':formValue.FirstName,
+                    'Lastname':formValue.LastName,
+                    'Email':formValue.Email,
+                    'Tel':formValue.Tel
                 })
             });
             console.log("response submit:"  + response)
@@ -137,6 +136,28 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         } catch (error) {
             console.log(error)
         }
+        }else {
+            try {
+                const response = await axiosPrivate({
+                    method: "post",
+                    url: "/topic",
+                    data: JSON.stringify({
+
+                        'topicName': formValue.Question,
+                        'description_topic': formValue.Description,
+                        'aantal_studenten': formValue.StudentsAmount,
+                        'targetAudience': targetIds,
+                        'keywords': keywordIds,
+                        'provider_id': props.persoonid
+                    })
+                });
+                console.log("response submit:"  + response)
+                navigate(from, {replace: true});
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
     }
 
     const handleTargetAudienceChange = (e) => {
@@ -217,6 +238,42 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                         onChange={handleKeywordsChange}
                     />
                 </div>
+                {CompanyComponent &&
+                    <div>
+                        <h3>Contact details:</h3>
+                            <label>First name</label>
+                            <input
+                                type="text"
+                                name="FirstName"
+                                placeholder="Provide a Firstname"
+                                value={formValue.FirstName}
+                                onChange={handleChange}
+                            />
+                            <label>Last name:</label>
+                            <input
+                                type="text"
+                                name="LastName"
+                                placeholder="Provide a Lastname"
+                                value={formValue.LastName}
+                                onChange={handleChange}
+                            />
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                name="Email"
+                                placeholder="Provide an Email"
+                                value={formValue.Email}
+                                onChange={handleChange}
+                            /><label>Phone:</label>
+                            <input
+                                type="tel"
+                                name="Tel"
+                                placeholder="Provide a phoneNumber"
+                                value={formValue.Tel}
+                                onChange={handleChange}
+                            />
+                    </div>
+                }
                 <button type="submit">
                     Add question
                 </button>

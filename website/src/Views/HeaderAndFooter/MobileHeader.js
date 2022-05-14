@@ -138,6 +138,7 @@ export default function MobileHeader(props){
                         <div className={"hamburgerbuttons"}>
                             <Link to="/topic">Topics</Link>
                             <Link to="/approve">Approve</Link>
+                            <Link to="/promotor/assing">Assign Promotor</Link>
                             <div className={"iconshamburger"}>
                                 <IoIosNotificationsOutline color='white' size={50}/>
                                 <GoPerson color='white' size={40}/>

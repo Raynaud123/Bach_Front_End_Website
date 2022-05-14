@@ -15,7 +15,6 @@ export default function NotificationInfo_Student(props) {
     const [Topic, setTopic] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -44,12 +43,17 @@ export default function NotificationInfo_Student(props) {
     }, [])
 
 
+
+
     return(
         <div className={"showTopicInfo"}>
             <div className={"topicinfocontainer"}>
-                {notification.notification_msg==="ASSIGNED"?
+                <div>{notification.notification_msg==="ASSIGNED"?
                     <div className={"topicmetButtons"}>
                         <h2 className={"OverflowAuto"}>You are assigned to a Thesis Topic!</h2>
+                        <div>
+                            {notification.addedDate}
+                        </div>
                         <div>
                             <button onClick={() => setShow(!Show)}>
                                 Info
@@ -59,6 +63,7 @@ export default function NotificationInfo_Student(props) {
                     :""}
                 {Show?
                     <NotificationInfoTopic_Student topic={Topic}/>:<div/>}
+                </div>
             </div>
         </div>
     )

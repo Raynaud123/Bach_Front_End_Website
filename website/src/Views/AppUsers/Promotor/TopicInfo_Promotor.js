@@ -23,6 +23,7 @@ export default function TopicInfo_Promotor(props) {
     const [Keyword, setKeyword] = useState([]);
     const [SelectStudent, setSelectStudent] = useState();
     const [BoostedStudent, setBoostedStudent] = useState([]);
+    const [BoostedComponent, setBoostedComponent] = useState(false);
 
 
     const axiosPrivate = useAxiosPrivate();
@@ -55,7 +56,10 @@ export default function TopicInfo_Promotor(props) {
                 await getKeywords(response.data.keyword_list);
                 await getPromotor(response.data.promotor);
                 await getStudents();
-                if(response.data.boostedStudent !== "undefined"){
+                if(response.data.boostedStudent.length == 0) {
+                    setBoostedComponent(true);
+                }else {
+                    setBoostedComponent(false);
                     setBoostedStudent(response.data.boostedStudent);
                 }
             } catch (err) {
@@ -267,7 +271,7 @@ export default function TopicInfo_Promotor(props) {
                     <h2>Contact</h2>
                     {ProvInfo()}
                 </div>
-                {Phase && <BoostComponent
+                {Phase && BoostedComponent &&<BoostComponent
                     aantalstudenten={AantalStudenten}
                     id={topicid}
                 />}

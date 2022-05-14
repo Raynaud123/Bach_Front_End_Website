@@ -7,6 +7,9 @@ export default function Approve_Masterproef(props){
     const masterid = props.persoonid;
     const [MasterNotifications, setMasterNotifications] = useState([]);
     const [Phase, setPhase] = useState([]);
+    const x = () => {
+      
+    }
 
 
 
@@ -61,8 +64,9 @@ export default function Approve_Masterproef(props){
         <div className={"showNot"}>
             <div className={"titel"}>
                 <h1 className={"topicTitle titel"}>Approve Topics/Promotors/ResearchGroups/Companies</h1>
-                <h4 className={"ronde titel"}> &emsp; Approving is possible untill: {Phase.begin_deadline} - {Phase.end_deadline}</h4>
+                <h4 className={"ronde titel"}> &emsp; Approving is possible until: {Phase.begin_deadline} - {Phase.end_deadline}</h4>
             </div>
+            
             {
                 MasterNotifications.map((not) => (
                     <div key={not.notification_id}>

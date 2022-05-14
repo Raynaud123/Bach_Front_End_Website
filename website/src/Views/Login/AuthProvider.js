@@ -24,6 +24,8 @@ import NotificationInfo from "../Notification/NotificationInfo";
 import Home_Standaard from "../Home_Standaard";
 import Unauthorized from "../Login/Unauthorized"
 import Assign_Masterproef from "../AppUsers/Masterproefcoordinator/Assign_Masterproef";
+import PromotorAssing_Masterproef from "../AppUsers/Masterproefcoordinator/PromotorAssing_Masterproef";
+import AssignPromotor_Masterproef from "../AppUsers/Masterproefcoordinator/AssignPromotor_Masterproef";
 import * as PropTypes from "prop-types";
 
 
@@ -106,11 +108,19 @@ export const AuthProvider = ({ children }) => {
                         persoonid = {id}
                     />}/>
                     PersonInfo_Student
-                    <Route path="assign" element={<TopicAssign_Masterproef
+                    <Route path="/assign" element={<TopicAssign_Masterproef
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="/promotor/assign" element={<PromotorAssing_Masterproef
                         roles={role}
                         persoonid = {id}
                     />}/>
                     <Route path="topic/assign/:topicid" element={<Assign_Masterproef
+                        roles={role}
+                        persoonid = {id}
+                    />}/>
+                    <Route path="topic/promotor/assign/:topicid" element={<AssignPromotor_Masterproef
                         roles={role}
                         persoonid = {id}
                     />}/>

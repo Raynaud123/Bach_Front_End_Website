@@ -3,6 +3,9 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import PreferredTopic from "../../topics/PreferredTopic";
 import TopicsPromotor  from "../../../Styles/TopicsPromotor.css";
+import BoostComponent from "./BoostComponent";
+
+
 
 
 export default function TopicInfo_Promotor(props) {
@@ -10,8 +13,11 @@ export default function TopicInfo_Promotor(props) {
     const promotorid = props.promotorid;
     const topicid = useParams().topicid;
     const [Topic, setTopic] = useState([]);
+    const [AantalStudenten, setAantalStudenten] = useState();
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
+    const [Display,setDisplay] = useState(false);
+    const [Phase, setPhase] = useState(true);
     const [TargetAudience, setTargetAudience] = useState([]);
     const [Students, setStudents] = useState([]);
     const [Keyword, setKeyword] = useState([]);
@@ -42,6 +48,8 @@ export default function TopicInfo_Promotor(props) {
                 });
                 console.log(response.data);
                 isMounted && setTopic(response.data);
+                setAantalStudenten(response.data.aantal_studenten);
+                console.log(response.data.aantal_studenten);
                 await getProvider(response.data.provider);
                 await getTargetAudience(response.data.targetAudiences);
                 await getKeywords(response.data.keyword_list);
@@ -135,7 +143,27 @@ export default function TopicInfo_Promotor(props) {
             }
 
         }
-
+//         const getPhase = async () => {
+//             try {
+//                 const response = await axiosPrivate({
+//                     method: "get",
+//                     url: "/phase/now",
+//                     signal: controller.signal
+//                 });
+//                 // console.log(response.data);
+//                 if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
+//                     setPhase(true)
+//                 }
+//                 else setPhase(false);
+// //                isMounted && setPhaseId(response.data.phase_id);
+//             } catch (err) {
+//                 console.error(err);
+//                 navigate('/login', { state: { from: location }, replace: true });
+//                 console.log(errMsg);
+//             }
+//         }
+//
+//         getPhase();
         await getTopic();
 
 
@@ -144,6 +172,8 @@ export default function TopicInfo_Promotor(props) {
             controller.abort();
         }
     }, [])
+
+
 
 /*    useEffect(
 
@@ -166,29 +196,6 @@ export default function TopicInfo_Promotor(props) {
         await handleBoost();
 
     },[submit])*/
-
-
-    const handleOnclick = async (e) => {
-        e.preventDefault();
-        console.log(SelectStudent);
-        const handleBoost = async () => {
-            try {
-                const response = await axiosPrivate({
-                    method: "PUT",
-                    url: `/topic/boost/${topicid}`,
-                    data: JSON.stringify({'studentId': SelectStudent})
-                });
-                setBoostedStudent(SelectStudent);
-                console.log(response.data);
-                navigate(`/topics/info/${topicid}`, {replace: true});
-            } catch (err) {
-                console.error(err);
-                navigate('/login', {state: {from: location}, replace: true});
-                console.log(errMsg);
-            }
-        }
-        await handleBoost();
-    }
 
 
 
@@ -260,28 +267,32 @@ export default function TopicInfo_Promotor(props) {
                     <h2>Contact</h2>
                     {ProvInfo()}
                 </div>
-
+                {Phase && <BoostComponent
+                    aantalstudenten={AantalStudenten}
+                    id={topicid}
+                />}
             </div>
-            {!BoostedStudent && <form>
 
-                <select
-                    name="boost"
-                    onChange={(e) => {
-                        setSelectStudent(e.target.value);
-                    }}
+            {/*{!BoostedStudent && <form>*/}
 
-                >
-                    <option key={0}/>
-                    {Students.map((variable) => <option key={variable.id} value={variable.id}>
-                        {variable.firstName + " " + variable.lastName}
-                    </option>)}
-                </select>
+            {/*    <select*/}
+            {/*        name="boost"*/}
+            {/*        onChange={(e) => {*/}
+            {/*            setSelectStudent(e.target.value);*/}
+            {/*        }}*/}
 
-                <button
-                    onClick={handleOnclick}
-                >Boost Student</button>
-            </form>}
-            {BoostedStudent && <p>{BoostedStudent}</p>}
+            {/*    >*/}
+            {/*        <option key={0}/>*/}
+            {/*        {Students.map((variable) => <option key={variable.id} value={variable.id}>*/}
+            {/*            {variable.firstName + " " + variable.lastName}*/}
+            {/*        </option>)}*/}
+            {/*    </select>*/}
+
+            {/*    <button*/}
+            {/*        onClick={handleOnclick}*/}
+            {/*    >Boost Student</button>*/}
+            {/*</form>}*/}
+            {/*{BoostedStudent && <p>{BoostedStudent}</p>}*/}
 
 
         </div>

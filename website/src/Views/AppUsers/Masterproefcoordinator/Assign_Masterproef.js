@@ -45,7 +45,7 @@ export default function Assign_Masterproef(props){
                     setTwee(false);
                 }
             }catch (err){
-                if(err.response.status == 401){
+                if(err.response.status === 401){
                     navigate("/unauthorized");
                     console.error(err);
                 }
@@ -143,10 +143,10 @@ export default function Assign_Masterproef(props){
                 if(err.response.status === 500){
                     //          TO-DO: Server Failed pagina?
                 }
-                else if(err.response.status == 400){
+                else if(err.response.status === 400){
                     console.log("id niet gevonden")
                 }
-                else if(err.response.status == 409){
+                else if(err.response.status === 409){
                     console.log("Staat niet in de top 3 van de persoon")
                 }
                 else {

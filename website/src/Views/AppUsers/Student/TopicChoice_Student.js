@@ -68,6 +68,9 @@ export default function TopicChoice_Student(props) {
         console.log(Preferred);
         return (
             <div>
+                <div>
+                    You can change your Top 3 Thesis topics until you close this page.
+                </div>
                 {Show?
                         <Top3Pick_Student
                         studentid={studentid}

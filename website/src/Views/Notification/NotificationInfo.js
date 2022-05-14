@@ -1,5 +1,5 @@
 import React from 'react';
-import TopicInfo_Student from "../AppUsers/Student/TopicInfo_Student";
+import NotificationInfo_Student from "../Notification/NotificationInfo_Student";
 import TopicInfo_Admin from "../AppUsers/Admin/TopicInfo_Admin";
 import NotificationInfoPerObjSort_MasterProef from "./NotificationInfoPerObjSort_MasterProef";
 import TopicInfo_Company from "../AppUsers/Company/TopicInfo_Company";

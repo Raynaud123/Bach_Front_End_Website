@@ -58,7 +58,7 @@ export default function ViewChoice_Student(props) {
 
     return(
         <div>
-            {Top3.length!==0? Top3.map((topic,index) => (
+            {Top3.length===3? Top3.map((topic,index) => (
                 <div key={topic.topic_id}>
                     {index===0? showChoice(topic, "First Choice"):
                       index===1? showChoice(topic, "Second Choice"):

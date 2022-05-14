@@ -21,12 +21,12 @@ export default function PersonalInfo_Student(props) {
                     url: "/student/" + studentid,
                     signal: controller.signal
                 });
-                //console.log("Student: " + response.data);
+                console.log("Student: " + response.data);
                 isMounted && setStudent(response.data);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
-                console.log(errMsg);
+                console.log("Fout bij getStudent" + errMsg);
             }
         }
         getStudent().then();

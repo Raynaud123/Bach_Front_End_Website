@@ -89,6 +89,8 @@ export default function Login(){
 
 
     return(
+        <div className={"standaard"}>
+            <div className={"titel"}>
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Sign In</h1>
@@ -103,7 +105,7 @@ export default function Login(){
                             value={user}
                             required
                         />
-
+                        <br/>
                         <label htmlFor="password">Password:</label>
                         <input
                             type="password"
@@ -112,12 +114,16 @@ export default function Login(){
                             value={pwd}
                             required
                         />
+                        <br/>
                         <button>Sign In</button>
                     </form>
                     <p>Need an Account?<br /></p>
-                        <button>
-                            <Link to="/register">Register Here!</Link>
-                        </button>
+                    <button>
+                        <Link to="/register">Register Here!</Link>
+                    </button>
                 </section>
+            </div>
+            <div className={"fillhalf"}/>
+        </div>
     )
 }

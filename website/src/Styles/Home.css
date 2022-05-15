@@ -24,8 +24,14 @@
 .fill{
     height: 350px;
 }
+.fillhalf{
+    height: 125px;
+}
 @media only screen and (min-height: 400px) {
     .fill {
         height: 500px;
+    }
+    .fillhalf{
+        height: 250px;
     }
 }

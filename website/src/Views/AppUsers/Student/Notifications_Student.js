@@ -41,12 +41,26 @@ export default function Notifications_Student(props) {
         }
     }, [])
 
+    function showNot(notification) {
+        let d = new Date();
+        var arr = notification.addedDate.split("-");
+        var year = arr[0];
+        var month = arr[1];
+        var day = arr[2];
+        console.log("addedDate " + year + " " + month + " " + day);
+        console.log("Date " + d.getFullYear() + " " + (d.getMonth()+1) + " " + d.getDate());
+        return year<=d.getFullYear() && month<=(d.getMonth()+1) && day<=d.getDate();
+    }
+
     return(
         <div>
             Notifications: {Student.firstName} {Student.lastName}
             <div>
                 {NotificationList.map((n) => (
-                    <NotificationInfo_Student notification={n} student={Student}/>
+                    <div>
+                        {showNot(n)?
+                    <NotificationInfo_Student notification={n} student={Student}/>:""}
+                    </div>
                 ))}
             </div>
         </div>

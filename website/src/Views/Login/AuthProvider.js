@@ -14,7 +14,6 @@ import Error404 from "../Error404";
 import TopicChoice_Student from "../AppUsers/Student/TopicChoice_Student";
 import TopicAssign_Masterproef from "../AppUsers/Masterproefcoordinator/TopicAssign_Masterproef";
 import Approve_Masterproef from "../AppUsers/Masterproefcoordinator/Approve_Masterproef";
-import BoostStudent_Promotor from "../AppUsers/Promotor/BoostStudent_Promotor";
 import Maintenance_Admin from "../AppUsers/Admin/Maintenance_Admin";
 import ViewChoice_Student from "../AppUsers/Student/ViewChoice_Student";
 import SubmitTopic_Student from "../AppUsers/Student/SubmitTopic_Student";
@@ -26,8 +25,6 @@ import Unauthorized from "../Login/Unauthorized"
 import Assign_Masterproef from "../AppUsers/Masterproefcoordinator/Assign_Masterproef";
 import PromotorAssing_Masterproef from "../AppUsers/Masterproefcoordinator/PromotorAssing_Masterproef";
 import AssignPromotor_Masterproef from "../AppUsers/Masterproefcoordinator/AssignPromotor_Masterproef";
-import * as PropTypes from "prop-types";
-
 
 
 const AuthContext = createContext({});

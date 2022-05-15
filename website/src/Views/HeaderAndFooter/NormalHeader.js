@@ -123,14 +123,14 @@ export default function NormalHeader(props){
         else return null;
     }
     else if(role === "MASTER"){
-        if (PhaseId === 1 || PhaseId === 2 || PhaseId === 3 || PhaseId === 5 || PhaseId === 6){
+        if (PhaseId === 1 || PhaseId === 2 ){
             return(
                 <div className={"header"}>
                     <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/topic">Topics</Link></button>
                         <button><Link to="/approve">Approve</Link></button>
-                        <button><Link to="/promotor/assign">Assign</Link></button>
+                        <button><Link to="/promotor/assign">Assign Promotors</Link></button>
                     </div>
                     <Icons/>
                 </div>
@@ -142,6 +142,18 @@ export default function NormalHeader(props){
                     <HomeButton/>
                     <div className={"buttons"}>
                         <button><Link to="/assign">Assign Topics</Link></button>
+                    </div>
+                    <Icons/>
+                </div>
+            )
+        }
+        if (PhaseId === 3 || PhaseId === 5 || PhaseId === 6){
+            return(
+                <div className={"header"}>
+                    <HomeButton/>
+                    <div className={"buttons"}>
+                        <button><Link to="/topic">Topics</Link></button>
+                        <button><Link to="/approve">Approve</Link></button>
                     </div>
                     <Icons/>
                 </div>

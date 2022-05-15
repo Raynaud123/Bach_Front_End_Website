@@ -75,6 +75,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         getTarget();
         getKeyword();
 
+        //Nog veranderen naar topicprovider company boolean
         if(roles === "COMPANY"){
             setCompanyComponent(true);
         }else {

@@ -147,27 +147,27 @@ export default function TopicInfo_Promotor(props) {
             }
 
         }
-//         const getPhase = async () => {
-//             try {
-//                 const response = await axiosPrivate({
-//                     method: "get",
-//                     url: "/phase/now",
-//                     signal: controller.signal
-//                 });
-//                 // console.log(response.data);
-//                 if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
-//                     setPhase(true)
-//                 }
-//                 else setPhase(false);
-// //                isMounted && setPhaseId(response.data.phase_id);
-//             } catch (err) {
-//                 console.error(err);
-//                 navigate('/login', { state: { from: location }, replace: true });
-//                 console.log(errMsg);
-//             }
-//         }
-//
-//         getPhase();
+        const getPhase = async () => {
+            try {
+                const response = await axiosPrivate({
+                    method: "get",
+                    url: "/phase/now",
+                    signal: controller.signal
+                });
+                // console.log(response.data);
+                if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
+                    setPhase(true)
+                }
+                else setPhase(false);
+//                isMounted && setPhaseId(response.data.phase_id);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+                console.log(errMsg);
+            }
+        }
+
+        getPhase();
         await getTopic();
 
 
@@ -276,27 +276,6 @@ export default function TopicInfo_Promotor(props) {
                     id={topicid}
                 />}
             </div>
-
-            {/*{!BoostedStudent && <form>*/}
-
-            {/*    <select*/}
-            {/*        name="boost"*/}
-            {/*        onChange={(e) => {*/}
-            {/*            setSelectStudent(e.target.value);*/}
-            {/*        }}*/}
-
-            {/*    >*/}
-            {/*        <option key={0}/>*/}
-            {/*        {Students.map((variable) => <option key={variable.id} value={variable.id}>*/}
-            {/*            {variable.firstName + " " + variable.lastName}*/}
-            {/*        </option>)}*/}
-            {/*    </select>*/}
-
-            {/*    <button*/}
-            {/*        onClick={handleOnclick}*/}
-            {/*    >Boost Student</button>*/}
-            {/*</form>}*/}
-            {/*{BoostedStudent && <p>{BoostedStudent}</p>}*/}
 
 
         </div>

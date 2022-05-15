@@ -113,6 +113,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             keywordIds.push(value);
         })
 
+
         if (CompanyComponent){
             try{
             const response = await axiosPrivate({
@@ -125,10 +126,10 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     'targetAudience': targetIds,
                     'keywords': keywordIds,
                     'provider_id': props.persoonid,
-                    'Firstname':formValue.FirstName,
-                    'Lastname':formValue.LastName,
-                    'Email':formValue.Email,
-                    'Tel':formValue.Tel
+                    'firstname':formValue.FirstName,
+                    'lastname':formValue.LastName,
+                    'email':formValue.Email,
+                    'tel':formValue.Tel
                 })
             });
             console.log("response submit:"  + response)

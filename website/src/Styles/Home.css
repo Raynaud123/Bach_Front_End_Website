@@ -21,3 +21,11 @@
     size: 20px;
     text-align: center;
 }
+.fill{
+    height: 350px;
+}
+@media only screen and (min-height: 400px) {
+    .fill {
+        height: 500px;
+    }
+}

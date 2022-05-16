@@ -51,7 +51,6 @@ export default function Topic_Student (props){
                 <h4 className={"ronde titel"}> { firstRound? <b>First Round</b> : <b>Second Round</b>}
                     &emsp;&emsp; {phase.phase_name} ({phase.begin_deadline} - {phase.end_deadline})</h4>
             </div>
-            <TopicFilter/>
             <ApprovedTopics studentid={studentid}/>
         </div>
     )

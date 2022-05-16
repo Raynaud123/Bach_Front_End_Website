@@ -5,21 +5,17 @@ import Unauthorized from "../../Login/Unauthorized"
 import "../../../Styles/Home.css"
 import "../../../Styles/Register.css"
 import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
 
 
 export default function AssignPromotor_Masterproef(props){
-    const id = props.persoonid;
     const topic_id = useParams().topicid;
 
 
     const [Topic,setTopic] = useState([]);
     const [Promotoren,setPromotoren] = useState([]);
     const [Value,setValue] = useState([]);
-    const [Null,setNull] = useState(false);
-    const [Vol,setVol] = useState(false);
-    const [Twee,setTwee] = useState(false);
-    const [Display,setDisplay] = useState(false);
+    const [setTwee] = useState(false);
+    const [Display] = useState(false);
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
     const location = useLocation();
@@ -38,9 +34,9 @@ export default function AssignPromotor_Masterproef(props){
                     url: "/topic/" + topic_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
-                console.log(Topic)
+                //console.log(Topic)
                 if(response.data.aantal_studenten === 2){
                     setTwee(true);
                 }else {
@@ -66,9 +62,9 @@ export default function AssignPromotor_Masterproef(props){
                     url: "/promotor/hided/ " + topic_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 setPromotoren(response.data);
-                console.log(Promotoren);
+                //console.log(Promotoren);
             }catch (err){
                 console.error(err);
                 if(err.response.status === 500){
@@ -89,12 +85,11 @@ export default function AssignPromotor_Masterproef(props){
 
 
     const handleChange = (e) =>{
-        console.log(e);
-
+        //console.log(e);
         setValue(e);
     }
 
-    const handleOnclick = async (e) => {
+    const handleOnclick = async () => {
         let prom_id;
         Object.entries(Value).map((test) => {
             if(test[0] === "value"){
@@ -153,7 +148,7 @@ export default function AssignPromotor_Masterproef(props){
                             <p> You have chosen
                                 {
                                     Object.entries(Value).map((test) => {
-                                        console.log(test);
+                                        //console.log(test);
                                         if(test[0] === "label"){
                                             return (` ${test[1]}`)
                                         }

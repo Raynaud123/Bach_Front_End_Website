@@ -5,6 +5,8 @@ import {HiUsers} from "react-icons/all";
 import PreferredTopic from "../../topics/PreferredTopic";
 import Top3Pick_Student from "../Student/Top3Pick_Student";
 import "../../../Styles/Topics.css";
+import "../../../Styles/Home.css";
+
 
 export default function TopicChoice_Student(props) {
     const studentid = props.persoonid;
@@ -105,7 +107,7 @@ export default function TopicChoice_Student(props) {
     }
 
     return(
-        <div className={"showTopics"}>
+        <div className={"standaard"}>
             <div>
                 {
                     Top3.length!==3? top3possible(): showTop3Made()

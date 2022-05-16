@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
-import PreferredTopic from "../../topics/PreferredTopic";
-import TopicsPromotor  from "../../../Styles/TopicsPromotor.css";
 import BoostComponent from "./BoostComponent";
 
 
@@ -16,13 +14,11 @@ export default function TopicInfo_Promotor(props) {
     const [AantalStudenten, setAantalStudenten] = useState();
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
-    const [Display,setDisplay] = useState(false);
     const [Phase, setPhase] = useState(true);
-    const [TargetAudience, setTargetAudience] = useState([]);
-    const [Students, setStudents] = useState([]);
+    const [setTargetAudience] = useState([]);
+    const [setStudents] = useState([]);
     const [Keyword, setKeyword] = useState([]);
-    const [SelectStudent, setSelectStudent] = useState();
-    const [BoostedStudent, setBoostedStudent] = useState([]);
+    const [setBoostedStudent] = useState([]);
     const [BoostedComponent, setBoostedComponent] = useState(false);
 
 
@@ -47,10 +43,10 @@ export default function TopicInfo_Promotor(props) {
                     url: `/topic/${topicid}`,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
                 setAantalStudenten(response.data.aantal_studenten);
-                console.log(response.data.aantal_studenten);
+                //console.log(response.data.aantal_studenten);
                 await getProvider(response.data.provider);
                 await getTargetAudience(response.data.targetAudiences);
                 await getKeywords(response.data.keyword_list);
@@ -81,7 +77,7 @@ export default function TopicInfo_Promotor(props) {
                 } catch (err) {
                     if(err.response.status === 401){
                         navigate('/unauthorized',{replace:true});
-                        console.log(err);
+                        //console.log(err);
                     }
                     else{
                         console.error(err);
@@ -119,7 +115,7 @@ export default function TopicInfo_Promotor(props) {
                         url: `/promotor/` + promotorid,
                         signal: controller.signal
                     });
-                    console.log(response);
+                    //console.log(response);
                     setPromotor(response.data);
                 }
                 else{
@@ -138,7 +134,7 @@ export default function TopicInfo_Promotor(props) {
                         url: `/student/hided/all`,
                         signal: controller.signal
                     });
-                    console.log(response);
+                //console.log(response);
                     setStudents(response.data);
             }catch (err){
                 console.error(err);

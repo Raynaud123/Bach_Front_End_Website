@@ -38,9 +38,9 @@ export default function Assign_Masterproef(props){
                     url: "/topic/" + topic_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
-                console.log(Topic)
+                //console.log(Topic)
                 if(response.data.aantal_studenten === 2){
                     setTwee(true);
                 }else {
@@ -66,9 +66,9 @@ export default function Assign_Masterproef(props){
                     url: "/student/hided/" + id + "/" + topic_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 setStudenten(response.data);
-                console.log(Studenten);
+                //console.log(Studenten);
             }catch (err){
                 console.error(err);
                 if(err.response.status === 500){
@@ -89,7 +89,7 @@ export default function Assign_Masterproef(props){
 
 
     const handleChange = (e) =>{
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setNull(false);
             if (e.length === 2 && Twee){
@@ -108,15 +108,15 @@ export default function Assign_Masterproef(props){
         setValue(e);
     }
 
-    const handleOnclick = async (e) => {
+    const handleOnclick = async () => {
         const ids = [];
         if (Twee && Vol){
-            Object.entries(Value).map(([key,test]) =>{
-                console.log(key);
+            Object.entries(Value).map(([test]) =>{
+                //console.log(key);
                 const jep = JSON.stringify(test);
-                console.log(jep);
-                const {label,value} = JSON.parse(jep);
-                console.log(value);
+                //console.log(jep);
+                const {value} = JSON.parse(jep);
+                //console.log(value);
                 ids.push(value);
             })
         }else if(!Twee && Vol){
@@ -188,24 +188,24 @@ export default function Assign_Masterproef(props){
                                 isSearchable
                                 isMulti
                                 isClearable
-                                isOptionDisabled={(option) => Value.length >= 2}
+                                isOptionDisabled={() => Value.length >= 2}
                                 onChange={handleChange}
                             />
                             <div> You have chosen for
                             {
 
                                 Object.entries(Value).map(([key,test]) =>{
-                                    console.log(key);
-                                    if(key == "0"){
+                                    //console.log(key);
+                                    if(key === "0"){
                                         const jep = JSON.stringify(test);
-                                        console.log(jep);
-                                        const {label,value} = JSON.parse(jep);
-                                        console.log(label);
+                                        //console.log(jep);
+                                        const {label} = JSON.parse(jep);
+                                        //console.log(label);
                                         return (` ${label} `)
                                     }else{
                                         const jep = JSON.stringify(test);
-                                        console.log(jep);
-                                        const {label,value} = JSON.parse(jep);
+                                        //console.log(jep);
+                                        const {label} = JSON.parse(jep);
                                         return(`and ${label}`);
                                     }
                                 })
@@ -239,7 +239,7 @@ export default function Assign_Masterproef(props){
                                 {!Null && <p> You have chosen
                                     {
                                         Object.entries(Value).map((test) => {
-                                            console.log(test);
+                                            //console.log(test);
                                             if(test[0] === "label"){
                                                 return (` ${test[1]}`)
                                             }

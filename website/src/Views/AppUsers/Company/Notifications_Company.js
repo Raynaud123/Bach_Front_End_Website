@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 import NotificationInfo_Company from "../../Notification/NotificationInfo_Company";
+import "../../../Styles/Home.css";
+
 
 export default function Notifications_Company(props) {
     const companyid = props.persoonid;
@@ -10,7 +12,6 @@ export default function Notifications_Company(props) {
 
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ export default function Notifications_Company(props) {
     }, [])
 
     return(
-        <div>
+        <div className={"standaard"}>
             Notifications: {Company.name}
             <div>
                 {NotificationList.map((n) => (

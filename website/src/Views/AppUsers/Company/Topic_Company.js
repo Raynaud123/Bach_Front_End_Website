@@ -9,7 +9,7 @@ export default function Topic_Company(props){
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg] = useState('');
 
     const [ApprovedTopic, setApprovedTopic] = useState([]);
     const [NotApprovedTopic, setNotApprovedTopic] = useState([]);
@@ -27,23 +27,23 @@ export default function Topic_Company(props){
                     url: `/topic/company/approve/${props.companyid}`,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setApprovedTopic(response.data);
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
-                console.log("tyfus " + errMsg);
+                console.log(errMsg);
             }
         }
         const getNotApprovedTopics = async () => {
             try {
-                console.log(props.companyid);
+                //console.log(props.companyid);
                 const response = await axiosPrivate({
                     method: "get",
                     url: `/topic/company/notapprove/${props.companyid}`,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setNotApprovedTopic(response.data);
             } catch (err) {
                 console.error(err);

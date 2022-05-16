@@ -24,10 +24,13 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
     const [targetData, setTargetData] = useState([]);
     const [Target, setTarget] = useState([]);
+    const [TargetError,setTargetError] = useState(false);
+
 
     const [keywordData, setKeywordData] = useState([]);
     const [Keyword, setKeyword] = useState([]);
-    
+    const [KeywordError,setKeywordError] = useState(false);
+
     const [CompanyComponent, setCompanyComponent] = useState(false);
 
     const navigate = useNavigate();
@@ -114,52 +117,62 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             keywordIds.push(value);
         })
 
-
-        if (CompanyComponent){
-            try{
-            const response = await axiosPrivate({
-                method: "post",
-                url: "/topic",
-                data: JSON.stringify({
-                    'topicName': formValue.Question,
-                    'description_topic': formValue.Description,
-                    'aantal_studenten': formValue.StudentsAmount,
-                    'targetAudience': targetIds,
-                    'keywords': keywordIds,
-                    'provider_id': props.persoonid,
-                    'firstname':formValue.FirstName,
-                    'lastname':formValue.LastName,
-                    'email':formValue.Email,
-                    'tel':formValue.Tel,
-                    'promotor_id':-1
-                })
-            });
-            console.log("response submit:"  + response)
-            navigate(from, {replace: true});
-        } catch (error) {
-            console.log(error)
+        if(keywordIds.length === 0){
+            setKeywordError(true);
         }
-        }else {
-            try {
-                const response = await axiosPrivate({
-                    method: "post",
-                    url: "/topic",
-                    data: JSON.stringify({
+        else setKeywordError(false);
+        if (targetIds.length === 0){
+            setTargetError(true);
+        }else setKeywordError(false);
 
-                        'topicName': formValue.Question,
-                        'description_topic': formValue.Description,
-                        'aantal_studenten': formValue.StudentsAmount,
-                        'targetAudience': targetIds,
-                        'keywords': keywordIds,
-                        'provider_id': props.persoonid
-                    })
-                });
-                console.log("response submit:"  + response)
-                navigate(from, {replace: true});
-            } catch (error) {
-                console.log(error)
+        if (keywordIds.length !== 0 && targetIds.length !== 0){
+            if (CompanyComponent){
+                try{
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "/topic",
+                        data: JSON.stringify({
+                            'topicName': formValue.Question,
+                            'description_topic': formValue.Description,
+                            'aantal_studenten': formValue.StudentsAmount,
+                            'targetAudience': targetIds,
+                            'keywords': keywordIds,
+                            'provider_id': props.persoonid,
+                            'firstname':formValue.FirstName,
+                            'lastname':formValue.LastName,
+                            'email':formValue.Email,
+                            'tel':formValue.Tel,
+                            'promotor_id':-1
+                        })
+                    });
+                    console.log("response submit:"  + response)
+                    navigate(from, {replace: true});
+                } catch (error) {
+                    console.log(error)
+                }
+            }else {
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "/topic",
+                        data: JSON.stringify({
+
+                            'topicName': formValue.Question,
+                            'description_topic': formValue.Description,
+                            'aantal_studenten': formValue.StudentsAmount,
+                            'targetAudience': targetIds,
+                            'keywords': keywordIds,
+                            'provider_id': props.persoonid
+                        })
+                    });
+                    console.log("response submit:"  + response)
+                    navigate(from, {replace: true});
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }
+
 
     }
 
@@ -220,6 +233,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     </select>
                 </div>
                 <div className={"inputgroup"}>
+                    {TargetError && <p>THIS IS A REQUIRED FIELD!!!</p>}
                     <Select
                         name="secondSelectt"
                         options={targetData.map(e=>({label: e.campus.campus_name +"  "+e.course.course_name, value: e.targetAudience_id}))}
@@ -231,6 +245,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                 />
                 </div>
                 <div className={"inputgroup"}>
+                    {KeywordError && <p>THIS IS A REQUIRED FIELD!!!</p>}
                     <Select
                         name="secondSelectt"
                         options={keywordData.map(e=>({label: e.keyword_name , value: e.keyword_id}))}
@@ -246,6 +261,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                         <h3>Contact details:</h3>
                             <label>First name</label>
                             <input
+                                required
                                 type="text"
                                 name="FirstName"
                                 placeholder="Provide a Firstname"
@@ -254,6 +270,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                             />
                             <label>Last name:</label>
                             <input
+                                required
                                 type="text"
                                 name="LastName"
                                 placeholder="Provide a Lastname"
@@ -262,6 +279,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                             />
                             <label>Email:</label>
                             <input
+                                required
                                 type="email"
                                 name="Email"
                                 placeholder="Provide an Email"
@@ -269,6 +287,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                                 onChange={handleChange}
                             /><label>Phone:</label>
                             <input
+                                required
                                 type="tel"
                                 name="Tel"
                                 placeholder="Provide a phoneNumber"

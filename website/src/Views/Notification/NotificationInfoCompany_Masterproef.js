@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {BsCheck, BsXCircle} from "react-icons/all";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
@@ -30,7 +30,7 @@ export default function TopicInfo_Student(props) {
                     url: "/topicprovider/" + companyid,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setCompany(response.data);
                 await getTA(response.data.targetAudience);
                 await getTopics(response.data.topic);
@@ -68,13 +68,13 @@ export default function TopicInfo_Student(props) {
     }, [])
 
     async function submitApprove(approve) {
-        console.log("Approve: " + approve);
+        //console.log("Approve: " + approve);
         try {
             const response = await axiosPrivate({
                 method: "put",
                 url: "http://localhost:8080/master/" + masterid + "/approve/" + approve + "/topicprovider/" + companyid,
             });
-            console.log(response)
+            //console.log(response)
             navigate("/approve", { replace: true });
         } catch(error) {
             console.log(error)

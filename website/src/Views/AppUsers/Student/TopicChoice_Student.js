@@ -29,7 +29,7 @@ export default function TopicChoice_Student(props) {
                         url: "/student/" + studentid + "/preferred/all",
                         signal: controller.signal
                     });
-                    console.log("Response preferred: " + response.data);
+                    //console.log("Response preferred: " + response.data);
                     isMounted && setPreferred(response.data);
                 } catch (err) {
                     console.error(err);
@@ -44,7 +44,7 @@ export default function TopicChoice_Student(props) {
                     url: "/student/" + studentid + "/top3" ,
                     signal: controller.signal
                 });
-                console.log("Response top3: " + response.data);
+                //console.log("Response top3: " + response.data);
                 isMounted && setTop3(response.data);
             } catch (err) {
                 console.error(err);
@@ -65,7 +65,7 @@ export default function TopicChoice_Student(props) {
     }
 
     function top3possible() {
-        console.log(Preferred);
+        //console.log(Preferred);
         return (
             <div>
                 <div>

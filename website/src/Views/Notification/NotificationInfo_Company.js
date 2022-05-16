@@ -4,7 +4,6 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 
 export default function NotificationInfo_Company(props) {
-    const company = props.company;
     const notification = props.notification;
     const [Topic, setTopic] = useState([]);
 
@@ -23,7 +22,7 @@ export default function NotificationInfo_Company(props) {
                     url: "/topic/" + notification.object_id,
                     signal: controller.signal
                 });
-                console.log("Topic: " + response.data);
+                //console.log("Topic: " + response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);

@@ -54,7 +54,7 @@ export default function NotificationApprove(props){
                     url: "/topic/master/" + object_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setObj(response.data);
                 await getProvider(response.data.provider);
             } catch (err) {
@@ -70,7 +70,7 @@ export default function NotificationApprove(props){
                     url: "/promotor/" + object_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setObj(response.data);
             } catch (err) {
                 console.error(err);
@@ -85,7 +85,7 @@ export default function NotificationApprove(props){
                     url: "/topicprovider/" + object_id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setObj(response.data);
             } catch (err) {
                 console.error(err);
@@ -100,7 +100,7 @@ export default function NotificationApprove(props){
                     url: "/topicprovider/" + provid,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setProvider(response.data);
             } catch (err) {
                 console.error(err);

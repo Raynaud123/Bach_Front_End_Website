@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
-import {BsCheck, BsXCircle} from "react-icons/all";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import NotificationInfoTopic_Student from "../Notification/NotificationInfoTopic_Student"
 
@@ -8,7 +7,6 @@ import NotificationInfoTopic_Student from "../Notification/NotificationInfoTopic
 export default function NotificationInfo_Student(props) {
 
     const student = props.student;
-    console.log(student);
     const notification = props.notification;
 
     const [Show, setShow] = useState(false);
@@ -28,7 +26,7 @@ export default function NotificationInfo_Student(props) {
                     url: "/topic/assigned/" + student.id,
                     signal: controller.signal
                 });
-                console.log("Response assigned topic: " + response.data);
+                //console.log("Response assigned topic: " + response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);
@@ -41,8 +39,6 @@ export default function NotificationInfo_Student(props) {
             controller.abort();
         }
     }, [])
-
-
 
 
     return(

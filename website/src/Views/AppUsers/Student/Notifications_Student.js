@@ -24,9 +24,9 @@ export default function Notifications_Student(props) {
                     url: "/student/" + studentid,
                     signal: controller.signal
                 });
-                console.log("Student: " + response.data);
+                //console.log("Student: " + response.data);
                 isMounted && setStudent(response.data);
-                console.log("notification_list: " + response.data.notification_list);
+                //console.log("notification_list: " + response.data.notification_list);
                 if (response.data !== []) setNotificationList(response.data.notification_list);
             } catch (err) {
                 console.error(err);
@@ -47,8 +47,8 @@ export default function Notifications_Student(props) {
         var year = arr[0];
         var month = arr[1];
         var day = arr[2];
-        console.log("addedDate " + year + " " + month + " " + day);
-        console.log("Date " + d.getFullYear() + " " + (d.getMonth()+1) + " " + d.getDate());
+        //console.log("addedDate " + year + " " + month + " " + day);
+        //console.log("Date " + d.getFullYear() + " " + (d.getMonth()+1) + " " + d.getDate());
         return year<=d.getFullYear() && month<=(d.getMonth()+1) && day<=d.getDate();
     }
 

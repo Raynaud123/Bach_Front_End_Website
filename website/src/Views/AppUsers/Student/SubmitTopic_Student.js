@@ -7,7 +7,7 @@ export default function SubmitTopic_Student(props) {
     const studentId = props.persoonid;
 
 
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg] = useState('');
     const axiosPrivate = useAxiosPrivate();
     const [formValue, setformValue] = React.useState({
         Question: '',
@@ -42,7 +42,7 @@ export default function SubmitTopic_Student(props) {
                     url: "/targetaudience/hided/all",
                     signal: controller.signal
                 });
-                console.log("response getTarget:" + response.data);
+                //console.log("response getTarget:" + response.data);
                 isMounted && setTargetData(response.data);
             } catch (err) {
                 console.error(err);
@@ -58,7 +58,7 @@ export default function SubmitTopic_Student(props) {
                     url: "/keyword/all",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setKeywordData(response.data);
             } catch (err) {
                 console.error(err);
@@ -74,7 +74,7 @@ export default function SubmitTopic_Student(props) {
                     url: "/promotor/student/" + studentId,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setPromotorData(response.data);
             } catch (err) {
                 console.error(err);
@@ -100,26 +100,26 @@ export default function SubmitTopic_Student(props) {
         const keywordIds = [];
         const targetIds = [];
 
-        Object.entries(Target).map(([key,test]) =>{
-            console.log(key);
+        Object.entries(Target).map(([test]) =>{
+            //console.log(key);
             const jep = JSON.stringify(test);
-            console.log(jep);
-            const {label,value} = JSON.parse(jep);
-            console.log(value);
+            //console.log(jep);
+            const {value} = JSON.parse(jep);
+            //console.log(value);
             targetIds.push(value);
         })
 
 
-        Object.entries(Keyword).map(([key,test]) =>{
-            console.log(key);
+        Object.entries(Keyword).map(([test]) =>{
+            //console.log(key);
             const jep = JSON.stringify(test);
-            console.log(jep);
-            const {label,value} = JSON.parse(jep);
-            console.log(value);
+            //console.log(jep);
+            const {value} = JSON.parse(jep);
+            //console.log(value);
             keywordIds.push(value);
         })
 
-        console.log(Promotor);
+        //console.log(Promotor);
 
             try{
                 const response = await axiosPrivate({
@@ -135,7 +135,7 @@ export default function SubmitTopic_Student(props) {
                         'promotor_id': Promotor.value
                     })
                 });
-                console.log("response submit:"  + response)
+                //console.log("response submit:"  + response)
                 navigate(from, {replace: true});
             } catch (error) {
                 console.log(error)
@@ -143,17 +143,15 @@ export default function SubmitTopic_Student(props) {
         }
 
     const handleTargetAudienceChange = (e) => {
-        console.log(e);
-        if(e !== null){
+        //console.log(e);
+        if(e !== null)
             setTarget(e)
-        };
     }
 
     const handleKeywordsChange = (e) => {
-        console.log(e);
-        if(e !== null){
+        //console.log(e);
+        if(e !== null)
             setKeyword(e)
-        };
     }
 
 

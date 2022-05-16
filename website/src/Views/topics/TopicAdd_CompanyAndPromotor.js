@@ -47,7 +47,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     url: "/targetaudience/hided/all",
                     signal: controller.signal
                 });
-                console.log("response getTarget:" + response.data);
+                //console.log("response getTarget:" + response.data);
                 isMounted && setTargetData(response.data);
             } catch (err) {
                 console.error(err);
@@ -63,7 +63,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     url: "/keyword/all",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setKeywordData(response.data);
             } catch (err) {
                 console.error(err);
@@ -96,21 +96,21 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         const targetIds = [];
 
         Object.entries(Target).map(([key,test]) =>{
-            console.log(key);
+            //console.log(key);
             const jep = JSON.stringify(test);
-            console.log(jep);
+            //console.log(jep);
             const {label,value} = JSON.parse(jep);
-            console.log(value);
+            //console.log(value);
             targetIds.push(value);
         })
 
 
         Object.entries(Keyword).map(([key,test]) =>{
-            console.log(key);
+            //console.log(key);
             const jep = JSON.stringify(test);
-            console.log(jep);
+            //console.log(jep);
             const {label,value} = JSON.parse(jep);
-            console.log(value);
+            //console.log(value);
             keywordIds.push(value);
         })
 
@@ -134,7 +134,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     'promotor_id':-1
                 })
             });
-            console.log("response submit:"  + response)
+            //console.log("response submit:"  + response)
             navigate(from, {replace: true});
         } catch (error) {
             console.log(error)
@@ -154,7 +154,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                         'provider_id': props.persoonid
                     })
                 });
-                console.log("response submit:"  + response)
+                //console.log("response submit:"  + response)
                 navigate(from, {replace: true});
             } catch (error) {
                 console.log(error)
@@ -164,14 +164,14 @@ export default function TopicAdd_CompanyAndPromotor(props) {
     }
 
     const handleTargetAudienceChange = (e) => {
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setTarget(e)
         };
     }
 
     const handleKeywordsChange = (e) => {
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setKeyword(e)
         };

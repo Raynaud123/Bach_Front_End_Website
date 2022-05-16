@@ -30,7 +30,7 @@ export default function ApprovedTopics(props){
                     url: "/topic/approved",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);
@@ -63,7 +63,6 @@ export default function ApprovedTopics(props){
             controller.abort();
         }
     }, [])
-    //Topic.map(topic => console.log( topic ));
 
     function getPromotorName(promotor_id) {
         for(let i = 0; i<Promotors.length; i++){

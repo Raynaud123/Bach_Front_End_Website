@@ -35,7 +35,7 @@ export default function ViewChoice_Student(props) {
             controller.abort();
         }
     }, [])
-    Top3.map(topic => console.log( topic ));
+    //Top3.map(topic => console.log( topic ));
 
     function showNoTop3() {
         return (

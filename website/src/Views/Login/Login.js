@@ -40,7 +40,7 @@ export default function Login(){
 
     useEffect(() => {
         const accesTokenVar = accesToken;
-        console.log(role);
+        //console.log(role);
         setAuth({ user, pwd, loggedIn, accesTokenVar, role, id});
         setUser('');
         setPwd('');
@@ -61,7 +61,7 @@ export default function Login(){
                 },
                 data: JSON.stringify({'username': user,'password' : pwd})
             });
-            console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
             setRole(response.data.role[0].authority);
             setAccesToken(response.data.jwt);
             setId(response.data.id);

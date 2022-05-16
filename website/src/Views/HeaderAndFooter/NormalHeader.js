@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import '../../Styles/Header.css';
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import KULeuvenLogo from '../../assets/KULeuvenLogo.png'
@@ -44,7 +44,7 @@ export default function NormalHeader(props){
                 url: "/phase/now",
                 signal: controller.signal
             });
-            // console.log(response.data);
+            //console.log(response.data);
             isMounted && setPhaseId(response.data.phase_id);
         } catch (err) {
             console.error(err);

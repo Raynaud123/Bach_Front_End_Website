@@ -7,8 +7,6 @@ import PersonalInfo_Promotor from "../AppUsers/Promotor/PersonalInfo_Promotor"
 import Logout from "../Login/Logout"
 
 
-
-
 export default function PersonalInfo(props){
 
     switch(props.roles) {

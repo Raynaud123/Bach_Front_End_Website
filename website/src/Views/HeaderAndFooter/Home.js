@@ -40,7 +40,7 @@ export default function Home(props){
                         padTo2Digits(convDate.getMinutes()),
                         padTo2Digits(convDate.getSeconds()),
                     ].join(':')
-                console.log("formatDate " + formatDate);
+                //console.log("formatDate " + formatDate);
                 return formatDate;
             }
 
@@ -50,7 +50,7 @@ export default function Home(props){
                     url: "/phase/now",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setPhase(response.data);
                 setBeginDate(setDate(response.data.begin_deadline));
                 setEndDate(setDate(response.data.end_deadline));

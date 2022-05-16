@@ -30,7 +30,7 @@ export default function TopicInfo_Student(props) {
                     url: "/topic/master/" + topicid,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
                 await getKeywords(response.data.keyword_list);
                 await getProvider(response.data.provider);
@@ -56,7 +56,7 @@ export default function TopicInfo_Student(props) {
                     url: "/appuser/" + provid,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setProvider(response.data);
             } catch (err) {
                 console.error(err);
@@ -73,13 +73,13 @@ export default function TopicInfo_Student(props) {
     }, [])
 
     async function submitApprove(approve) {
-        console.log("Approve: " + approve);
+        //console.log("Approve: " + approve);
         try {
             const response = await axiosPrivate({
                 method: "put",
                 url: "http://localhost:8080/master/" + masterid + "/approve/" + approve + "/topic/" + topicid,
             });
-            console.log(response)
+            //console.log(response)
             navigate("/approve", { replace: true });
             // await updateStudents();
         } catch(error) {

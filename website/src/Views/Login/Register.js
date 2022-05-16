@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import "../../Styles/Home.css"
 import "../../Styles/Register.css"
-
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -101,10 +101,11 @@ export default function Register(){
                     </p>
                 </div>
             ) : (
-        <div>
+        <div className={"standaard"}>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
+                <div className={"form-style-1"}>
                 <label htmlFor="username">
                     Username:
                 </label>
@@ -120,6 +121,7 @@ export default function Register(){
                     aria-describedby="uidnote"
                     onFocus={() => setUserFocus(true)}
                     onBlur={() => setUserFocus(false)}
+                    className={"field-long"}
                 />
                 <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
                     4 to 24 characters.<br />
@@ -137,6 +139,7 @@ export default function Register(){
                     required
                     aria-invalid={validPwd ? "false" : "true"}
                     aria-describedby="pwdnote"
+                    className={"field-long"}
                     onFocus={() => setPwdFocus(true)}
                     onBlur={() => setPwdFocus(false)}
                 />
@@ -157,6 +160,7 @@ export default function Register(){
                     required
                     aria-invalid={validMatch ? "false" : "true"}
                     aria-describedby="confirmnote"
+                    className={"field-long"}
                     onFocus={() => setMatchFocus(true)}
                     onBlur={() => setMatchFocus(false)}
                 />
@@ -164,11 +168,11 @@ export default function Register(){
                     Must match the first password input field.
                 </p>
 
-                <button disabled={!validName || !validPwd || !validMatch}> Register</button>
-
+                <button className={"register"} disabled={!validName || !validPwd || !validMatch}> Register</button>
+            </div>
             </form>
             <p>Already registered?<br /></p>
-               <button>
+               <button className={"login"}>
                    <Link to="/login">Login</Link>
                </button>
         </div>)}

@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import "../../../Styles/Home.css"
+import "../../../Styles/personalInfo.css"
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -21,7 +23,7 @@ export default function PersonalInfo_Admin(props) {
                     url: "/admin/" + adminid,
                     signal: controller.signal
                 });
-                //console.log("Admin: " + response.data);
+                console.log(response.data);
                 isMounted && setAdmin(response.data);
             } catch (err) {
                 console.error(err);
@@ -38,7 +40,10 @@ export default function PersonalInfo_Admin(props) {
 
     return(
         <div>
-            {Admin.firstName}
+            <h2>Personal Information</h2>
+            <p><span>Firstname: </span>{Admin.firstName}</p>
+            <p><span>Lastname: </span> {Admin.lastName}</p>
+            <p><span>Role: </span> {`${Admin.appUserRole}`.toLowerCase()}</p>
         </div>
     )
 }

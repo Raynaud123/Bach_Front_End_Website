@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import "../../../Styles/personalInfo.css"
 import Logout from "../../Login/Logout";
 
 export default function PersonalInfo_Promotor(props) {
@@ -39,7 +40,10 @@ export default function PersonalInfo_Promotor(props) {
 
     return(
         <div>
-            {Promotor.firstName}
+            <h2>Personal Information</h2>
+            <p><span>Firstname: </span>{Promotor.firstName}</p>
+            <p><span>Lastname: </span> {Promotor.lastName}</p>
+            <p><span>Role: </span> {`${Promotor.appUserRole}`.toLowerCase()}</p>
         </div>
     )
 }

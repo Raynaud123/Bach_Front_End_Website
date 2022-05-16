@@ -216,7 +216,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
     }
 
     return (
-        <div className={"Home"}>
+        <div className={"standaard"}>
         <div className={"center"}>
             <form onSubmit={handleSubmit}>
                 <h2>Add a new Topic</h2>

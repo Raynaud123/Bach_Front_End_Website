@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import "../../../Styles/personalInfo.css"
 import {useLocation, useNavigate} from "react-router-dom";
 
 export default function PersonalInfo_Master(props) {
@@ -38,7 +39,10 @@ export default function PersonalInfo_Master(props) {
 
     return(
         <div>
-            {Master.firstName}
+            <h2>Personal Information</h2>
+            <p><span>Firstname: </span>{Master.firstName}</p>
+            <p><span>Lastname: </span> {Master.lastName}</p>
+            <p><span>Role: </span> {`${Master.appUserRole}`.toLowerCase()}</p>
         </div>
     )
 }

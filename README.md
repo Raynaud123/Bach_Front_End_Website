@@ -81,6 +81,7 @@ The frontEnd of the project is build with React as it framework and written in J
 ## Getting Started
 To run this code, you open a terminal in the IDE where this code is implemented. In this terminal navigate to the folder "website" (command: cd .\website\).
 Afterwards you run the command "npm start" and a new page in your browser will appear.
+Don't forget also start the <a href="https://github.com/Raynaud123/Bach_Back_End">BackEnd</a>!
 
 ### Prerequisites
 
@@ -95,11 +96,11 @@ Afterwards you run the command "npm start" and a new page in your browser will a
    ```sh
    git clone https://github.com/Raynaud123/Bach_Front_End_Website.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Go to "Getting Started" for further steps
+3. Go to "Getting Started" for further steps
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

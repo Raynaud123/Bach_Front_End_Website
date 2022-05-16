@@ -56,7 +56,8 @@ export default function TopicInfo_Promotor(props) {
                 await getKeywords(response.data.keyword_list);
                 await getPromotor(response.data.promotor);
                 await getStudents();
-                if(response.data.boostedStudent.length == 0) {
+                if(response.data.boostedStudent.length === 0) {
+                    console.log("boosted component true");
                     setBoostedComponent(true);
                 }else {
                     setBoostedComponent(false);
@@ -154,9 +155,10 @@ export default function TopicInfo_Promotor(props) {
                     url: "/phase/now",
                     signal: controller.signal
                 });
-                // console.log(response.data);
-                if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
-                    setPhase(true)
+                console.log(response.data);
+                if(3===3){ //(response.data.phase_id === 3 || response.data.phase_id === 6) && isMounted){
+                    console.log("phase true");
+                    setPhase(true);
                 }
                 else setPhase(false);
 //                isMounted && setPhaseId(response.data.phase_id);
@@ -167,7 +169,7 @@ export default function TopicInfo_Promotor(props) {
             }
         }
 
-        getPhase();
+        await getPhase();
         await getTopic();
 
 
@@ -176,32 +178,6 @@ export default function TopicInfo_Promotor(props) {
             controller.abort();
         }
     }, [])
-
-
-
-/*    useEffect(
-
-        async () =>{
-            const handleBoost = async () => {
-                try {
-                    const response = await axiosPrivate({
-                        method: "PUT",
-                        url: `/topic/boost/${topicid}`,
-                        data: JSON.stringify({'studentid': SelectStudent})
-                    });
-                    console.log(response.data);
-                    navigate(`/topics/info/${topicid}`, {replace: true});
-                } catch (err) {
-                    console.error(err);
-                    navigate('/login', {state: {from: location}, replace: true});
-                    console.log(errMsg);
-                }
-        }
-        await handleBoost();
-
-    },[submit])*/
-
-
 
 
     function PromInfo() {

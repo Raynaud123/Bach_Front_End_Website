@@ -130,7 +130,8 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     'firstname':formValue.FirstName,
                     'lastname':formValue.LastName,
                     'email':formValue.Email,
-                    'tel':formValue.Tel
+                    'tel':formValue.Tel,
+                    'promotor_id':-1
                 })
             });
             console.log("response submit:"  + response)

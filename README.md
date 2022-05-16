@@ -20,7 +20,7 @@
     FrontEnd code for a bachelor project from Raynaud Cornille & Marthe Spriet
     <br />
     <br />
-    <a href="https://github.com/Raynaud123/Bach_Front_End_Website">View Corresponding BackEnd</a>
+    <a href="https://github.com/Raynaud123/Bach_Back_End">View Corresponding BackEnd</a>
   </p>
 </div>
 

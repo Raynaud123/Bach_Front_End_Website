@@ -75,15 +75,8 @@ export default function Maintenance_Admin(props){
     const [ProviderCreate, setProviderCreate] = useState(false);
     const [FormValueProvider, setFormValueProvider] = useState({
         name: "",
-        campus: [],
         approved: null,
-        isCompany: null,
-        begleiders: [{
-            phoneContact: 0,
-            firstNameMentor: "",
-            lastNameMentor: "",
-            emailMentor: ""
-        }]
+        isCompany: null
     });
 
     const [TargetAudiences, setTargetAudiences] = useState([]);
@@ -1157,6 +1150,12 @@ export default function Maintenance_Admin(props){
                     [event.target.name]: event.target.value
                 });
             }
+            const handleMasterChangeArray = (event) => {
+                setFormValueMaster({
+                    ...FormValueMaster,
+                    [event.target.name]: Array.from(event.target.selectedOptions, item => item.value)
+                });
+            }
 
             function showMasterInfo() {
                 return(
@@ -1199,7 +1198,7 @@ export default function Maintenance_Admin(props){
                                                     <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
                                                     </div>))}
                                             </div>:<div>No target audiences</div>}
-                                        <select name="targetAudience" onChange={handleMasterChange} className={"maxgrootte"}>
+                                        <select name="targetAudience" onChange={handleMasterChangeArray} multiple className={"maxgrootte"}>
                                             <option value={"null"}>--None--</option>
                                             {TargetAudiences.map((ta) => (
                                                 <option key={ta.targetAudience_id}
@@ -1313,7 +1312,7 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
-                                    <select name="targetAudience" onChange={handleMasterChange} className={"maxgrootte"}>
+                                    <select name="targetAudience" onChange={handleMasterChangeArray} multiple className={"maxgrootte"}>
                                         <option value={"null"}>--None--</option>
                                         {TargetAudiences.map((ta) => (
                                             <option key={ta.targetAudience_id}
@@ -1393,9 +1392,9 @@ export default function Maintenance_Admin(props){
             }
 
             const submitMasterUpdate = async(e) => {
-                console.log(Masters[MasterIndex]);
-                console.log(FormValueMaster);
-                let tas = getObjectOrNullArray(FormValueStudent.targetAudience);
+                //console.log(Masters[MasterIndex]);
+                //console.log(FormValueMaster);
+                let tas = getObjectOrNullArray(FormValueMaster.targetAudience);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
@@ -1413,7 +1412,7 @@ export default function Maintenance_Admin(props){
                             email: FormValueMaster.email
                         }
                     });
-                    console.log(response)
+                    //console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueMaster(
                         {
@@ -1465,6 +1464,10 @@ export default function Maintenance_Admin(props){
                         setErrorMessageForm("Invalid country " + FormValueMaster.country);
                         FormValidMaster = false;
                     }
+                    if (FormValuePromotor.targetAudience.length > 1){
+                        setErrorMessageForm("To many targetAudience " + FormValuePromotor.targetAudience);
+                        FormValidMaster = false;
+                    }
                     if (FormValueMaster.lastName === ""){
                         setErrorMessageForm("Invalid lastname " + FormValueMaster.lastName);
                         FormValidMaster = false;
@@ -1478,6 +1481,7 @@ export default function Maintenance_Admin(props){
                 checkFormValueMaster();
                 if (FormValidMaster){
                     setErrorMessageForm("");
+                    //console.log(FormValueMaster);
                     try {
                         const response = await axiosPrivate({
                             method: "post",
@@ -1495,7 +1499,7 @@ export default function Maintenance_Admin(props){
                                 email: FormValueMaster.email
                             }
                         });
-                        console.log(response)
+                        //console.log(response)
                         navigate("/maintenance", { replace: true });
                         setMasterIndex(-1);
                         setMasterCreate(false);
@@ -1520,7 +1524,7 @@ export default function Maintenance_Admin(props){
                 }
             }
             const submitMasterDelete = async(e) => {
-                console.log(Masters[MasterIndex]);
+                //console.log(Masters[MasterIndex]);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
@@ -1529,7 +1533,7 @@ export default function Maintenance_Admin(props){
                             master_id: Masters[MasterIndex].id
                         }
                     });
-                    console.log(response)
+                    //console.log(response)
                     navigate("/maintenance", { replace: true });
                     setMasterIndex(-1);
                     setFormValueMaster({
@@ -1556,7 +1560,7 @@ export default function Maintenance_Admin(props){
                 try {
                     const response = await axiosPrivate({
                         method: "get",
-                        url: "/student/all",
+                        url: "/master/all",
                         signal: controller.signal
                     });
                     console.log(response.data);
@@ -1627,6 +1631,14 @@ export default function Maintenance_Admin(props){
                     ...FormValuePromotor,
                     [event.target.name]: event.target.value
                 });
+                console.log(event.target.name + " " + event.target.value);
+            }
+            const handlePromotorChangeArray = (event) => {
+                setFormValuePromotor({
+                    ...FormValuePromotor,
+                    [event.target.name]: Array.from(event.target.selectedOptions, item => item.value)
+                });
+                console.log(Array.from(event.target.selectedOptions, item => item.value));
             }
 
             function showPromotorInfo() {
@@ -1670,7 +1682,7 @@ export default function Maintenance_Admin(props){
                                                     <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
                                                     </div>))}
                                             </div>:<div>No target audiences</div>}
-                                        <select name="targetAudience" onChange={handlePromotorChange} className={"maxgrootte"}>
+                                        <select name="targetAudience" onChange={handlePromotorChangeArray} multiple className={"maxgrootte"}>
                                             <option value={"null"}>--None--</option>
                                             {TargetAudiences.map((ta) => (
                                                 <option key={ta.targetAudience_id}
@@ -1754,8 +1766,8 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="approved" className={"InfoAttribute"}>Approve</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Promotors[PromotorIndex].approve? "True":"False"}
-                                        <select name="approve" onChange={handlePromotorChange}>
+                                        {Promotors[PromotorIndex].approved? "True":"False"}
+                                        <select name="approved" onChange={handlePromotorChange}>
                                             <option value={"null"}>Null</option>
                                             <option value={"false"}>False</option>
                                             <option value={"true"}>True</option>
@@ -1795,7 +1807,7 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
-                                    <select name="targetAudience" onChange={handlePromotorChange} className={"maxgrootte"}>
+                                    <select name="targetAudience" onChange={handlePromotorChangeArray} multiple className={"maxgrootte"}>
                                         <option value={"null"}>--None--</option>
                                         {TargetAudiences.map((ta) => (
                                             <option key={ta.targetAudience_id}
@@ -1872,7 +1884,7 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="approved" className={"InfoAttribute"}>Approve</label>
-                                    <select name="approve" onChange={handlePromotorChange}>
+                                    <select name="approved" onChange={handlePromotorChange}>
                                         <option value={"null"}>Null</option>
                                         <option value={"false"}>False</option>
                                         <option value={"true"}>True</option>
@@ -1885,9 +1897,10 @@ export default function Maintenance_Admin(props){
             }
 
             const submitPromotorUpdate = async(e) => {
-                console.log(Promotors[PromotorIndex]);
-                console.log(FormValuePromotor);
+                //console.log(Promotors[PromotorIndex]);
+                //console.log(FormValuePromotor);
                 let tas = getObjectOrNullArray(FormValuePromotor.targetAudience);
+                console.log(tas);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
@@ -1931,7 +1944,7 @@ export default function Maintenance_Admin(props){
                 let FormValidPromotor = true;
                 function checkFormValuePromotor() {
                     if (FormValuePromotor.approved === null ){
-                        setErrorMessageForm("Invalid approved " + FormValuePromotor.approved);
+                        setErrorMessageForm("Invalid approve " + FormValuePromotor.approved);
                         FormValidPromotor = false;
                     }
                     if (FormValuePromotor.phoneNumber === "" || FormValuePromotor.phoneNumber === 0){
@@ -1974,7 +1987,7 @@ export default function Maintenance_Admin(props){
                 checkFormValuePromotor();
                 if (FormValidPromotor){
                     setErrorMessageForm("");
-                    let tas = getObjectOrNullArray(FormValidPromotor.targetAudience);
+                    let tas = getObjectOrNullArray(FormValuePromotor.targetAudience);
                     try {
                         const response = await axiosPrivate({
                             method: "post",
@@ -2143,55 +2156,35 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="name" className={"InfoAttribute"}>Provider name</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Providers[ProviderIndex].name? Providers[ProviderIndex].name:""}
+                                        {Providers[ProviderIndex].name!==""? Providers[ProviderIndex].name:<div/>}
                                         <input type="text" name="name" placeholder={"Provider name"}
                                                value={FormValueProvider.name}
                                                onChange={handleProviderChange}
                                         />
                                     </div>
                                 </div>
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].firstRound? "True":"False"}*/}
-                                {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseBeginDeadline"*/}
-                                {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseEndDeadline"*/}
-                                {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].hide? "True":"False"}*/}
-                                {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="isCompany" className={"InfoAttribute"}>Is a Company?</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Providers[ProviderIndex].isCompany? "True":"False"}
+                                        <select name="isCompany" onChange={handleProviderChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="approved" className={"InfoAttribute"}>Approved</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Providers[ProviderIndex].approved? "True":"False"}
+                                        <select name="approved" onChange={handleProviderChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                         }
                     </div>
@@ -2213,44 +2206,26 @@ export default function Maintenance_Admin(props){
                                     />
                                 </div>
                             </div>
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>*/}
-                            {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                            {/*        <input type="date" name="phaseBeginDeadline"*/}
-                            {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                            {/*        <input type="date" name="phaseEndDeadline"*/}
-                            {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                            {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="isCompany" className={"InfoAttribute"}>Is a Company?</label>
+                                    <select name="isCompany" onChange={handleProviderChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="approved" className={"InfoAttribute"}>Approved</label>
+                                    <select name="approved" onChange={handleProviderChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 )
@@ -2265,42 +2240,17 @@ export default function Maintenance_Admin(props){
                         url: "http://localhost:8080/admin/update/topicprovider/" + Providers[ProviderIndex].id,
                         data: {
                             name: FormValueProvider.name,
-                            campus: FormValueProvider.campus,
-                            topic_list: FormValueProvider.topic_list,
-                            streetName: FormValueProvider.streetName,
-                            streetNumber: FormValueProvider.streetNumber,
-                            postNumber: FormValueProvider.postNumber,
-                            phoneNumber: FormValueProvider.phoneNumber,
-                            city: FormValueProvider.city,
-                            country: FormValueProvider.country,
-                            email: FormValueProvider.email,
-                            approved: FormValueProvider.approved,
-                            locked: FormValueProvider.locked,
-                            enabled: FormValueProvider.enabled,
-                            userName: FormValueProvider.userName,
-                            password: FormValueProvider.password
+                            isCompany: FormValueProvider.isCompany,
+                            approved: FormValueProvider.approved
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueProvider({
                             name: "",
-                            campus: [],
-                            topic_list: [],
-                            streetName: "",
-                            streetNumber: -1,
-                            postNumber: -1,
-                            phoneNumber: -1,
-                            city: "",
-                            country: "",
-                            email: "",
                             approved: null,
-                            locked: null,
-                            enabled: null,
-                            isCompany: null,
-                            company: null,
-                            userName: "",
-                            password: ""}
+                            isCompany: null
+                    }
                     );
                     await updateProviders();
                 } catch(error) {
@@ -2310,6 +2260,14 @@ export default function Maintenance_Admin(props){
             const submitProviderCreate = async(e) => {
                 let FormValidProvider = true;
                 function checkFormValueProvider() {
+                    if (FormValueProvider.approved === null){
+                        setErrorMessageForm("Invalid approved" + FormValueProvider.approved);
+                        FormValidProvider = false;
+                    }
+                    if (FormValueProvider.isCompany === null){
+                        setErrorMessageForm("Invalid isCompany" + FormValueProvider.isCompany);
+                        FormValidProvider = false;
+                    }
                     if (FormValueProvider.name === ""){
                         setErrorMessageForm("Invalid name" + FormValueProvider.name);
                         FormValidProvider = false;
@@ -2325,21 +2283,8 @@ export default function Maintenance_Admin(props){
                             url: "http://localhost:8080/admin/create/topicprovider/",
                             data: {
                                 name: FormValueProvider.name,
-                                campus: FormValueProvider.campus,
-                                topic_list: FormValueProvider.topic_list,
-                                streetName: FormValueProvider.streetName,
-                                streetNumber: FormValueProvider.streetNumber,
-                                postNumber: FormValueProvider.postNumber,
-                                phoneNumber: FormValueProvider.phoneNumber,
-                                city: FormValueProvider.city,
-                                country: FormValueProvider.country,
-                                email: FormValueProvider.email,
-                                approved: FormValueProvider.approved,
-                                locked: FormValueProvider.locked,
-                                enabled: FormValueProvider.enabled,
-                                userName: FormValueProvider.userName,
-                                password: FormValueProvider.password
-
+                                isCompany: FormValueProvider.isCompany,
+                                approved: FormValueProvider.approved
                             }
                         });
                         console.log(response)
@@ -2347,23 +2292,10 @@ export default function Maintenance_Admin(props){
                         setProviderIndex(-1);
                         setProviderCreate(false);
                         setFormValueProvider({
-                            name: "",
-                            campus: [],
-                            topic_list: [],
-                            streetName: "",
-                            streetNumber: -1,
-                            postNumber: -1,
-                            phoneNumber: -1,
-                            city: "",
-                            country: "",
-                            email: "",
-                            approved: null,
-                            locked: null,
-                            enabled: null,
-                            isCompany: null,
-                            company: null,
-                            userName: "",
-                            password: ""}
+                                name: "",
+                                approved: null,
+                                isCompany: null
+                        }
                         );
                         await updateProviders();
                     } catch(error) {
@@ -2385,23 +2317,10 @@ export default function Maintenance_Admin(props){
                     navigate("/maintenance", { replace: true });
                     setProviderIndex(-1);
                     setFormValueProvider({
-                        name: "",
-                        campus: [],
-                        topic_list: [],
-                        streetName: "",
-                        streetNumber: -1,
-                        postNumber: -1,
-                        phoneNumber: -1,
-                        city: "",
-                        country: "",
-                        email: "",
-                        approved: null,
-                        locked: null,
-                        enabled: null,
-                        isCompany: null,
-                        company: null,
-                        userName: "",
-                        password: ""}
+                            name: "",
+                            approved: null,
+                            isCompany: null
+                    }
                     );
                     await updateProviders();
                 } catch(error) {
@@ -2414,7 +2333,7 @@ export default function Maintenance_Admin(props){
                 try {
                     const response = await axiosPrivate({
                         method: "get",
-                        url: "/master/all",
+                        url: "/topicprovider/all",
                         signal: controller.signal
                     });
                     console.log(response.data);
@@ -2442,12 +2361,6 @@ export default function Maintenance_Admin(props){
                                     <div className={"ListItemTitle"}>
                                         {ProviderIndex===index? <div className={"ListItemSelected"}>{provider.name}</div>:<div>{provider.name}</div>}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*    {student.firstRound? <div>First Round</div>: <div>Second Round</div>}*/}
-                                    {/*</div>*/}
-                                    {/*<div>*/}
-                                    {/*    {student.begin_deadline} - {student.end_deadline}*/}
-                                    {/*</div>*/}
                                 </div>
                             ))}
                         </div>
@@ -2458,7 +2371,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div className={"windowrightcrudForm"}>
                             {ProviderCreate? createProvider(): showProviderInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>

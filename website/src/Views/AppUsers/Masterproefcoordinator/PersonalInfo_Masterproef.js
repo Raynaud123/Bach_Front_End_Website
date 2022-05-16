@@ -54,7 +54,7 @@ export default function PersonalInfo_Master(props) {
             <p><span>Firstname: </span>{Master.firstName}</p>
             <p><span>Lastname: </span> {Master.lastName}</p>
             <p><span>Role: </span> {`${Master.appUserRole}`.toLowerCase()}</p>
-            <div onClick={() => askAdmin()}>Ask help from Admin</div>
+            {/*<div onClick={() => askAdmin()}>Ask help from Admin</div>*/}
         </div>
     )
 }

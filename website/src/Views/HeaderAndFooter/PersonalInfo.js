@@ -8,8 +8,6 @@ import "../../Styles/Home.css"
 import Logout from "../Login/Logout"
 
 
-
-
 export default function PersonalInfo(props){
 
     switch(props.roles) {

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "../../../Styles/Topics.css";
 import "../../../Styles/Home.css";
 import "../../../Styles/Register.css";
@@ -9,7 +9,6 @@ import "../../../Styles/Register.css";
 export default function Top3Pick_Student(props) {
     const studentid = props.studentid;
     const [Preferred] = useState(props.preferred);
-    console.log(Preferred);
     const [FirstChoice, setFirstChoice] = useState(0);
     const [SecondChoice, setSecondChoice] = useState(0);
     const [ThirdChoice, setThirdChoice] = useState(0);
@@ -18,8 +17,6 @@ export default function Top3Pick_Student(props) {
     let from = "/choice";
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg] = useState('');
-    const location = useLocation();
     const navigate = useNavigate();
 
 
@@ -29,7 +26,7 @@ export default function Top3Pick_Student(props) {
                 method: "put",
                 url: "http://localhost:8080/student/" + studentid + "/updatetop3/" + FirstChoice +"/" + SecondChoice + "/" +ThirdChoice,
             });
-            console.log(response)
+            //console.log(response)
             navigate(from, {replace: false});
             setShow(false);
             setFirstChoice(0);

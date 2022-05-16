@@ -53,7 +53,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     url: "/targetaudience/hided/all",
                     signal: controller.signal
                 });
-                console.log("response getTarget:" + response.data);
+                //console.log("response getTarget:" + response.data);
                 isMounted && setTargetData(response.data);
             } catch (err) {
                 console.error(err);
@@ -69,7 +69,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                     url: "/keyword/all",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setKeywordData(response.data);
             } catch (err) {
                 console.error(err);
@@ -102,21 +102,21 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         const targetIds = [];
 
         Object.entries(Target).map(([key,test]) =>{
-            console.log(key);
+            //console.log(key);
             const jep = JSON.stringify(test);
-            console.log(jep);
+            //console.log(jep);
             const {label,value} = JSON.parse(jep);
-            console.log(value);
+            //console.log(value);
             targetIds.push(value);
         })
 
 
         Object.entries(Keyword).map(([key,test]) =>{
-            console.log(key);
+            //console.log(key);
             const jep = JSON.stringify(test);
-            console.log(jep);
+            //console.log(jep);
             const {label,value} = JSON.parse(jep);
-            console.log(value);
+            //console.log(value);
             keywordIds.push(value);
         })
 
@@ -181,25 +181,24 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             }
         }
 
-
     }
 
     const handleTargetAudienceChange = (e) => {
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setTarget(e)
         };
     }
 
     const handleKeywordsChange = (e) => {
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setKeyword(e)
         };
     }
 
     const handleAmountChange = (e) => {
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setformValue({...formValue,["StudentsAmount"]: e.value})
         };
@@ -208,7 +207,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
 
 
     const handleChange = (event) => {
-        console.log(event);
+        //console.log(event);
         setformValue({
             ...formValue,
             [event.target.name]: event.target.value

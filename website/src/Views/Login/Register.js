@@ -52,7 +52,7 @@ export default function Register(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("submitted");
+        //console.log("submitted");
         // if button enabled with JS hack
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
@@ -67,12 +67,12 @@ export default function Register(){
                 data:{
                     'username': user,
                     'password': pwd
-                }
-            });
-            console.log(response.data);
-            console.log(response.accessToken);
-            console.log(response.refreshToken);
-            console.log(JSON.stringify(response))
+                }}
+            );
+            //console.log(response.data);
+            //console.log(response.accessToken);
+            //console.log(response.refreshToken);
+            //console.log(JSON.stringify(response))
             setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this

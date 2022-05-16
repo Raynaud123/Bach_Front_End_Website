@@ -1,8 +1,6 @@
 import React from "react";
 
-
 export default function NotificationInfo_Promotor(props) {
-    const promotor = props.promotor;
     const notification = props.notification;
 
     return(

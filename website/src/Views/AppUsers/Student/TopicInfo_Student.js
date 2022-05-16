@@ -6,14 +6,11 @@ import PreferredTopic from "../../topics/PreferredTopic";
 
 export default function TopicInfo_Student(props) {
     const studentid = props.studentid;
-    console.log(useParams().topicid);
     const topicid = useParams().topicid;
-    console.log(topicid);
     const [Topic, setTopic] = useState([]);
     const [Provider, setProvider] = useState([]);
-    const [Promotor, setPromotor] = useState([]);
+    const [Promotor] = useState([]);
     const [TargetAudience, setTargetAudience] = useState([]);
-    // const [Coordinator, setCoordinator] = useState([]);
     const [Keyword, setKeyword] = useState([]);
 
 
@@ -33,7 +30,7 @@ export default function TopicInfo_Student(props) {
                     url: "/topic/" + topicid,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
                 await getProvider(response.data.provider);
                 // await getPromotor(response.data.promotor_id);
@@ -64,7 +61,7 @@ export default function TopicInfo_Student(props) {
                     // console.log(response.data[0]);
                     isMounted && setProvider(response.data[0]);
                 } catch (err) {
-                    if(err.response.status == 401){
+                    if(err.response.status === 401){
                         navigate("/unauthorized");
                         console.error(err);
                     }
@@ -76,38 +73,7 @@ export default function TopicInfo_Student(props) {
                 }
             }
         }
-        const getPromotor = async (promid) => {
-            try {
-                const response = await axiosPrivate({
-                    method: "get",
-                    url: "/promotor/" + promid,
-                    signal: controller.signal
-                });
-                // console.log(response.data);
-                isMounted && setPromotor(response.data);
-            } catch (err) {
-                console.error(err);
-                navigate('/login', {state: {from: location}, replace: true});
-                console.log(errMsg);
-            }
 
-        }
-        // const getCoordinator = async (coordid) => {
-        //     try {
-        //         const response = await axiosPrivate({
-        //             method: "get",
-        //             url: "/masterproefcoordinator/" + coordid,
-        //             signal: controller.signal
-        //         });
-        //         // console.log(response.data);
-        //         isMounted && setCoordinator(response.data);
-        //     } catch (err) {
-        //         console.error(err);
-        //         navigate('/login', {state: {from: location}, replace: true});
-        //         console.log(errMsg);
-        //     }
-        //
-        // }
         const getTargetAudience = async (targetAudienceList) => {
             // console.log(targetAudienceList);
             try {

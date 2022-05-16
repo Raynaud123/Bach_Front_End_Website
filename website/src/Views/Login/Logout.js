@@ -33,7 +33,7 @@ export default function Logout(){
         setId(null);
         setloggedIn(false);
         const accesTokenVar = accesToken;
-        console.log(role);
+        //console.log(role);
         setAuth({ user, pwd, loggedIn, accesTokenVar, role, id});
         navigate("/login", { replace: true });
     }

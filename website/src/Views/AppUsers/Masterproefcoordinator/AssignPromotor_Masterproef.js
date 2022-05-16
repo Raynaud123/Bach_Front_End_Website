@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Unauthorized from "../../Login/Unauthorized"
+import "../../../Styles/Home.css"
+import "../../../Styles/Register.css"
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -131,13 +133,13 @@ export default function AssignPromotor_Masterproef(props){
     }
     else{
             return (
-                <div>
+                <div className={"standaard"}>
                     <div>
                         <h1>Topic name: {Topic.topicName}</h1>
                         <p>Description: {Topic.description_topic}</p>
                     </div>
                     <div>
-                        <div>
+                        <div className={"form-style-1"}>
                             <h2>Promotors</h2>
                             {Display && <p>Not Full</p>}
                             <Select

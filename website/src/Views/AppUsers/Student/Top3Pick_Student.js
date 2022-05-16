@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 import "../../../Styles/Topics.css";
+import "../../../Styles/Home.css";
+import "../../../Styles/Register.css";
 
 
 export default function Top3Pick_Student(props) {
@@ -64,10 +66,10 @@ export default function Top3Pick_Student(props) {
     };
 
     return(
-        <div>
+        <div className={"standaard"}>
             {Show?
                 <div>
-                    <form id={"formtop3"}>
+                    <form id={"formtop3"} className={"form-style-1"}>
                         <div>
                             <label>1st choice:</label>
                             <select className={"SelectTop3"} id="firstchoice" onChange={(e) => onFirstChoiceChange(e)}>

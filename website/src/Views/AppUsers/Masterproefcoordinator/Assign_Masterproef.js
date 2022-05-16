@@ -178,7 +178,7 @@ export default function Assign_Masterproef(props){
                         <p>Students Amount: {Topic.aantal_studenten}</p>
                     </div>
                     <div>
-                        <div>
+                        <div className={"form-style-1"}>
                             <h2>Students without Topic</h2>
                             {Display && <p>This is a  Topic for {Topic.aantal_studenten} Students</p>}
                             <Select

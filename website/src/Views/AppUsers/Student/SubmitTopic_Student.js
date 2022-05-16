@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import Select from "react-select";
 import {useLocation, useNavigate} from "react-router-dom";
+import "../../../Styles/Home.css"
+import "../../../Styles/Register.css"
 
 export default function SubmitTopic_Student(props) {
     const studentId = props.persoonid;
@@ -173,10 +175,10 @@ export default function SubmitTopic_Student(props) {
 
 
     return(
-        <div >
+        <div className={"standaard"}>
             <h1>Submit a Topic as student</h1>
             <p>You must have a promotor for your topic otherwise your topic won't be approved! You also have to do the submitted topic on your own!</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={"form-style-1"}>
                 <h2>Add a new Topic</h2>
                 <div className={"inputgroup"}>
                     <input

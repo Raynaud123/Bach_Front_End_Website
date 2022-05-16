@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import "../../../Styles/personalInfo.css"
 
 export default function PersonalInfo_Student(props) {
     const studentid = props.studentid;
@@ -38,7 +39,10 @@ export default function PersonalInfo_Student(props) {
 
     return(
         <div>
-            {Student.firstName}
+            <h2>Personal Information</h2>
+            <p><span>Firstname: </span>{Student.firstName}</p>
+            <p><span>Lastname: </span> {Student.lastName}</p>
+            <p><span>Role: </span> {`${Student.appUserRole}`.toLowerCase()}</p>
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Unauthorized from "../../Login/Unauthorized"
+import "../../../Styles/Register.css"
 import Select from 'react-select'
 
 
@@ -154,7 +155,7 @@ export default function BoostComponent(props){
 
     if(Twee){
             return (
-                <div>
+                <div className={"form-style-1"}>
                     <h2>Choose a student to boost</h2>
                     {Display && <p>This is a  Topic for {AantalStudenten} Students</p>}
                     <Select
@@ -191,7 +192,7 @@ export default function BoostComponent(props){
                 </div>)
         }else {
             return (
-                <div>
+                <div className={"form-style-1"}>
                 <h2>Choose a student to boost</h2>
                     {Display && <p>Not Full</p>}
                     <Select

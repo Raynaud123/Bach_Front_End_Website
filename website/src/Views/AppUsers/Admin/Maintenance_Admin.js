@@ -35,7 +35,6 @@ export default function Maintenance_Admin(props){
         country: "",
         email: "",
         master: null,
-        approved: null
     });
 
     const [Masters, setMasters] = useState([]);
@@ -45,40 +44,30 @@ export default function Maintenance_Admin(props){
         firstName: "",
         lastName: "",
         targetAudience: [],
-        asPromotor_topic_list: [],
-        awaitApproved_promotor_list: [],
-        awaitApproved_topicProvider_list: [],
-        awaitApproved_topic_list: [],
         streetName: "",
-        streetNumber: -1,
-        postNumber: -1,
-        phoneNumber: -1,
+        streetNumber: 0,
+        postNumber: 0,
+        phoneNumber: 0,
         city: "",
         country: "",
-        email: "",
-        approved: null
+        email: ""
     });
 
     const [Promotors, setPromotors] = useState([]);
     const [PromotorIndex, setPromotorIndex] = useState(-1);
     const [PromotorCreate, setPromotorCreate] = useState(false);
     const [FormValuePromotor, setFormValuePromotor] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         targetAudience: [],
-        topic_list: [],
         streetName: "",
-        streetNumber: -1,
-        postNumber: -1,
-        phoneNumber: -1,
+        streetNumber: 0,
+        postNumber: 0,
+        phoneNumber: 0,
         city: "",
         country: "",
         email: "",
-        approved: null,
-        locked: null,
-        enabled: null,
-        isCompany: null,
-        userName: "",
-        password: ""
+        approved: null
     });
 
     const [Providers, setProviders] = useState([]);
@@ -87,21 +76,14 @@ export default function Maintenance_Admin(props){
     const [FormValueProvider, setFormValueProvider] = useState({
         name: "",
         campus: [],
-        topic_list: [],
-        streetName: "",
-        streetNumber: -1,
-        postNumber: -1,
-        phoneNumber: -1,
-        city: "",
-        country: "",
-        email: "",
         approved: null,
-        locked: null,
-        enabled: null,
         isCompany: null,
-        company: null,
-        userName: "",
-        password: ""
+        begleiders: [{
+            phoneContact: 0,
+            firstNameMentor: "",
+            lastNameMentor: "",
+            emailMentor: ""
+        }]
     });
 
     const [TargetAudiences, setTargetAudiences] = useState([]);
@@ -304,6 +286,18 @@ export default function Maintenance_Admin(props){
     }, [])
 
     function showMaintenanceBar(effect, deps) {
+        function getObjectOrNull(a) {
+            if (a==="null"){
+                return null;
+            }
+            return a;
+        }
+        function getObjectOrNullArray(a) {
+            if (a.includes('null')){
+                return null;
+            }
+            return a;
+        }
         function showStandaard() {
             return (
                 <div className={"windowMainenance"}>
@@ -655,18 +649,6 @@ export default function Maintenance_Admin(props){
                 });
                 //console.log(Array.from(event.target.selectedOptions, item => item.value));
             }
-            function getObjectOrNullArray(a) {
-                if (a.includes('null')){
-                    return null;
-                }
-                return a;
-            }
-            function getObjectOrNull(a) {
-                if (a==="null"){
-                    return null;
-                }
-                return a;
-            }
 
             function showStudentInfo() {
                 function getMaster(mid) {
@@ -955,7 +937,7 @@ export default function Maintenance_Admin(props){
                             master: master,
                         }
                     });
-                    console.log(response)
+                    //console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueStudent(
                         {
@@ -1016,7 +998,7 @@ export default function Maintenance_Admin(props){
                         setErrorMessageForm("Invalid firstname " + FormValueStudent.firstName);
                         FormValidStudent = false;
                     }
-                    console.log("FormValid: " + FormValidStudent);
+                    //console.log("FormValid: " + FormValidStudent);
                 }
                 checkFormValueStudent();
                 if (FormValidStudent){
@@ -1131,6 +1113,9 @@ export default function Maintenance_Admin(props){
                                     <div className={"ListItemTitle"}>
                                         {StudentIndex===index? <div className={"ListItemSelected"}>{student.firstName} {student.lastName}</div>:<div>{student.firstName} {student.lastName}</div>}
                                     </div>
+                                    {student.targetAudience.map((ta) => (
+                                        <div key={ta.targetAudience_id}>{ta.campus.campus_name + " " + ta.course.abbriviationName}</div>
+                                    ))}
                                 </div>
                             ))}
                         </div>
@@ -1186,57 +1171,115 @@ export default function Maintenance_Admin(props){
                                     <div className={"comment"}>New Value</div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="firstName" className={"InfoAttribute"}>Master firstName</label>
+                                    <label htmlFor="firstName" className={"InfoAttribute"}>Firstname</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Masters[MasterIndex].firstName? Masters[MasterIndex].firstName:""}
-                                        <input type="text" name="firstName" placeholder={"Master firstName"}
+                                        <input type="text" name="firstName" placeholder={"firstname"}
                                                value={FormValueMaster.firstName}
                                                onChange={handleMasterChange}
                                         />
                                     </div>
                                 </div>
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].firstRound? "True":"False"}*/}
-                                {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseBeginDeadline"*/}
-                                {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseEndDeadline"*/}
-                                {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].hide? "True":"False"}*/}
-                                {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="lastName" className={"InfoAttribute"}>Lastname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].lastName? Masters[MasterIndex].lastName:""}
+                                        <input type="text" name="lastName" placeholder={"Lastname"}
+                                               value={FormValueMaster.lastName}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audience</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].targetAudience.length!==0?
+                                            <div>
+                                                {Masters[MasterIndex].targetAudience.map((ta) => (
+                                                    <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
+                                                    </div>))}
+                                            </div>:<div>No target audiences</div>}
+                                        <select name="targetAudience" onChange={handleMasterChange} className={"maxgrootte"}>
+                                            <option value={"null"}>--None--</option>
+                                            {TargetAudiences.map((ta) => (
+                                                <option key={ta.targetAudience_id}
+                                                        value={ta.targetAudience_id}>
+                                                    {ta.campus.campus_name} {ta.course.course_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Country</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].country? Masters[MasterIndex].country:"No country"}
+                                        <input type="text" name="country" placeholder={"Country"}
+                                               value={FormValueMaster.country}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>City</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].city? Masters[MasterIndex].city:""}
+                                        <input type="text" name="city" placeholder={"City"}
+                                               value={FormValueMaster.city}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Post number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].postNumber!==0? Masters[MasterIndex].postNumber:""}
+                                        <input type="number" name="postNumber" placeholder={"Post number"}
+                                               value={FormValueMaster.postNumber}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Streetname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].streetName? Masters[MasterIndex].streetName:""}
+                                        <input type="text" name="streetName" placeholder={"Streetname"}
+                                               value={FormValueMaster.streetName}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Street number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].streetNumber!==0? Masters[MasterIndex].streetNumber:""}
+                                        <input type="number" name="streetNumber" placeholder={"Street number"}
+                                               value={FormValueMaster.streetNumber}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="email" className={"InfoAttribute"}>Email</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].email? Masters[MasterIndex].email:""}
+                                        <input type="email" name="email" placeholder={"Email"}
+                                               value={FormValueMaster.email}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="phoneNumber" className={"InfoAttribute"}>Phone number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Masters[MasterIndex].phoneNumber!==0? Masters[MasterIndex].phoneNumber:""}
+                                        <input type="number" name="phoneNumber" placeholder={"Phone number"}
+                                               value={FormValueMaster.phoneNumber}
+                                               onChange={handleMasterChange}
+                                        />
+                                    </div>
+                                </div>
                             </form>
                         }
                     </div>
@@ -1251,51 +1294,99 @@ export default function Maintenance_Admin(props){
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="firstName" className={"InfoAttribute"}>Master Firstname</label>
-                                    <input type="text" name="firstName" placeholder={"Master Firstname"}
+                                    <label htmlFor="firstName" className={"InfoAttribute"}>Firstname</label>
+                                    <input type="text" name="firstName" placeholder={"Firstname"}
                                            value={FormValueMaster.firstName}
                                            onChange={handleMasterChange}
                                     />
                                 </div>
                             </div>
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>*/}
-                            {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                            {/*        <input type="date" name="phaseBeginDeadline"*/}
-                            {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                            {/*        <input type="date" name="phaseEndDeadline"*/}
-                            {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                            {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="lastName" className={"InfoAttribute"}>Lastname</label>
+                                    <input type="text" name="lastName" placeholder={"Lastname"}
+                                           value={FormValueMaster.lastName}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
+                                    <select name="targetAudience" onChange={handleMasterChange} className={"maxgrootte"}>
+                                        <option value={"null"}>--None--</option>
+                                        {TargetAudiences.map((ta) => (
+                                            <option key={ta.targetAudience_id}
+                                                    value={ta.targetAudience_id}>
+                                                {ta.campus.campus_name} {ta.course.course_name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Country</label>
+                                    <input type="text" name="country" placeholder={"Country"}
+                                           value={FormValueMaster.country}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>City</label>
+                                    <input type="text" name="city" placeholder={"City"}
+                                           value={FormValueMaster.city}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Post number</label>
+                                    <input type="number" name="postNumber" placeholder={"Post number"}
+                                           value={FormValueMaster.postNumber}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Streetname</label>
+                                    <input type="text" name="streetName" placeholder={"Streetname"}
+                                           value={FormValueMaster.streetName}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Street number</label>
+                                    <input type="number" name="streetNumber" placeholder={"Street number"}
+                                           value={FormValueMaster.streetNumber}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="email" className={"InfoAttribute"}>Email</label>
+                                    <input type="email" name="email" placeholder={"Email"}
+                                           value={FormValueMaster.email}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phoneNumber" className={"InfoAttribute"}>Phone number</label>
+                                    <input type="number" name="phoneNumber" placeholder={"Phone number"}
+                                           value={FormValueMaster.phoneNumber}
+                                           onChange={handleMasterChange}
+                                    />
+                                </div>
+                            </div>
                         </form>
                     </div>
                 )
@@ -1304,6 +1395,7 @@ export default function Maintenance_Admin(props){
             const submitMasterUpdate = async(e) => {
                 console.log(Masters[MasterIndex]);
                 console.log(FormValueMaster);
+                let tas = getObjectOrNullArray(FormValueStudent.targetAudience);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
@@ -1311,47 +1403,31 @@ export default function Maintenance_Admin(props){
                         data: {
                             firstName: FormValueMaster.firstName,
                             lastName: FormValueMaster.lastName,
-                            targetAudience: FormValueMaster.targetAudience,
-                            asPromotor_topic_list: FormValueMaster.asPromotor_topic_list,
-                            awaitApproved_promotor_list: FormValueMaster.awaitApproved_promotor_list,
-                            awaitApproved_topicProvider_list: FormValueMaster.awaitApproved_topicProvider_list,
-                            awaitApproved_topic_list: FormValueMaster.awaitApproved_topic_list,
+                            targetAudience: tas,
                             streetName: FormValueMaster.streetName,
                             streetNumber: FormValueMaster.streetNumber,
                             postNumber: FormValueMaster.postNumber,
                             phoneNumber: FormValueMaster.phoneNumber,
                             city: FormValueMaster.city,
                             country: FormValueMaster.country,
-                            email: FormValueMaster.email,
-                            approved: FormValueMaster.approved,
-                            locked: FormValueMaster.locked,
-                            enabled: FormValueMaster.enabled,
-                            userName: FormValueMaster.userName,
-                            password: FormValueMaster.password
+                            email: FormValueMaster.email
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueMaster(
-                        {firstName: "",
+                        {
+                            firstName: "",
                             lastName: "",
                             targetAudience: [],
-                            asPromotor_topic_list: [],
-                            awaitApproved_promotor_list: [],
-                            awaitApproved_topicProvider_list: [],
-                            awaitApproved_topic_list: [],
                             streetName: "",
-                            streetNumber: -1,
-                            postNumber: -1,
-                            phoneNumber: -1,
+                            streetNumber: 0,
+                            postNumber: 0,
+                            phoneNumber: 0,
                             city: "",
                             country: "",
-                            email: "",
-                            approved: null,
-                            locked: null,
-                            enabled: null,
-                            userName: "",
-                            password: ""}
+                            email: ""
+                        }
                     );
                     await updateMasters();
                 } catch(error) {
@@ -1361,15 +1437,43 @@ export default function Maintenance_Admin(props){
             const submitMasterCreate = async(e) => {
                 let FormValidMaster = true;
                 function checkFormValueMaster() {
-                    if (FormValueMaster.firstName === ""){
-                        setErrorMessageForm("Invalid firstname" + FormValueMaster.firstName);
+                    if (FormValueMaster.phoneNumber === "" || FormValueMaster.phoneNumber === 0){
+                        setErrorMessageForm("Invalid phoneNumber " + FormValueMaster.phoneNumber );
+                        FormValidMaster = false;
+                    }
+                    if (FormValueMaster.email === ""){
+                        setErrorMessageForm("Invalid email " + FormValueMaster.email);
+                        FormValidMaster = false;
+                    }
+                    if (FormValueMaster.streetNumber <= 0  || FormValueMaster.streetNumber === null){
+                        setErrorMessageForm("Invalid streetNumber " + FormValueMaster.streetNumber);
+                        FormValidMaster = false;
+                    }
+                    if (FormValueMaster.streetName === ""){
+                        setErrorMessageForm("Invalid streetName " + FormValueMaster.streetName);
+                        FormValidMaster = false;
+                    }
+                    if (FormValueMaster.postNumber <= 0  || FormValueMaster.postNumber === null){
+                        setErrorMessageForm("Invalid postNumber " + FormValueMaster.streetNumber);
+                        FormValidMaster = false;
+                    }
+                    if (FormValueMaster.city === ""){
+                        setErrorMessageForm("Invalid city " + FormValueMaster.city);
+                        FormValidMaster = false;
+                    }
+                    if (FormValueMaster.country === ""){
+                        setErrorMessageForm("Invalid country " + FormValueMaster.country);
                         FormValidMaster = false;
                     }
                     if (FormValueMaster.lastName === ""){
-                        setErrorMessageForm("Invalid lastname" + FormValueMaster.lastName);
+                        setErrorMessageForm("Invalid lastname " + FormValueMaster.lastName);
                         FormValidMaster = false;
                     }
-                    console.log("FormValid: " + FormValidMaster);
+                    if (FormValueMaster.firstName === ""){
+                        setErrorMessageForm("Invalid firstname " + FormValueMaster.firstName);
+                        FormValidMaster = false;
+                    }
+                    //console.log("FormValid: " + FormValidMaster);
                 }
                 checkFormValueMaster();
                 if (FormValidMaster){
@@ -1382,22 +1486,13 @@ export default function Maintenance_Admin(props){
                                 firstName: FormValueMaster.firstName,
                                 lastName: FormValueMaster.lastName,
                                 targetAudience: FormValueMaster.targetAudience,
-                                asPromotor_topic_list: FormValueMaster.asPromotor_topic_list,
-                                awaitApproved_promotor_list: FormValueMaster.awaitApproved_promotor_list,
-                                awaitApproved_topicProvider_list: FormValueMaster.awaitApproved_topicProvider_list,
-                                awaitApproved_topic_list: FormValueMaster.awaitApproved_topic_list,
                                 streetName: FormValueMaster.streetName,
                                 streetNumber: FormValueMaster.streetNumber,
                                 postNumber: FormValueMaster.postNumber,
                                 phoneNumber: FormValueMaster.phoneNumber,
                                 city: FormValueMaster.city,
                                 country: FormValueMaster.country,
-                                email: FormValueMaster.email,
-                                approved: FormValueMaster.approved,
-                                locked: FormValueMaster.locked,
-                                enabled: FormValueMaster.enabled,
-                                userName: FormValueMaster.userName,
-                                password: FormValueMaster.password
+                                email: FormValueMaster.email
                             }
                         });
                         console.log(response)
@@ -1405,25 +1500,18 @@ export default function Maintenance_Admin(props){
                         setMasterIndex(-1);
                         setMasterCreate(false);
                         setFormValueMaster(
-                            {firstName: "",
+                            {
+                                firstName: "",
                                 lastName: "",
                                 targetAudience: [],
-                                asPromotor_topic_list: [],
-                                awaitApproved_promotor_list: [],
-                                awaitApproved_topicProvider_list: [],
-                                awaitApproved_topic_list: [],
                                 streetName: "",
-                                streetNumber: -1,
-                                postNumber: -1,
-                                phoneNumber: -1,
+                                streetNumber: 0,
+                                postNumber: 0,
+                                phoneNumber: 0,
                                 city: "",
                                 country: "",
-                                email: "",
-                                approved: null,
-                                locked: null,
-                                enabled: null,
-                                userName: "",
-                                password: ""}
+                                email: ""
+                            }
                         );
                         await updateMasters();
                     } catch(error) {
@@ -1448,22 +1536,14 @@ export default function Maintenance_Admin(props){
                         firstName: "",
                         lastName: "",
                         targetAudience: [],
-                        asPromotor_topic_list: [],
-                        awaitApproved_promotor_list: [],
-                        awaitApproved_topicProvider_list: [],
-                        awaitApproved_topic_list: [],
                         streetName: "",
-                        streetNumber: -1,
-                        postNumber: -1,
-                        phoneNumber: -1,
+                        streetNumber: 0,
+                        postNumber: 0,
+                        phoneNumber: 0,
                         city: "",
                         country: "",
-                        email: "",
-                        approved: null,
-                        locked: null,
-                        enabled: null,
-                        userName: "",
-                        password: ""}
+                        email: ""
+                        }
                     );
                     await updateMasters();
                 } catch(error) {
@@ -1504,12 +1584,9 @@ export default function Maintenance_Admin(props){
                                     <div className={"ListItemTitle"}>
                                         {MasterIndex===index? <div className={"ListItemSelected"}>{master.firstName} {master.lastName}</div>:<div>{master.firstName} {master.lastName}</div>}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*    {student.firstRound? <div>First Round</div>: <div>Second Round</div>}*/}
-                                    {/*</div>*/}
-                                    {/*<div>*/}
-                                    {/*    {student.begin_deadline} - {student.end_deadline}*/}
-                                    {/*</div>*/}
+                                    {master.targetAudience.map((ta) => (
+                                        <div key={ta.targetAudience_id}>{ta.campus.campus_name + " " + ta.course.abbriviationName}</div>
+                                    ))}
                                 </div>
                             ))}
                         </div>
@@ -1520,7 +1597,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div className={"windowrightcrudForm"}>
                             {MasterCreate? createMaster(): showMasterInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>
@@ -1543,7 +1620,6 @@ export default function Maintenance_Admin(props){
                     </div>
                 </div>
             )
-            return null;
         }
         function showPromotors() {
             const handlePromotorChange = (event) => {
@@ -1566,13 +1642,124 @@ export default function Maintenance_Admin(props){
                                     <div className={"comment"}>New Value</div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="name" className={"InfoAttribute"}>Promotor name</label>
+                                    <label htmlFor="firstName" className={"InfoAttribute"}>Firstname</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Promotors[PromotorIndex].firstName? Promotors[PromotorIndex].firstName:""}
-                                        <input type="text" name="name" placeholder={"Promotor name"}
+                                        <input type="text" name="firstName" placeholder={"Firstname"}
                                                value={FormValuePromotor.firstName}
                                                onChange={handlePromotorChange}
                                         />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="lastName" className={"InfoAttribute"}>Lastname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].lastName? Promotors[PromotorIndex].lastName:""}
+                                        <input type="text" name="lastName" placeholder={"Lastname"}
+                                               value={FormValuePromotor.lastName}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].targetAudience.length!==0?
+                                            <div>
+                                                {Promotors[PromotorIndex].targetAudience.map((ta) => (
+                                                    <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
+                                                    </div>))}
+                                            </div>:<div>No target audiences</div>}
+                                        <select name="targetAudience" onChange={handlePromotorChange} className={"maxgrootte"}>
+                                            <option value={"null"}>--None--</option>
+                                            {TargetAudiences.map((ta) => (
+                                                <option key={ta.targetAudience_id}
+                                                        value={ta.targetAudience_id}>
+                                                    {ta.campus.campus_name} {ta.course.course_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Country</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].country? Promotors[PromotorIndex].country:""}
+                                        <input type="text" name="country" placeholder={"Country"}
+                                               value={FormValuePromotor.country}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>City</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].city? Promotors[PromotorIndex].city:""}
+                                        <input type="text" name="city" placeholder={"City"}
+                                               value={FormValuePromotor.city}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Postnumber</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].postNumber!==0? Promotors[PromotorIndex].postNumber:""}
+                                        <input type="number" name="postNumber"
+                                               value={FormValuePromotor.postNumber}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Streetname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].streetName? Promotors[PromotorIndex].streetName:""}
+                                        <input type="text" name="streetName" placeholder={"Streetname"}
+                                               value={FormValuePromotor.streetName}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Street number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].streetNumber!==0? Promotors[PromotorIndex].streetNumber:""}
+                                        <input type="number" name="streetNumber"
+                                               value={FormValuePromotor.streetNumber}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="email" className={"InfoAttribute"}>Email</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].email? Promotors[PromotorIndex].email:""}
+                                        <input type="email" name="email" placeholder={"Email"}
+                                               value={FormValuePromotor.email}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="phoneNumber" className={"InfoAttribute"}>Phone number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].phoneNumber!==0? Promotors[PromotorIndex].phoneNumber:""}
+                                        <input type="number" name="phoneNumber" placeholder={"Phone number"}
+                                               value={FormValuePromotor.phoneNumber}
+                                               onChange={handlePromotorChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="approved" className={"InfoAttribute"}>Approve</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Promotors[PromotorIndex].approve? "True":"False"}
+                                        <select name="approve" onChange={handlePromotorChange}>
+                                            <option value={"null"}>Null</option>
+                                            <option value={"false"}>False</option>
+                                            <option value={"true"}>True</option>
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -1589,11 +1776,107 @@ export default function Maintenance_Admin(props){
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="name" className={"InfoAttribute"}>Promotor name</label>
-                                    <input type="text" name="name" placeholder={"Promotor name"}
+                                    <label htmlFor="firstName" className={"InfoAttribute"}>Firstname</label>
+                                    <input type="text" name="firstName" placeholder={"Firstname"}
                                            value={FormValuePromotor.firstName}
                                            onChange={handlePromotorChange}
                                     />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="lastName" className={"InfoAttribute"}>Lastname</label>
+                                    <input type="text" name="lastName" placeholder={"Lastname"}
+                                           value={FormValuePromotor.lastName}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
+                                    <select name="targetAudience" onChange={handlePromotorChange} className={"maxgrootte"}>
+                                        <option value={"null"}>--None--</option>
+                                        {TargetAudiences.map((ta) => (
+                                            <option key={ta.targetAudience_id}
+                                                    value={ta.targetAudience_id}>
+                                                {ta.campus.campus_name} {ta.course.course_name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Country</label>
+                                    <input type="text" name="country" placeholder={"Country"}
+                                           value={FormValuePromotor.country}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>City</label>
+                                    <input type="text" name="city" placeholder={"City"}
+                                           value={FormValuePromotor.city}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Postnumber</label>
+                                    <input type="number" name="postNumber"
+                                           value={FormValuePromotor.postNumber}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Streetname</label>
+                                    <input type="text" name="streetName" placeholder={"Streetname"}
+                                           value={FormValuePromotor.streetName}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Street number</label>
+                                    <input type="number" name="streetNumber"
+                                           value={FormValuePromotor.streetNumber}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="email" className={"InfoAttribute"}>Email</label>
+                                    <input type="email" name="email" placeholder={"Email"}
+                                           value={FormValuePromotor.email}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phoneNumber" className={"InfoAttribute"}>Phone number</label>
+                                    <input type="number" name="phoneNumber" placeholder={"Phone number"}
+                                           value={FormValuePromotor.phoneNumber}
+                                           onChange={handlePromotorChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="approved" className={"InfoAttribute"}>Approve</label>
+                                    <select name="approve" onChange={handlePromotorChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
@@ -1604,48 +1887,40 @@ export default function Maintenance_Admin(props){
             const submitPromotorUpdate = async(e) => {
                 console.log(Promotors[PromotorIndex]);
                 console.log(FormValuePromotor);
+                let tas = getObjectOrNullArray(FormValuePromotor.targetAudience);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/update/promotor/" + Promotors[PromotorIndex].id,
                         data: {
-                            name: FormValueProvider.name,
-                            campus: FormValueProvider.campus,
-                            topic_list: FormValueProvider.topic_list,
-                            streetName: FormValueProvider.streetName,
-                            streetNumber: FormValueProvider.streetNumber,
-                            postNumber: FormValueProvider.postNumber,
-                            phoneNumber: FormValueProvider.phoneNumber,
-                            city: FormValueProvider.city,
-                            country: FormValueProvider.country,
-                            email: FormValueProvider.email,
-                            approved: FormValueProvider.approved,
-                            locked: FormValueProvider.locked,
-                            enabled: FormValueProvider.enabled,
-                            userName: FormValuePromotor.userName,
-                            password: FormValuePromotor.password
+                            firstName: FormValuePromotor.firstName,
+                            lastName: FormValuePromotor.lastName,
+                            targetAudience: tas,
+                            streetName: FormValuePromotor.streetName,
+                            streetNumber: FormValuePromotor.streetNumber,
+                            postNumber: FormValuePromotor.postNumber,
+                            phoneNumber: FormValuePromotor.phoneNumber,
+                            city: FormValuePromotor.city,
+                            country: FormValuePromotor.country,
+                            email: FormValuePromotor.email,
+                            approved: FormValuePromotor.approved
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValuePromotor({
-                        name: "",
-                        campus: [],
-                        topic_list: [],
+                        firstName: "",
+                        lastName: "",
+                        targetAudience: [],
                         streetName: "",
-                        streetNumber: -1,
-                        postNumber: -1,
-                        phoneNumber: -1,
+                        streetNumber: 0,
+                        postNumber: 0,
+                        phoneNumber: 0,
                         city: "",
                         country: "",
                         email: "",
-                        approved: null,
-                        locked: null,
-                        enabled: null,
-                        isCompany: null,
-                        company: null,
-                        userName: "",
-                        password: ""}
+                        approved: null
+                    }
                     );
                     await updatePromotors();
                 } catch(error) {
@@ -1655,36 +1930,67 @@ export default function Maintenance_Admin(props){
             const submitPromotorCreate = async(e) => {
                 let FormValidPromotor = true;
                 function checkFormValuePromotor() {
-                    if (FormValuePromotor.firstName === ""){
-                        setErrorMessageForm("Invalid name" + FormValuePromotor.firstName);
+                    if (FormValuePromotor.approved === null ){
+                        setErrorMessageForm("Invalid approved " + FormValuePromotor.approved);
                         FormValidPromotor = false;
                     }
-                    console.log("FormValid: " + FormValidPromotor);
+                    if (FormValuePromotor.phoneNumber === "" || FormValuePromotor.phoneNumber === 0){
+                        setErrorMessageForm("Invalid phoneNumber " + FormValuePromotor.phoneNumber );
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.email === ""){
+                        setErrorMessageForm("Invalid email " + FormValuePromotor.email);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.streetNumber <= 0  || FormValuePromotor.streetNumber === null){
+                        setErrorMessageForm("Invalid streetNumber " + FormValuePromotor.streetNumber);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.streetName === ""){
+                        setErrorMessageForm("Invalid streetName " + FormValuePromotor.streetName);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.postNumber <= 0  || FormValuePromotor.postNumber === null){
+                        setErrorMessageForm("Invalid postNumber " + FormValuePromotor.streetNumber);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.city === ""){
+                        setErrorMessageForm("Invalid city " + FormValuePromotor.city);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.country === ""){
+                        setErrorMessageForm("Invalid country " + FormValuePromotor.country);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.lastName === ""){
+                        setErrorMessageForm("Invalid lastname " + FormValuePromotor.lastName);
+                        FormValidPromotor = false;
+                    }
+                    if (FormValuePromotor.firstName === ""){
+                        setErrorMessageForm("Invalid firstname " + FormValuePromotor.firstName);
+                        FormValidPromotor = false;
+                    }
                 }
                 checkFormValuePromotor();
                 if (FormValidPromotor){
                     setErrorMessageForm("");
+                    let tas = getObjectOrNullArray(FormValidPromotor.targetAudience);
                     try {
                         const response = await axiosPrivate({
                             method: "post",
                             url: "http://localhost:8080/admin/create/promotor/",
                             data: {
-                                name: FormValueProvider.name,
-                                campus: FormValueProvider.campus,
-                                topic_list: FormValueProvider.topic_list,
-                                streetName: FormValueProvider.streetName,
-                                streetNumber: FormValueProvider.streetNumber,
-                                postNumber: FormValueProvider.postNumber,
-                                phoneNumber: FormValueProvider.phoneNumber,
-                                city: FormValueProvider.city,
-                                country: FormValueProvider.country,
-                                email: FormValueProvider.email,
-                                approved: FormValueProvider.approved,
-                                locked: FormValueProvider.locked,
-                                enabled: FormValueProvider.enabled,
-                                userName: FormValuePromotor.userName,
-                                password: FormValuePromotor.password
-
+                                firstName: FormValuePromotor.firstName,
+                                lastName: FormValuePromotor.lastName,
+                                targetAudience: tas,
+                                streetName: FormValuePromotor.streetName,
+                                streetNumber: FormValuePromotor.streetNumber,
+                                postNumber: FormValuePromotor.postNumber,
+                                phoneNumber: FormValuePromotor.phoneNumber,
+                                city: FormValuePromotor.city,
+                                country: FormValuePromotor.country,
+                                email: FormValuePromotor.email,
+                                approved: FormValuePromotor.approved
                             }
                         });
                         console.log(response)
@@ -1692,23 +1998,18 @@ export default function Maintenance_Admin(props){
                         setPromotorIndex(-1);
                         setPromotorCreate(false);
                         setFormValuePromotor({
-                            name: "",
-                            campus: [],
-                            topic_list: [],
+                            firstName: "",
+                            lastName: "",
+                            targetAudience: [],
                             streetName: "",
-                            streetNumber: -1,
-                            postNumber: -1,
-                            phoneNumber: -1,
+                            streetNumber: 0,
+                            postNumber: 0,
+                            phoneNumber: 0,
                             city: "",
                             country: "",
                             email: "",
-                            approved: null,
-                            locked: null,
-                            enabled: null,
-                            isCompany: null,
-                            company: null,
-                            userName: "",
-                            password: ""}
+                            approved: null
+                            }
                         );
                         await updatePromotors();
                     } catch(error) {
@@ -1730,23 +2031,18 @@ export default function Maintenance_Admin(props){
                     navigate("/maintenance", { replace: true });
                     setPromotorIndex(-1);
                     setFormValuePromotor({
-                        name: "",
-                        campus: [],
-                        topic_list: [],
-                        streetName: "",
-                        streetNumber: -1,
-                        postNumber: -1,
-                        phoneNumber: -1,
-                        city: "",
-                        country: "",
-                        email: "",
-                        approved: null,
-                        locked: null,
-                        enabled: null,
-                        isCompany: null,
-                        company: null,
-                        userName: "",
-                        password: ""}
+                            firstName: "",
+                            lastName: "",
+                            targetAudience: [],
+                            streetName: "",
+                            streetNumber: 0,
+                            postNumber: 0,
+                            phoneNumber: 0,
+                            city: "",
+                            country: "",
+                            email: "",
+                            approved: null
+                        }
                     );
                     await updatePromotors();
                 } catch(error) {
@@ -1787,6 +2083,9 @@ export default function Maintenance_Admin(props){
                                     <div className={"ListItemTitle"}>
                                         {PromotorIndex===index? <div className={"ListItemSelected"}>{prom.firstName}</div>:<div>{prom.firstName}</div>}
                                     </div>
+                                    {prom.targetAudience.map((ta) => (
+                                        <div key={ta.targetAudience_id}>{ta.campus.campus_name + " " + ta.course.abbriviationName}</div>
+                                    ))}
                                 </div>
                             ))}
                         </div>
@@ -1797,7 +2096,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div className={"windowrightcrudForm"}>
                             {PromotorCreate? createPromotor(): showPromotorInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>

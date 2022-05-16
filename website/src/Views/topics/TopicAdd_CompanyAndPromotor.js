@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom"
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import "../../Styles/Home.css"
 import Select from "react-select";
 
 
@@ -21,6 +22,8 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         LastName:"",
         Tel:""
     });
+
+    const [StudentError, setStudentError] = useState(false);
 
     const [targetData, setTargetData] = useState([]);
     const [Target, setTarget] = useState([]);
@@ -125,7 +128,13 @@ export default function TopicAdd_CompanyAndPromotor(props) {
             setTargetError(true);
         }else setKeywordError(false);
 
-        if (keywordIds.length !== 0 && targetIds.length !== 0){
+        if (formValue.StudentsAmount === 0){
+            setStudentError(true);
+        }else {
+            setStudentError(false);
+        }
+
+        if (keywordIds.length !== 0 && targetIds.length !== 0 && formValue.StudentsAmount !== 0){
             if (CompanyComponent){
                 try{
                     const response = await axiosPrivate({
@@ -156,7 +165,6 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                         method: "post",
                         url: "/topic",
                         data: JSON.stringify({
-
                             'topicName': formValue.Question,
                             'description_topic': formValue.Description,
                             'aantal_studenten': formValue.StudentsAmount,
@@ -190,8 +198,17 @@ export default function TopicAdd_CompanyAndPromotor(props) {
         };
     }
 
+    const handleAmountChange = (e) => {
+        console.log(e);
+        if(e !== null){
+            setformValue({...formValue,["StudentsAmount"]: e.value})
+        };
+    }
+
+
 
     const handleChange = (event) => {
+        console.log(event);
         setformValue({
             ...formValue,
             [event.target.name]: event.target.value
@@ -199,6 +216,7 @@ export default function TopicAdd_CompanyAndPromotor(props) {
     }
 
     return (
+        <div className={"Home"}>
         <div className={"center"}>
             <form onSubmit={handleSubmit}>
                 <h2>Add a new Topic</h2>
@@ -221,16 +239,15 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                 />
                 </div>
                 <div className={"inputgroup"}>
+                    {StudentError && <p>This IS A REQUIRED FIELD!!!!</p>}
                     <label>Amount of students:</label>
-                    <select
+                    <Select
                         name="StudentsAmount"
-                        value={formValue.StudentsAmount}
-                        onChange={handleChange}
-                    >
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
+                        placeholder="StudentAmount"
+                        options={[{value: 1, label: 1 },{ value: 2, label: 2 }]}
+ //                       value={formValue.StudentsAmount}
+                        onChange={handleAmountChange}
+                    />
                 </div>
                 <div className={"inputgroup"}>
                     {TargetError && <p>THIS IS A REQUIRED FIELD!!!</p>}
@@ -301,6 +318,6 @@ export default function TopicAdd_CompanyAndPromotor(props) {
                 </button>
             </form>
         </div>
-
+        </div>
     )
 }

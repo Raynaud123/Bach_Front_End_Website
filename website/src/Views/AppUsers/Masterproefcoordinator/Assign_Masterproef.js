@@ -3,6 +3,8 @@ import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Unauthorized from "../../Login/Unauthorized"
 import Select from 'react-select'
+import "../../../Styles/Home.css"
+import "../../../Styles/Register.css"
 import makeAnimated from 'react-select/animated'
 
 
@@ -169,7 +171,7 @@ export default function Assign_Masterproef(props){
     else{
         if(Topic.aantal_studenten === 2){
             return (
-                <div>
+                <div className={"standaard"}>
                     <div>
                         <h1>Topic name: {Topic.topicName}</h1>
                         <p>Description: {Topic.description_topic}</p>
@@ -217,13 +219,13 @@ export default function Assign_Masterproef(props){
         }
         else {
             return(
-                <div>
+                <div className={"standaard"}>
                     <div>
                         <h1>Topic name: {Topic.topicName}</h1>
                         <p>Description: {Topic.description_topic}</p>
                     </div>
                         <div>
-                            <div>
+                            <div className={"form-style-1"}>
                                 <h2>Students without Topic</h2>
                                 {Display && <p>Not Full</p>}
                                 <Select

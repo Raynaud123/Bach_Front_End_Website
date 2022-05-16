@@ -38,7 +38,7 @@ export default function TopicInfo_Company(props) {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: `/topic/${topicid}`,
+                    url: `/topic/topic/topic/${topicid}`,
                     signal: controller.signal
                 });
                 console.log(response.data);

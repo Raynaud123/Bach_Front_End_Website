@@ -30,7 +30,7 @@ export default function ApprovedTopics(props){
                     url: "/topic/approved",
                     signal: controller.signal
                 });
-                //console.log(response.data);
+                console.log(response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);
@@ -65,10 +65,10 @@ export default function ApprovedTopics(props){
     }, [])
 
     function getPromotorName(promotor_id) {
-        for(let i = 0; i<Promotors.length; i++){
-            if (Promotors[i].id === promotor_id) return Promotors[i].firstName + " " + Promotors[i].lastName;
+        if(promotor_id === null){
+            return "No promotors";
         }
-        return "No promotors";
+        else return promotor_id.lastName;
     }
     function getTargetAudience(targetAudience_list) {
         return (
@@ -85,7 +85,7 @@ export default function ApprovedTopics(props){
     function getKeywords(keyword_list) {
         return (
             <div>
-                {keyword_list && keyword_list.length>1?
+                {keyword_list && keyword_list.length>0?
                     <div>{keyword_list.map((k,index) => (
                     index===0? k.keyword_name: ", " + k.keyword_name
                 ))}</div> : "No keywords"}
@@ -111,7 +111,7 @@ export default function ApprovedTopics(props){
                                 {getPromotorName(topic.promotor)}
                             </div>
                             <div className={"targetAudiencebox contentintopicbow"} >
-                                {getTargetAudience(topic.targetAudience_list)}
+                                {getTargetAudience(topic.targetAudiences)}
                             </div>
                             <div className={"keywordbox contentintopicbow"} >
                                 {getKeywords(topic.keyword_list)}

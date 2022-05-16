@@ -75,7 +75,7 @@ export default function TopicInfo_Student(props) {
         }
 
         const getTargetAudience = async (targetAudienceList) => {
-            // console.log(targetAudienceList);
+            console.log(targetAudienceList);
             try {
                 setTargetAudience(targetAudienceList);
             } catch (err) {

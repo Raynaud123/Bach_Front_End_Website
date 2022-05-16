@@ -36,7 +36,7 @@ export default function TopicInfo_Masterproef(props) {
             try {
                 const response = await axiosPrivate({
                     method: "get",
-                    url: `/topic/master/${topicid}`,
+                    url: `/topic/topic/topic/${topicid}`,
                     signal: controller.signal
                 });
                 console.log(response.data);
@@ -46,10 +46,9 @@ export default function TopicInfo_Masterproef(props) {
                 await getProvider(response.data.provider);
                 await getTargetAudience(response.data.targetAudiences);
                 await getKeywords(response.data.keyword_list);
-                await getPromotor(response.data.promotor.id);
+                await getPromotor(response.data.promotor);
                 await getStudents();
             } catch (err) {
-
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
                 console.log(errMsg);

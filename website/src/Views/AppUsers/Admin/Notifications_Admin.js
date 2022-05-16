@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import "../../../Styles/Home.css";
+import NotificationInfoPerObjSort_MasterProef from "../../Notification/NotificationInfoPerObjSort_MasterProef";
+
 
 export default function Notifications_Admin(props) {
     const adminid = props.persoonid;
@@ -37,8 +40,15 @@ export default function Notifications_Admin(props) {
     }, [])
 
     return(
-        <div>
+        <div className={"standaard"}>
             Notifications: {Admin.firstName}
+            <div>
+                {Admin.notification_list?Admin.notification_list.map((n) => (
+                    <div>
+                        {n.object_name} met id: {n.object_id}
+                    </div>
+                )):"No notifications"}
+            </div>
         </div>
     )
 }

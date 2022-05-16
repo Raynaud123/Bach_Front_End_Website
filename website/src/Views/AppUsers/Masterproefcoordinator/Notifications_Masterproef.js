@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
+import "../../../Styles/Home.css";
+import NotificationInfoPerObjSort_MasterProef from "../../Notification/NotificationInfoPerObjSort_MasterProef";
+
 
 export default function Notifications_Master(props) {
     const masterid = props.persoonid;
@@ -37,8 +40,11 @@ export default function Notifications_Master(props) {
     }, [])
 
     return(
-        <div>
+        <div className={"standaard"}>
             Notifications: {Master.firstName}
+            <div>
+                If there are topics/promotor/companies/researchgroups that need to be approved, you will find them in the path "approve".
+            </div>
         </div>
     )
 }

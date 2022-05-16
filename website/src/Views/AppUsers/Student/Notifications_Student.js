@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 import NotificationInfo_Student from "../../Notification/NotificationInfo_Student";
+import "../../../Styles/Home.css";
+
 
 export default function Notifications_Student(props) {
     const studentid = props.persoonid;
@@ -53,7 +55,7 @@ export default function Notifications_Student(props) {
     }
 
     return(
-        <div>
+        <div className={"standaard"}>
             Notifications: {Student.firstName} {Student.lastName}
             <div>
                 {NotificationList.map((n) => (

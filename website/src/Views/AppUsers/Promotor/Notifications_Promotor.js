@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 import NotificationInfo_Promotor from "../../Notification/NotificationInfo_Promotor";
+import "../../../Styles/Home.css";
+
 
 export default function Notifications_Promotor(props) {
     const promotorid = props.persoonid;
@@ -41,7 +43,7 @@ export default function Notifications_Promotor(props) {
     }, [])
 
     return(
-        <div>
+        <div  className={"standaard"}>
             Notifications: {Promotor.firstName}
             <div>
                 {NotificationList.map((n) => (

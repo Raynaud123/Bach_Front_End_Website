@@ -14,6 +14,6 @@ export default function NotificationInfo(props){
             return <NotificationInfoPromotor_Masterproef persoonid={props.persoonid} promotorid={useParams().object_id}/>
         case "COMPANY":
             return <NotificationInfoCompany_Masterproef persoonid={props.persoonid} companyid={useParams().object_id}/>
-
+        default:
     }
 }

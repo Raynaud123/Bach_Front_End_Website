@@ -4,9 +4,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import "../../../Styles/Maintenance.css"
 
 
-export default function Maintenance_Admin(props){
-    const adminid = props.persoonid;
-
+export default function Maintenance_Admin(){
     const [ErrorMessageForm, setErrorMessageForm] = useState("");
 
     const [Phases, setPhases] = useState([]);
@@ -262,13 +260,13 @@ export default function Maintenance_Admin(props){
             }
 
         }
-        getTopics().then(r => null);
-        getPromotors().then(r => null);
-        getPhases().then(r => null);
-        getStudents().then(r => null);
-        getMasters().then(r => null);
-        getProviders().then(r => null);
-        getTargetAudiences().then(r => null);
+        getTopics().then();
+        getPromotors().then();
+        getPhases().then();
+        getStudents().then();
+        getMasters().then();
+        getProviders().then();
+        getTargetAudiences().then();
         getKeywords().then();
         getTopics().then();
 
@@ -278,7 +276,7 @@ export default function Maintenance_Admin(props){
         }
     }, [])
 
-    function showMaintenanceBar(effect, deps) {
+    function showMaintenanceBar() {
         function getObjectOrNull(a) {
             if (a==="null"){
                 return null;
@@ -443,7 +441,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitPhaseUpdate = async(e) => {
+            const submitPhaseUpdate = async() => {
                 //console.log(Phases[PhaseIndex]);
                 //console.log(FormValuePhase);
                 try {
@@ -472,7 +470,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitPhaseCreate = async(e) => {
+            const submitPhaseCreate = async() => {
                 let FormValidPhase = true;
                 function checkFormValuePhase() {
                     if (FormValuePhase.phaseName === ""){
@@ -527,7 +525,7 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitPhaseDelete = async(e) => {
+            const submitPhaseDelete = async() => {
                 //console.log(Phases[PhaseIndex]);
                 try {
                     const response = await axiosPrivate({
@@ -907,7 +905,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitStudentUpdate = async(e) => {
+            const submitStudentUpdate = async() => {
                 //console.log(FormValueStudent);
                 let tas = getObjectOrNullArray(FormValueStudent.targetAudience);
                 let master = getObjectOrNull(FormValueStudent.master);
@@ -952,7 +950,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitStudentCreate = async(e) => {
+            const submitStudentCreate = async() => {
                 let FormValidStudent = true;
                 function checkFormValueStudent() {
                     if (FormValueStudent.phoneNumber === "" || FormValueStudent.phoneNumber === 0){
@@ -1041,7 +1039,7 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitStudentDelete = async(e) => {
+            const submitStudentDelete = async() => {
                 //console.log(Students[StudentIndex]);
                 try {
                     const response = await axiosPrivate({
@@ -1391,7 +1389,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitMasterUpdate = async(e) => {
+            const submitMasterUpdate = async() => {
                 //console.log(Masters[MasterIndex]);
                 //console.log(FormValueMaster);
                 let tas = getObjectOrNullArray(FormValueMaster.targetAudience);
@@ -1433,7 +1431,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitMasterCreate = async(e) => {
+            const submitMasterCreate = async() => {
                 let FormValidMaster = true;
                 function checkFormValueMaster() {
                     if (FormValueMaster.phoneNumber === "" || FormValueMaster.phoneNumber === 0){
@@ -1523,7 +1521,7 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitMasterDelete = async(e) => {
+            const submitMasterDelete = async() => {
                 //console.log(Masters[MasterIndex]);
                 try {
                     const response = await axiosPrivate({
@@ -1896,7 +1894,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitPromotorUpdate = async(e) => {
+            const submitPromotorUpdate = async() => {
                 //console.log(Promotors[PromotorIndex]);
                 //console.log(FormValuePromotor);
                 let tas = getObjectOrNullArray(FormValuePromotor.targetAudience);
@@ -1940,7 +1938,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitPromotorCreate = async(e) => {
+            const submitPromotorCreate = async() => {
                 let FormValidPromotor = true;
                 function checkFormValuePromotor() {
                     if (FormValuePromotor.approved === null ){
@@ -2030,7 +2028,7 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitPromotorDelete = async(e) => {
+            const submitPromotorDelete = async() => {
                 //console.log(Promotors[PromotorIndex]);
                 try {
                     const response = await axiosPrivate({
@@ -2231,7 +2229,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitProviderUpdate = async(e) => {
+            const submitProviderUpdate = async() => {
                 //console.log(Providers[ProviderIndex]);
                 //console.log(FormValueProvider);
                 try {
@@ -2257,7 +2255,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitProviderCreate = async(e) => {
+            const submitProviderCreate = async() => {
                 let FormValidProvider = true;
                 function checkFormValueProvider() {
                     if (FormValueProvider.approved === null){
@@ -2303,7 +2301,7 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitProviderDelete = async(e) => {
+            const submitProviderDelete = async() => {
                 //console.log(Providers[ProviderIndex]);
                 try {
                     const response = await axiosPrivate({
@@ -2596,7 +2594,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitTargetAudienceUpdate = async(e) => {
+            const submitTargetAudienceUpdate = async() => {
                 //console.log(TargetAudiences[TargetAudienceIndex]);
                 //console.log(FormValueTargetAudience);
                 try {
@@ -2638,7 +2636,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitTargetAudienceCreate = async(e) => {
+            const submitTargetAudienceCreate = async() => {
                 let FormValidTargetAudience = true;
                 function checkFormValueTargetAudience() {
                     if (FormValueTargetAudience.campus_name === ""){
@@ -2710,7 +2708,7 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitTargetAudienceDelete = async(e) => {
+            const submitTargetAudienceDelete = async() => {
                 //console.log("TA: " + TargetAudienceIndex);
                 //console.log(TargetAudiences[TargetAudienceIndex]);
                 try {
@@ -2891,11 +2889,11 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitKeywordUpdate = async(e) => {
+            const submitKeywordUpdate = async() => {
                 //console.log(Keywords[KeywordIndex]);
                 //console.log(FormValueKeyword);
                 try {
-                    const response = await axiosPrivate({
+                    await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/update/keyword/" + Keywords[KeywordIndex].keyword_id,
                         data: {
@@ -2915,7 +2913,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitKeywordCreate = async(e) => {
+            const submitKeywordCreate = async() => {
                 let FormValidKeyword = true;
                 function checkFormValueKeyword() {
                     if (FormValueKeyword.keyword_name === ""){
@@ -2932,7 +2930,7 @@ export default function Maintenance_Admin(props){
                 if (FormValidKeyword){
                     setErrorMessageForm("");
                     try {
-                        const response = await axiosPrivate({
+                        await axiosPrivate({
                             method: "post",
                             url: "http://localhost:8080/admin/create/keyword/",
                             data: {
@@ -2955,10 +2953,10 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitKeywordDelete = async(e) => {
+            const submitKeywordDelete = async() => {
                 //console.log(Keywords[KeywordIndex]);
                 try {
-                    const response = await axiosPrivate({
+                    await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/delete/keyword",
                         data: {
@@ -3426,7 +3424,7 @@ export default function Maintenance_Admin(props){
                 )
             }
 
-            const submitTopicUpdate = async(e) => {
+            const submitTopicUpdate = async() => {
                 //console.log(Topics[TopicIndex]);
                 //console.log(FormValueTopic);
                 let keywords = getObjectOrNull(FormValueTopic.keyword_list);
@@ -3436,7 +3434,7 @@ export default function Maintenance_Admin(props){
 
                 setErrorMessageForm("");
                 try {
-                    const response = await axiosPrivate({
+                    await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/update/topic/" + Topics[TopicIndex].topic_id,
                         data: {
@@ -3455,7 +3453,7 @@ export default function Maintenance_Admin(props){
                             targetAudiences: tas
                         }
                     });
-                    //console.log(response)
+//console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueTopic({
                         aantal_studenten: 2,
@@ -3478,7 +3476,7 @@ export default function Maintenance_Admin(props){
                     console.log(error)
                 }
             }
-            const submitTopicCreate = async(e) => {
+            const submitTopicCreate = async() => {
                 let FormValidTopic = true;
                 function checkFormValueTopic() {
                     if (FormValueTopic.hide_topic === null){
@@ -3525,7 +3523,7 @@ export default function Maintenance_Admin(props){
                     // console.log("tags " + tags);
 
                     try {
-                        const response = await axiosPrivate({
+                        await axiosPrivate({
                             method: "post",
                             url: "http://localhost:8080/admin/create/topic/",
                             data: {
@@ -3570,17 +3568,17 @@ export default function Maintenance_Admin(props){
                     }
                 }
             }
-            const submitTopicDelete = async(e) => {
+            const submitTopicDelete = async() => {
                 // console.log(Topics[TopicIndex]);
                 try {
-                    const response = await axiosPrivate({
+                    await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/delete/topic",
                         data: {
                             topic_id: Topics[TopicIndex].topic_id
                         }
                     });
-                    // console.log(response)
+// console.log(response)
                     navigate("/maintenance", { replace: true });
                     setTopicIndex(-1);
                     setFormValueTopic({

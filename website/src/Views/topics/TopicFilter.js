@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
-// import {FiSearch} from "react-icons/all";
 import '../../Styles/Topics.css';
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import {useLocation, useNavigate} from "react-router-dom";
 
 
 export default function TopicFilter (){
-    const [TargetAudience, setTargetAudience] = useState([]);
+    const [ setTargetAudience] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -47,11 +45,7 @@ export default function TopicFilter (){
 
         return(
             <div >
-                {/*{this.state.data.map(targetaudience =>*/}
-                {/*    <div key = {targetaudience.id}>*/}
-                {/*        {targetaudience.state.campus}*/}
-                {/*    </div>*/}
-                {/*)}*/}
+
             </div>
         )
 }

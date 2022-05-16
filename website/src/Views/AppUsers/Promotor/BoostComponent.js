@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import Unauthorized from "../../Login/Unauthorized"
+import {useLocation, useNavigate} from "react-router-dom";
 import "../../../Styles/Register.css"
 import Select from 'react-select'
 
@@ -23,9 +22,7 @@ export default function BoostComponent(props){
 
 
     useEffect(()=>{
-        let isMounted = true;
         const controller = new AbortController();
-        console.log(topic_id);
 
 
         const getTopic = async () => {
@@ -41,7 +38,7 @@ export default function BoostComponent(props){
                 }else {
                     setTwee(false);
                     setAantalStudenten(1);
-                };
+                }
             } catch (err) {
 
                 console.error(err);
@@ -58,9 +55,9 @@ export default function BoostComponent(props){
                 url: "/student/hided/boost/" + topic_id,
                 signal: controller.signal
             });
-            console.log(response.data);
+                //console.log(response.data);
             setStudenten(response.data);
-            console.log(Studenten);
+                //console.log(Studenten);
         }catch (err){
             console.error(err);
             if(err.response.status === 500){
@@ -77,7 +74,7 @@ export default function BoostComponent(props){
     },[])
 
     const handleChange = (e) =>{
-        console.log(e);
+        //console.log(e);
         if(e !== null){
             setNull(false);
             if (e.length === 2 && Twee){
@@ -96,17 +93,17 @@ export default function BoostComponent(props){
         setValue(e);
     }
 
-    const handleOnclick = async (e) => {
+    const handleOnclick = async () => {
         const ids = [];
-        console.log(Vol)
-        console.log("twee" + Twee);
+        //console.log(Vol)
+        //console.log("twee" + Twee);
         if (Twee && Vol){
-            Object.entries(Value).map(([key,test]) =>{
-                console.log(key);
+            Object.entries(Value).map(([test]) =>{
+                //console.log(key);
                 const jep = JSON.stringify(test);
-                console.log(jep);
-                const {label,value} = JSON.parse(jep);
-                console.log(value);
+                //console.log(jep);
+                const {value} = JSON.parse(jep);
+                //console.log(value);
                 ids.push(value);
             })
         }else if(!Twee && Vol){
@@ -116,7 +113,7 @@ export default function BoostComponent(props){
                 }
             })
         }
-        console.log(ids);
+        //console.log(ids);
         if(Vol){
             setDisplay(false);
             try {
@@ -165,24 +162,24 @@ export default function BoostComponent(props){
                         isSearchable
                         isMulti
                         isClearable
-                        isOptionDisabled={(option) => Value.length >= 2}
+                        isOptionDisabled={() => Value.length >= 2}
                         onChange={handleChange}
                     />
                     <div> You have chosen for
                         {
 
                             Object.entries(Value).map(([key,test]) =>{
-                                console.log(key);
-                                if(key == "0"){
+                                //console.log(key);
+                                if(key === "0"){
                                     const jep = JSON.stringify(test);
-                                    console.log(jep);
-                                    const {label,value} = JSON.parse(jep);
-                                    console.log(label);
+                                    //console.log(jep);
+                                    const {label} = JSON.parse(jep);
+                                    //console.log(label);
                                     return (` ${label} `)
                                 }else{
                                     const jep = JSON.stringify(test);
-                                    console.log(jep);
-                                    const {label,value} = JSON.parse(jep);
+                                    //console.log(jep);
+                                    const {label} = JSON.parse(jep);
                                     return(`and ${label}`);
                                 }
                             })
@@ -206,7 +203,7 @@ export default function BoostComponent(props){
                     {!Null && <p> You have chosen
                         {
                             Object.entries(Value).map((test) => {
-                                console.log(test);
+                                //console.log(test);
                                 if(test[0] === "label"){
                                     return (` ${test[1]}`)
                                 }

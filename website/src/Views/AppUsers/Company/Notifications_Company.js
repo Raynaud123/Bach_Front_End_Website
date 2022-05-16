@@ -10,7 +10,6 @@ export default function Notifications_Company(props) {
 
 
     const axiosPrivate = useAxiosPrivate();
-    const [errMsg] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
 

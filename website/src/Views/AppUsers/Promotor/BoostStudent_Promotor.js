@@ -5,7 +5,7 @@ import {HiUsers} from "react-icons/all";
 
 export default function BoostStudent_Promotor(props){
 
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg] = useState('');
     const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function BoostStudent_Promotor(props){
                     url: `/topic/promotor/${props.promotorid}`,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 isMounted && setTopic(response.data);
             } catch (err) {
                 console.error(err);

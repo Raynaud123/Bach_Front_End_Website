@@ -7,7 +7,6 @@ export default function TopicAssign_Masterproef(props){
 
     const id = props.persoonid;
 
-    const [Studenten,SetStudenten] = useState([]);
     const [Topics,SetTopics] = useState([]);
 
 
@@ -22,28 +21,7 @@ export default function TopicAssign_Masterproef(props){
         //cancel request if component is unmountend
         const controller = new AbortController();
 
-        // const getStudenten =async () => {
-        //     try {
-        //         const response = await axiosPrivate({
-        //             method: "get",
-        //             url: "/student/hided/" + id,
-        //             signal: controller.signal
-        //         });
-        //         console.log(response.data);
-        //         SetStudenten(response.data);
-        //         console.log(Studenten);
-        //     }catch (err){
-        //         console.error(err);
-        //         if(err.response.status === 500){
-        //   //          TO-DO: Server Failed pagina?
-        //         }
-        //         else {
-        //             navigate('/login', { state: { from: location }, replace: true });
-        //             console.log(errMsg);
-        //         }
-        //
-        //     }
-        // }
+
         const getTopics =async () => {
             try {
                 const response = await axiosPrivate({
@@ -51,9 +29,9 @@ export default function TopicAssign_Masterproef(props){
                     url: "/topic/hided/" + id,
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 SetTopics(response.data);
-                console.log(Topics);
+                //console.log(Topics);
             }catch (err){
                 console.error(err);
                 if(err.response.status === 500){
@@ -67,7 +45,6 @@ export default function TopicAssign_Masterproef(props){
             }
         }
 
-//        getStudenten();
         getTopics();
     },[])
 
@@ -75,14 +52,6 @@ export default function TopicAssign_Masterproef(props){
     return(
         <div >
             <h1>Assign</h1>
-            {/*<h4>Studenten zonder topic</h4>*/}
-            {/*{Studenten.map((student) => {*/}
-            {/*    return(<p>{student.username}</p>)*/}
-            {/*})}*/}
-            {/* zoekfunctie */}
-            <div>
-
-            </div>
             <h4>Topics zonder student</h4>
             {Topics.map((topic) => {
                 return(<div className={"topiccontainer"}>

@@ -7,11 +7,6 @@ export default function Approve_Masterproef(props){
     const masterid = props.persoonid;
     const [MasterNotifications, setMasterNotifications] = useState([]);
     const [Phase, setPhase] = useState([]);
-    const x = () => {
-      
-    }
-
-
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
@@ -29,7 +24,7 @@ export default function Approve_Masterproef(props){
                     url: "/master/" + masterid + "/notifications",
                     signal: controller.signal
                 });
-                console.log(response.data);
+                //console.log(response.data);
                 const myData = [].concat(response.data).sort((a, b) => a.notification_id > b.notification_id ? 1 : -1);
                 isMounted && setMasterNotifications(myData);
             } catch (err) {

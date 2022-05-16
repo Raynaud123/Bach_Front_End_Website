@@ -14,8 +14,8 @@ export default function AssignPromotor_Masterproef(props){
     const [Topic,setTopic] = useState([]);
     const [Promotoren,setPromotoren] = useState([]);
     const [Value,setValue] = useState([]);
-    const [setTwee] = useState(false);
-    const [Display] = useState(false);
+    const [Twee,setTwee] = useState(false);
+    const [Display,setDisplay] = useState(false);
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
     const location = useLocation();
@@ -34,7 +34,7 @@ export default function AssignPromotor_Masterproef(props){
                     url: "/topic/" + topic_id,
                     signal: controller.signal
                 });
-                //console.log(response.data);
+                console.log(response.data);
                 isMounted && setTopic(response.data);
                 //console.log(Topic)
                 if(response.data.aantal_studenten === 2){
@@ -47,11 +47,11 @@ export default function AssignPromotor_Masterproef(props){
                     navigate("/unauthorized");
                     console.error(err);
                 }
-                else{
+               else{
                     console.error(err);
                     navigate('/login', { state: { from: location }, replace: true });
                     console.log(errMsg);
-                }
+               }
             }
         }
 

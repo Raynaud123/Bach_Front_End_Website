@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from "react-router-dom";
 import "../../Styles/Home.css"
 import "../../Styles/Register.css"
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -15,7 +16,7 @@ export default function Register(){
 
     const userRef = useRef();
     const errRef = useRef();
-
+    const axiosPrivate = useAxiosPrivate();
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
@@ -60,13 +61,14 @@ export default function Register(){
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+            const response = await axiosPrivate({
+                method: 'post',
+                url: "/appuser/register",
+                data:{
+                    'username': user,
+                    'password': pwd
                 }
-            );
+            });
             console.log(response.data);
             console.log(response.accessToken);
             console.log(response.refreshToken);
@@ -168,7 +170,7 @@ export default function Register(){
                     Must match the first password input field.
                 </p>
 
-                <button className={"register"} disabled={!validName || !validPwd || !validMatch}> Register</button>
+                <button type="submit" className={"register"} disabled={!validName || !validPwd || !validMatch}> Register</button>
             </div>
             </form>
             <p>Already registered?<br /></p>

@@ -28,14 +28,13 @@ export default function Maintenance_Admin(props){
         lastName: "",
         targetAudience: [],
         streetName: "",
-        streetNumber: -1,
-        postNumber: -1,
-        phoneNumber: -1,
+        streetNumber: 0,
+        postNumber: 0,
+        phoneNumber: 0,
         city: "",
         country: "",
         email: "",
-        assignedTopic: -1,
-        master: -1,
+        master: null,
         approved: null
     });
 
@@ -57,11 +56,7 @@ export default function Maintenance_Admin(props){
         city: "",
         country: "",
         email: "",
-        approved: null,
-        locked: null,
-        enabled: null,
-        userName: "",
-        password: ""
+        approved: null
     });
 
     const [Promotors, setPromotors] = useState([]);
@@ -651,14 +646,14 @@ export default function Maintenance_Admin(props){
                     ...FormValueStudent,
                     [event.target.name]: event.target.value
                 });
-                console.log(event.target.name + " " + event.target.value);
+                //console.log(event.target.name + " " + event.target.value);
             }
             const handleStudentChangeArray = (event) => {
                 setFormValueStudent({
                     ...FormValueStudent,
                     [event.target.name]: Array.from(event.target.selectedOptions, item => item.value)
                 });
-                console.log(Array.from(event.target.selectedOptions, item => item.value));
+                //console.log(Array.from(event.target.selectedOptions, item => item.value));
             }
             function getObjectOrNullArray(a) {
                 if (a.includes('null')){
@@ -674,6 +669,13 @@ export default function Maintenance_Admin(props){
             }
 
             function showStudentInfo() {
+                function getMaster(mid) {
+                    return <div>{Masters.map((m) =>(
+                        m.id===mid? m.firstName + " " + m.lastName:""
+                    ))}
+                    </div>
+                }
+
                 return(
                     <div>
                         {StudentIndex===-1? <div/>:
@@ -695,48 +697,118 @@ export default function Maintenance_Admin(props){
                                         />
                                     </div>
                                 </div>
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseRound" className={"InfoAttribute"}>First Round</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].firstRound? "True":"False"}*/}
-                                {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].begin_deadline? Phases[PhaseIndex].begin_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseBeginDeadline"*/}
-                                {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].end_deadline? Phases[PhaseIndex].end_deadline: " "}*/}
-                                {/*        <input type="date" name="phaseEndDeadline"*/}
-                                {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                                {/*               onChange={handlePhaseChange}*/}
-                                {/*        />*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*<div className={"InfoSection"}>*/}
-                                {/*    <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                                {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                                {/*        {Phases[PhaseIndex].hide? "True":"False"}*/}
-                                {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                                {/*            <option value={"null"}>Null</option>*/}
-                                {/*            <option value={"false"}>False</option>*/}
-                                {/*            <option value={"true"}>True</option>*/}
-                                {/*        </select>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="lastName" className={"InfoAttribute"}>Student Lastname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].lastName? Students[StudentIndex].lastName:""}
+                                        <input type="text" name="lastName" placeholder={"Student Lastname"}
+                                               value={FormValueStudent.lastName}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].targetAudience.length!==0?
+                                            <div>
+                                                {Students[StudentIndex].targetAudience.map((ta) => (
+                                                    <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
+                                                    </div>))}
+                                            </div>:<div>No target audiences</div>}
+                                        <select name="targetAudience" onChange={handleStudentChangeArray} multiple className={"maxgrootte"}>
+                                            <option value={"null"}>--None--</option>
+                                            {TargetAudiences.map((ta) => (
+                                                <option key={ta.targetAudience_id}
+                                                        value={ta.targetAudience_id}>
+                                                    {ta.campus.campus_name} {ta.course.course_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Student Country</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].country? Students[StudentIndex].country:"No country"}
+                                        <input type="text" name="country" placeholder={"Country"}
+                                               value={FormValueStudent.country}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>Student City</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].city? Students[StudentIndex].city:""}
+                                        <input type="text" name="city" placeholder={"City"}
+                                               value={FormValueStudent.city}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Student Post number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].postNumber!==0? Students[StudentIndex].postNumber:""}
+                                        <input type="number" name="postNumber" placeholder={"Post number"}
+                                               value={FormValueStudent.postNumber}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Student Streetname</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].streetName? Students[StudentIndex].streetName:""}
+                                        <input type="text" name="streetName" placeholder={"Streetname"}
+                                               value={FormValueStudent.streetName}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Student Street number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].streetNumber!==0? Students[StudentIndex].streetNumber:""}
+                                        <input type="number" name="streetNumber" placeholder={"Street number"}
+                                               value={FormValueStudent.streetNumber}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="email" className={"InfoAttribute"}>Email</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].email? Students[StudentIndex].email:""}
+                                        <input type="email" name="email" placeholder={"Email"}
+                                               value={FormValueStudent.email}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="phoneNumber" className={"InfoAttribute"}>Student Phone number</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].phoneNumber!==0? Students[StudentIndex].phoneNumber:""}
+                                        <input type="number" name="phoneNumber" placeholder={"Phone number"}
+                                               value={FormValueStudent.phoneNumber}
+                                               onChange={handleStudentChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"InfoSection"}>
+                                    <label htmlFor="master" className={"InfoAttribute"}>Student Thesis Coordinator</label>
+                                    <div className={"InfoAttributeValueAndInput"}>
+                                        {Students[StudentIndex].master!==null && Students[StudentIndex].master!==0? getMaster(Students[StudentIndex].master):""}
+                                        <select name="master" onChange={handleStudentChange} >
+                                            <option value={"null"}>--None--</option>
+                                            {Masters.map((m) => (
+                                                <option value={m.id}>{m.firstName} {m.lastName}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                         }
                     </div>
@@ -829,7 +901,7 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="email" className={"InfoAttribute"}>Email</label>
-                                    <input type="text" name="email" placeholder={"Email"}
+                                    <input type="email" name="email" placeholder={"Email"}
                                            value={FormValueStudent.email}
                                            onChange={handleStudentChange}
                                     />
@@ -838,21 +910,10 @@ export default function Maintenance_Admin(props){
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
                                     <label htmlFor="phoneNumber" className={"InfoAttribute"}>Student Phone number</label>
-                                    <input type="text" name="phoneNumber" placeholder={"Phone number"}
+                                    <input type="number" name="phoneNumber" placeholder={"Phone number"}
                                            value={FormValueStudent.phoneNumber}
                                            onChange={handleStudentChange}
                                     />
-                                </div>
-                            </div>
-                            <div className={"InfoSection"}>
-                                <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="assignedTopic" className={"InfoAttribute"}>Assigned Topic</label>
-                                    <select name="assignedTopic" onChange={handleStudentChange} className={"maxgrootte"}>
-                                        <option value={"null"}>--None--</option>
-                                        {Topics.map((t) => (
-                                            <option value={t.topic_id}>{t.topicName}</option>
-                                        ))}
-                                    </select>
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
@@ -866,24 +927,15 @@ export default function Maintenance_Admin(props){
                                     </select>
                                 </div>
                             </div>
-                            <div className={"InfoSection"}>
-                                <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="approved" className={"InfoAttribute"}>Approve</label>
-                                    <select name="approved" onChange={handleStudentChange}>
-                                        <option value={"null"}>Null</option>
-                                        <option value={"false"}>False</option>
-                                        <option value={"true"}>True</option>
-                                    </select>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 )
             }
 
             const submitStudentUpdate = async(e) => {
-                console.log(Students[StudentIndex]);
-                console.log(FormValueStudent);
+                //console.log(FormValueStudent);
+                let tas = getObjectOrNullArray(FormValueStudent.targetAudience);
+                let master = getObjectOrNull(FormValueStudent.master);
 
                 try {
                     const response = await axiosPrivate({
@@ -892,7 +944,7 @@ export default function Maintenance_Admin(props){
                         data: {
                             firstName: FormValueStudent.firstName,
                             lastName: FormValueStudent.lastName,
-                            targetAudience: FormValueStudent.targetAudience,
+                            targetAudience: tas,
                             streetName: FormValueStudent.streetName,
                             streetNumber: FormValueStudent.streetNumber,
                             postNumber: FormValueStudent.postNumber,
@@ -900,9 +952,7 @@ export default function Maintenance_Admin(props){
                             city: FormValueStudent.city,
                             country: FormValueStudent.country,
                             email: FormValueStudent.email,
-                            assignedTopic: FormValueStudent.assignedTopic,
-                            master: FormValueStudent.master,
-                            approved: FormValueStudent.approved,
+                            master: master,
                         }
                     });
                     console.log(response)
@@ -913,15 +963,13 @@ export default function Maintenance_Admin(props){
                             lastName: "",
                             targetAudience: [],
                             streetName: "",
-                            streetNumber: -1,
-                            postNumber: -1,
-                            phoneNumber: -1,
+                            streetNumber: 0,
+                            postNumber: 0,
+                            phoneNumber: 0,
                             city: "",
                             country: "",
                             email: "",
-                            assignedTopic: -1,
-                            master: -1,
-                            approved: null
+                            master: null,
                         }
                     );
                     await updateStudents();
@@ -932,36 +980,40 @@ export default function Maintenance_Admin(props){
             const submitStudentCreate = async(e) => {
                 let FormValidStudent = true;
                 function checkFormValueStudent() {
-                    if (FormValueStudent.phoneNumber === ""){
-                        setErrorMessageForm("Invalid phoneNumber" + FormValueStudent.phoneNumber);
+                    if (FormValueStudent.phoneNumber === "" || FormValueStudent.phoneNumber === 0){
+                        setErrorMessageForm("Invalid phoneNumber " + FormValueStudent.phoneNumber );
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.email === ""){
-                        setErrorMessageForm("Invalid email" + FormValueStudent.email);
+                        setErrorMessageForm("Invalid email " + FormValueStudent.email);
                         FormValidStudent = false;
                     }
-                    if (FormValueStudent.streetNumber === -1 && FormValueStudent.streetNumber > 0){
-                        setErrorMessageForm("Invalid streetNumber" + FormValueStudent.streetNumber);
+                    if (FormValueStudent.streetNumber <= 0  || FormValueStudent.streetNumber === null){
+                        setErrorMessageForm("Invalid streetNumber " + FormValueStudent.streetNumber);
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.streetName === ""){
-                        setErrorMessageForm("Invalid streetName" + FormValueStudent.streetName);
+                        setErrorMessageForm("Invalid streetName " + FormValueStudent.streetName);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.postNumber <= 0  || FormValueStudent.postNumber === null){
+                        setErrorMessageForm("Invalid postNumber " + FormValueStudent.streetNumber);
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.city === ""){
-                        setErrorMessageForm("Invalid city" + FormValueStudent.city);
+                        setErrorMessageForm("Invalid city " + FormValueStudent.city);
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.country === ""){
-                        setErrorMessageForm("Invalid country" + FormValueStudent.country);
+                        setErrorMessageForm("Invalid country " + FormValueStudent.country);
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.lastName === ""){
-                        setErrorMessageForm("Invalid lastname" + FormValueStudent.lastName);
+                        setErrorMessageForm("Invalid lastname " + FormValueStudent.lastName);
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.firstName === ""){
-                        setErrorMessageForm("Invalid firstname" + FormValueStudent.firstName);
+                        setErrorMessageForm("Invalid firstname " + FormValueStudent.firstName);
                         FormValidStudent = false;
                     }
                     console.log("FormValid: " + FormValidStudent);
@@ -970,7 +1022,6 @@ export default function Maintenance_Admin(props){
                 if (FormValidStudent){
                     setErrorMessageForm("");
                     let tas = getObjectOrNullArray(FormValueStudent.targetAudience);
-                    let assignt = getObjectOrNull(FormValueStudent.assignedTopic);
                     let master = getObjectOrNull(FormValueStudent.master);
                     try {
                         const response = await axiosPrivate({
@@ -987,12 +1038,10 @@ export default function Maintenance_Admin(props){
                                 city: FormValueStudent.city,
                                 country: FormValueStudent.country,
                                 email: FormValueStudent.email,
-                                assignedTopic: assignt,
                                 master: master,
-                                approved: FormValueStudent.approved,
                             }
                         });
-                        console.log(response)
+                        //console.log(response)
                         navigate("/maintenance", { replace: true });
                         setStudentIndex(-1);
                         setStudentCreate(false);
@@ -1002,15 +1051,13 @@ export default function Maintenance_Admin(props){
                                 lastName: "",
                                 targetAudience: [],
                                 streetName: "",
-                                streetNumber: -1,
-                                postNumber: -1,
-                                phoneNumber: -1,
+                                streetNumber: 0,
+                                postNumber: 0,
+                                phoneNumber: 0,
                                 city: "",
                                 country: "",
                                 email: "",
-                                assignedTopic: -1,
-                                master: -1,
-                                approved: null
+                                master: null,
                             }
                         );
                         await updateStudents();
@@ -1020,16 +1067,16 @@ export default function Maintenance_Admin(props){
                 }
             }
             const submitStudentDelete = async(e) => {
-                console.log(Students[StudentIndex]);
+                //console.log(Students[StudentIndex]);
                 try {
                     const response = await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/delete/student",
                         data: {
-                            student_id: Students[StudentIndex].id
+                            id: Students[StudentIndex].id
                         }
                     });
-                    console.log(response)
+                    //console.log(response)
                     navigate("/maintenance", { replace: true });
                     setStudentIndex(-1);
                     setFormValueStudent({
@@ -1037,15 +1084,14 @@ export default function Maintenance_Admin(props){
                         lastName: "",
                         targetAudience: [],
                         streetName: "",
-                        streetNumber: -1,
-                        postNumber: -1,
-                        phoneNumber: -1,
+                        streetNumber: 0,
+                        postNumber: 0,
+                        phoneNumber: 0,
                         city: "",
                         country: "",
                         email: "",
-                        assignedTopic: null,
                         master: null,
-                        approved: null}
+                    }
                     );
                     await updateStudents();
                 } catch(error) {
@@ -1061,9 +1107,8 @@ export default function Maintenance_Admin(props){
                         url: "/student/all",
                         signal: controller.signal
                     });
-                    console.log(response.data);
+                    //console.log(response.data);
                     const myData = [].concat(response.data).sort((a, b) => a.id > b.id ? 1 : -1);
-                    console.log(response.data);
                     isMounted && setStudents(myData);
 
                 } catch (err) {
@@ -2803,6 +2848,13 @@ export default function Maintenance_Admin(props){
                 });
                 // console.log(Array.from(event.target.selectedOptions, item => item.value));
             }
+            function getObjectOrNull(a) {
+                if (a.includes('null')){
+                    // console.log("a: " + a)
+                    return null;
+                }
+                return a;
+            }
 
             function showTopicInfo() {
                 function getProvider(provider) {
@@ -3213,14 +3265,6 @@ export default function Maintenance_Admin(props){
                 } catch(error) {
                     console.log(error)
                 }
-            }
-
-            function getObjectOrNull(a) {
-                if (a.includes('null')){
-                    // console.log("a: " + a)
-                    return null;
-                }
-                return a;
             }
             const submitTopicCreate = async(e) => {
                 let FormValidTopic = true;

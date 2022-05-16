@@ -56,7 +56,7 @@ export default function TopicInfo_Promotor(props) {
                 await getKeywords(response.data.keyword_list);
                 await getPromotor(response.data.promotor);
                 await getStudents();
-                if(response.data.boostedStudent.length == 0) {
+                if(response.data.boostedStudent.length === 0) {
                     setBoostedComponent(true);
                 }else {
                     setBoostedComponent(false);
@@ -155,6 +155,7 @@ export default function TopicInfo_Promotor(props) {
                     signal: controller.signal
                 });
                 // console.log(response.data);
+                console.log(response.data.phase_id);
                 if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
                     setPhase(true)
                 }
@@ -242,6 +243,8 @@ export default function TopicInfo_Promotor(props) {
         )
     }
     function KeywordInfo() {
+        console.log(BoostedComponent);
+        console.log(Phase);
         return(
             <div className={"tekst"}>
                 <h3>Keywords:</h3> {Keyword? <div>{Keyword.map((keyword) => (<div> &emsp; {keyword.keyword_name}</div> ))}</div> : "None"}

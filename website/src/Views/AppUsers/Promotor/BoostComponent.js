@@ -8,7 +8,7 @@ import Select from 'react-select'
 export default function BoostComponent(props){
     const topic_id = props.id;
 
-    const [AantalStudenten,setAantalStudenten] = useState();
+    const [AantalStudenten,setAantalStudenten] = useState(0);
     const [Studenten,setStudenten] = useState([]);
     const [Value,setValue] = useState([]);
     const [Null,setNull] = useState(false);
@@ -34,9 +34,13 @@ export default function BoostComponent(props){
                     url: `/topic/${topic_id}`,
                     signal: controller.signal
                 });
-                if(response.data.aantal_studenten == 2){
+                if(response.data.aantal_studenten === 2){
                     setTwee(true)
-                }else setTwee(false);
+                    setAantalStudenten(2);
+                }else {
+                    setTwee(false);
+                    setAantalStudenten(1);
+                };
             } catch (err) {
 
                 console.error(err);

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {HiUsers} from "react-icons/all";
+import "../../../Styles/Home.css";
+
 
 export default function TopicAssign_Masterproef(props){
 
@@ -50,7 +52,7 @@ export default function TopicAssign_Masterproef(props){
 
 
     return(
-        <div >
+        <div className={"standaard"}>
             <h1>Assign</h1>
             <h4>Topics zonder student</h4>
             {Topics.map((topic) => {

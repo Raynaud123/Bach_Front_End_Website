@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {HiUsers} from "react-icons/all";
+import "../../../Styles/Home.css";
+
 
 export default function PromotorAssing_Masterproef(props){
 
@@ -20,7 +22,6 @@ export default function PromotorAssing_Masterproef(props){
 
         //cancel request if component is unmountend
         const controller = new AbortController();
-        //Nog backend Link maken om topics zonder promotor te displayen
         const getTopics =async () => {
             try {
                 const response = await axiosPrivate({
@@ -40,7 +41,6 @@ export default function PromotorAssing_Masterproef(props){
             }catch (err){
                 console.error(err);
                 if(err.response.status === 500){
-                    //          TO-DO: Server Failed pagina?
                 }
                 else {
                     navigate('/login', { state: { from: location }, replace: true });
@@ -55,7 +55,7 @@ export default function PromotorAssing_Masterproef(props){
 
 
     return(
-        <div >
+        <div className={"standaard"}>
             <h1>Assign</h1>
 
             {Empty && <p>Er moeten geen Promotoren toegewezen worden</p>}

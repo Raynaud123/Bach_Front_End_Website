@@ -37,12 +37,24 @@ export default function PersonalInfo_Master(props) {
         }
     }, [])
 
+    async function askAdmin() {
+        try {
+            await axiosPrivate({
+                method: "post",
+                url: "http://localhost:8080/admin/help/" + masterid,
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <div>
             <h2>Personal Information</h2>
             <p><span>Firstname: </span>{Master.firstName}</p>
             <p><span>Lastname: </span> {Master.lastName}</p>
             <p><span>Role: </span> {`${Master.appUserRole}`.toLowerCase()}</p>
+            <div onClick={() => askAdmin()}>Ask help from Admin</div>
         </div>
     )
 }

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {HiUsers} from "react-icons/all";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
+import "../../../Styles/Home.css";
+
 
 export default function Topic_Company(props){
 
@@ -59,7 +61,7 @@ export default function Topic_Company(props){
 
 
     return(
-        <div>
+        <div className={"standaard"}>
             <h2>Topics who are approved</h2>
             {ApprovedTopic.map((topic) => (
                 <div className={"topiccontainer"}>

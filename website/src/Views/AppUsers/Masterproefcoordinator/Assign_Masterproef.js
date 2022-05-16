@@ -5,7 +5,6 @@ import Unauthorized from "../../Login/Unauthorized"
 import Select from 'react-select'
 import "../../../Styles/Home.css"
 import "../../../Styles/Register.css"
-import makeAnimated from 'react-select/animated'
 
 
 export default function Assign_Masterproef(props){

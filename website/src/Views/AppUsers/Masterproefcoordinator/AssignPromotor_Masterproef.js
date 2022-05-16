@@ -127,38 +127,38 @@ export default function AssignPromotor_Masterproef(props){
         return <Unauthorized/>
     }
     else{
-            return (
-                <div className={"standaard"}>
-                    <div>
-                        <h1>Topic name: {Topic.topicName}</h1>
-                        <p>Description: {Topic.description_topic}</p>
-                    </div>
-                    <div>
-                        <div className={"form-style-1"}>
-                            <h2>Promotors</h2>
-                            {Display && <p>Not Full</p>}
-                            <Select
-                                name="secondSelectt"
-                                options={Promotoren.map(e=>({label: e.username, value: e.id}))}
-                                placeholder="Select Promotor"
-                                isSearchable
-                                isClearable
-                                onChange={handleChange}
-                            />
-                            <p> You have chosen
-                                {
-                                    Object.entries(Value).map((test) => {
-                                        //console.log(test);
-                                        if(test[0] === "label"){
-                                            return (` ${test[1]}`)
-                                        }
-                                    })
-                                } for this topic
-                            </p>
-                            <button onClick={handleOnclick}>Submit here</button>
-                        </div>
+        return (
+            <div className={"standaard"}>
+                <div>
+                    <h1>Topic name: {Topic.topicName}</h1>
+                    <p>Description: {Topic.description_topic}</p>
+                </div>
+                <div>
+                    <div className={"form-style-1"}>
+                        <h2>Promotors</h2>
+                        {Display && <p>Not Full</p>}
+                        <Select
+                            name="secondSelectt"
+                            options={Promotoren.map(e=>({label: e.username, value: e.id}))}
+                            placeholder="Select Promotor"
+                            isSearchable
+                            isClearable
+                            onChange={handleChange}
+                        />
+                        <p> You have chosen
+                            {
+                                Object.entries(Value).map((test) => {
+                                    //console.log(test);
+                                    if(test[0] === "label"){
+                                        return (` ${test[1]}`)
+                                    }
+                                })
+                            } for this topic
+                        </p>
+                        <button onClick={handleOnclick}>Submit here</button>
                     </div>
                 </div>
-            )
+            </div>
+        )
     }
 }

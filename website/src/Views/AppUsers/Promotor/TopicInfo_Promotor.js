@@ -155,7 +155,7 @@ export default function TopicInfo_Promotor(props) {
                     signal: controller.signal
                 });
                 // console.log(response.data);
-                if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
+                if(3 === 3 || response.data.phase_id === 6 && isMounted){
                     setPhase(true)
                 }
                 else setPhase(false);

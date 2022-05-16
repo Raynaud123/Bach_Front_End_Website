@@ -5,6 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 export default function PersonalInfo_Company(props) {
     const companyid = props.companyid;
     const [Company, setCompany] = useState([]);
+    const [Role, setRole] = useState('')
 
     const axiosPrivate = useAxiosPrivate();
     const [errMsg] = useState('');
@@ -21,8 +22,13 @@ export default function PersonalInfo_Company(props) {
                     url: "/topicprovider/approved/" + companyid,
                     signal: controller.signal
                 });
-                //console.log("Company: " + response.data);
+                console.log(response.data);
                 isMounted && setCompany(response.data);
+                if(response.data.company === true){
+                    setRole("Company")
+                }else {
+                    setRole("Research")
+                }
             } catch (err) {
                 console.error(err);
                 navigate('/login', { state: { from: location }, replace: true });
@@ -38,7 +44,9 @@ export default function PersonalInfo_Company(props) {
 
     return(
         <div>
-            {Company.name}
+            <h2>Company Details</h2>
+            <p><span>Name: </span>{Company.name}</p>
+            <p><span>Role: </span>{Role}</p>
         </div>
     )
 }

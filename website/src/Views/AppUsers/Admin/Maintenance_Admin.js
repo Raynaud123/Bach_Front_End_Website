@@ -27,8 +27,6 @@ export default function Maintenance_Admin(props){
         firstName: "",
         lastName: "",
         targetAudience: [],
-        top3Topic: [],
-        preferredTopics: [],
         streetName: "",
         streetNumber: -1,
         postNumber: -1,
@@ -36,13 +34,9 @@ export default function Maintenance_Admin(props){
         city: "",
         country: "",
         email: "",
-        assignedTopic: null,
-        master: null,
-        approved: null,
-        locked: null,
-        enabled: null,
-        userName: "",
-        password: ""
+        assignedTopic: -1,
+        master: -1,
+        approved: null
     });
 
     const [Masters, setMasters] = useState([]);
@@ -70,7 +64,6 @@ export default function Maintenance_Admin(props){
         password: ""
     });
 
-    //Attributen nakijken!!!!!!!!!!!! // TODO
     const [Promotors, setPromotors] = useState([]);
     const [PromotorIndex, setPromotorIndex] = useState(-1);
     const [PromotorCreate, setPromotorCreate] = useState(false);
@@ -145,11 +138,11 @@ export default function Maintenance_Admin(props){
     const [FormValueTopic, setFormValueTopic] = useState({
         aantal_studenten: 2,
         approved_topic: null,
-        boostedStudent: null,
+        boostedStudent: -1,
         description_topic: "",
         hide_topic: null,
         keyword_list: [],
-        promotor: null,
+        promotor: -1,
         provider: -1,
         release_date: "",
         student_list: [],
@@ -658,6 +651,26 @@ export default function Maintenance_Admin(props){
                     ...FormValueStudent,
                     [event.target.name]: event.target.value
                 });
+                console.log(event.target.name + " " + event.target.value);
+            }
+            const handleStudentChangeArray = (event) => {
+                setFormValueStudent({
+                    ...FormValueStudent,
+                    [event.target.name]: Array.from(event.target.selectedOptions, item => item.value)
+                });
+                console.log(Array.from(event.target.selectedOptions, item => item.value));
+            }
+            function getObjectOrNullArray(a) {
+                if (a.includes('null')){
+                    return null;
+                }
+                return a;
+            }
+            function getObjectOrNull(a) {
+                if (a==="null"){
+                    return null;
+                }
+                return a;
             }
 
             function showStudentInfo() {
@@ -745,44 +758,124 @@ export default function Maintenance_Admin(props){
                                     />
                                 </div>
                             </div>
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseRound" className={"InfoAttribute"}>FirstRound</label>*/}
-                            {/*        <select name="phaseRound" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseBeginDeadline" className={"InfoAttribute"}>Begin Dealine</label>*/}
-                            {/*        <input type="date" name="phaseBeginDeadline"*/}
-                            {/*               value={FormValuePhase.phaseBeginDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseEndDeadline" className={"InfoAttribute"}>End Deadline</label>*/}
-                            {/*        <input type="date" name="phaseEndDeadline"*/}
-                            {/*               value={FormValuePhase.phaseEndDeadline}*/}
-                            {/*               onChange={handlePhaseChange}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={"InfoSection"}>*/}
-                            {/*    <div className={"InfoAttributeValueAndInput"}>*/}
-                            {/*        <label htmlFor="phaseHide" className={"InfoAttribute"}>Hide</label>*/}
-                            {/*        <select name="phaseHide" onChange={handlePhaseChange}>*/}
-                            {/*            <option value={"null"}>Null</option>*/}
-                            {/*            <option value={"false"}>False</option>*/}
-                            {/*            <option value={"true"}>True</option>*/}
-                            {/*        </select>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="lastName" className={"InfoAttribute"}>Student Lastname</label>
+                                    <input type="text" name="lastName" placeholder={"Student Lastname"}
+                                           value={FormValueStudent.lastName}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="targetAudience" className={"InfoAttribute"}>Target Audiences</label>
+                                    <select name="targetAudience" onChange={handleStudentChangeArray} multiple className={"maxgrootte"}>
+                                        <option value={"null"}>--None--</option>
+                                        {TargetAudiences.map((ta) => (
+                                            <option key={ta.targetAudience_id}
+                                                    value={ta.targetAudience_id}>
+                                                {ta.campus.campus_name} {ta.course.course_name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="country" className={"InfoAttribute"}>Student Country</label>
+                                    <input type="text" name="country" placeholder={"Country"}
+                                           value={FormValueStudent.country}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="city" className={"InfoAttribute"}>Student City</label>
+                                    <input type="text" name="city" placeholder={"City"}
+                                           value={FormValueStudent.city}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="postNumber" className={"InfoAttribute"}>Student Post number</label>
+                                    <input type="number" name="postNumber" placeholder={"Post number"}
+                                           value={FormValueStudent.postNumber}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetName" className={"InfoAttribute"}>Student Streetname</label>
+                                    <input type="text" name="streetName" placeholder={"Streetname"}
+                                           value={FormValueStudent.streetName}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="streetNumber" className={"InfoAttribute"}>Student Street number</label>
+                                    <input type="number" name="streetNumber" placeholder={"Street number"}
+                                           value={FormValueStudent.streetNumber}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="email" className={"InfoAttribute"}>Email</label>
+                                    <input type="text" name="email" placeholder={"Email"}
+                                           value={FormValueStudent.email}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="phoneNumber" className={"InfoAttribute"}>Student Phone number</label>
+                                    <input type="text" name="phoneNumber" placeholder={"Phone number"}
+                                           value={FormValueStudent.phoneNumber}
+                                           onChange={handleStudentChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="assignedTopic" className={"InfoAttribute"}>Assigned Topic</label>
+                                    <select name="assignedTopic" onChange={handleStudentChange} className={"maxgrootte"}>
+                                        <option value={"null"}>--None--</option>
+                                        {Topics.map((t) => (
+                                            <option value={t.topic_id}>{t.topicName}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="master" className={"InfoAttribute"}>Student Thesis Coordinator</label>
+                                    <select name="master" onChange={handleStudentChange} >
+                                        <option value={"null"}>--None--</option>
+                                        {Masters.map((m) => (
+                                            <option value={m.id}>{m.firstName} {m.lastName}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={"InfoSection"}>
+                                <div className={"InfoAttributeValueAndInput"}>
+                                    <label htmlFor="approved" className={"InfoAttribute"}>Approve</label>
+                                    <select name="approved" onChange={handleStudentChange}>
+                                        <option value={"null"}>Null</option>
+                                        <option value={"false"}>False</option>
+                                        <option value={"true"}>True</option>
+                                    </select>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 )
@@ -791,6 +884,7 @@ export default function Maintenance_Admin(props){
             const submitStudentUpdate = async(e) => {
                 console.log(Students[StudentIndex]);
                 console.log(FormValueStudent);
+
                 try {
                     const response = await axiosPrivate({
                         method: "post",
@@ -799,8 +893,6 @@ export default function Maintenance_Admin(props){
                             firstName: FormValueStudent.firstName,
                             lastName: FormValueStudent.lastName,
                             targetAudience: FormValueStudent.targetAudience,
-                            top3Topic: FormValueStudent.top3Topic,
-                            preferredTopics: FormValueStudent.preferredTopics,
                             streetName: FormValueStudent.streetName,
                             streetNumber: FormValueStudent.streetNumber,
                             postNumber: FormValueStudent.postNumber,
@@ -811,20 +903,15 @@ export default function Maintenance_Admin(props){
                             assignedTopic: FormValueStudent.assignedTopic,
                             master: FormValueStudent.master,
                             approved: FormValueStudent.approved,
-                            locked: FormValueStudent.locked,
-                            enabled: FormValueStudent.enabled,
-                            userName: FormValueStudent.userName,
-                            password: FormValueStudent.password
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueStudent(
-                        {firstName: "",
+                        {
+                            firstName: "",
                             lastName: "",
                             targetAudience: [],
-                            top3Topic: [],
-                            preferredTopics: [],
                             streetName: "",
                             streetNumber: -1,
                             postNumber: -1,
@@ -832,13 +919,10 @@ export default function Maintenance_Admin(props){
                             city: "",
                             country: "",
                             email: "",
-                            assignedTopic: null,
-                            master: null,
-                            approved: null,
-                            locked: null,
-                            enabled: null,
-                            userName: "",
-                            password: ""}
+                            assignedTopic: -1,
+                            master: -1,
+                            approved: null
+                        }
                     );
                     await updateStudents();
                 } catch(error) {
@@ -848,12 +932,36 @@ export default function Maintenance_Admin(props){
             const submitStudentCreate = async(e) => {
                 let FormValidStudent = true;
                 function checkFormValueStudent() {
-                    if (FormValueStudent.firstName === ""){
-                        setErrorMessageForm("Invalid firstname" + FormValueStudent.firstName);
+                    if (FormValueStudent.phoneNumber === ""){
+                        setErrorMessageForm("Invalid phoneNumber" + FormValueStudent.phoneNumber);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.email === ""){
+                        setErrorMessageForm("Invalid email" + FormValueStudent.email);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.streetNumber === -1 && FormValueStudent.streetNumber > 0){
+                        setErrorMessageForm("Invalid streetNumber" + FormValueStudent.streetNumber);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.streetName === ""){
+                        setErrorMessageForm("Invalid streetName" + FormValueStudent.streetName);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.city === ""){
+                        setErrorMessageForm("Invalid city" + FormValueStudent.city);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.country === ""){
+                        setErrorMessageForm("Invalid country" + FormValueStudent.country);
                         FormValidStudent = false;
                     }
                     if (FormValueStudent.lastName === ""){
                         setErrorMessageForm("Invalid lastname" + FormValueStudent.lastName);
+                        FormValidStudent = false;
+                    }
+                    if (FormValueStudent.firstName === ""){
+                        setErrorMessageForm("Invalid firstname" + FormValueStudent.firstName);
                         FormValidStudent = false;
                     }
                     console.log("FormValid: " + FormValidStudent);
@@ -861,6 +969,9 @@ export default function Maintenance_Admin(props){
                 checkFormValueStudent();
                 if (FormValidStudent){
                     setErrorMessageForm("");
+                    let tas = getObjectOrNullArray(FormValueStudent.targetAudience);
+                    let assignt = getObjectOrNull(FormValueStudent.assignedTopic);
+                    let master = getObjectOrNull(FormValueStudent.master);
                     try {
                         const response = await axiosPrivate({
                             method: "post",
@@ -868,9 +979,7 @@ export default function Maintenance_Admin(props){
                             data: {
                                 firstName: FormValueStudent.firstName,
                                 lastName: FormValueStudent.lastName,
-                                targetAudience: FormValueStudent.targetAudience,
-                                top3Topic: FormValueStudent.top3Topic,
-                                preferredTopics: FormValueStudent.preferredTopics,
+                                targetAudience: tas,
                                 streetName: FormValueStudent.streetName,
                                 streetNumber: FormValueStudent.streetNumber,
                                 postNumber: FormValueStudent.postNumber,
@@ -878,13 +987,9 @@ export default function Maintenance_Admin(props){
                                 city: FormValueStudent.city,
                                 country: FormValueStudent.country,
                                 email: FormValueStudent.email,
-                                assignedTopic: FormValueStudent.assignedTopic,
-                                master: FormValueStudent.master,
+                                assignedTopic: assignt,
+                                master: master,
                                 approved: FormValueStudent.approved,
-                                locked: FormValueStudent.locked,
-                                enabled: FormValueStudent.enabled,
-                                userName: FormValueStudent.userName,
-                                password: FormValueStudent.password
                             }
                         });
                         console.log(response)
@@ -892,11 +997,10 @@ export default function Maintenance_Admin(props){
                         setStudentIndex(-1);
                         setStudentCreate(false);
                         setFormValueStudent(
-                            {firstName: "",
+                            {
+                                firstName: "",
                                 lastName: "",
                                 targetAudience: [],
-                                top3Topic: [],
-                                preferredTopics: [],
                                 streetName: "",
                                 streetNumber: -1,
                                 postNumber: -1,
@@ -904,13 +1008,10 @@ export default function Maintenance_Admin(props){
                                 city: "",
                                 country: "",
                                 email: "",
-                                assignedTopic: null,
-                                master: null,
-                                approved: null,
-                                locked: null,
-                                enabled: null,
-                                userName: "",
-                                password: ""}
+                                assignedTopic: -1,
+                                master: -1,
+                                approved: null
+                            }
                         );
                         await updateStudents();
                     } catch(error) {
@@ -935,8 +1036,6 @@ export default function Maintenance_Admin(props){
                         firstName: "",
                         lastName: "",
                         targetAudience: [],
-                        top3Topic: [],
-                        preferredTopics: [],
                         streetName: "",
                         streetNumber: -1,
                         postNumber: -1,
@@ -946,11 +1045,7 @@ export default function Maintenance_Admin(props){
                         email: "",
                         assignedTopic: null,
                         master: null,
-                        approved: null,
-                        locked: null,
-                        enabled: null,
-                        userName: "",
-                        password: ""}
+                        approved: null}
                     );
                     await updateStudents();
                 } catch(error) {
@@ -991,12 +1086,6 @@ export default function Maintenance_Admin(props){
                                     <div className={"ListItemTitle"}>
                                         {StudentIndex===index? <div className={"ListItemSelected"}>{student.firstName} {student.lastName}</div>:<div>{student.firstName} {student.lastName}</div>}
                                     </div>
-                                    {/*<div>*/}
-                                    {/*    {student.firstRound? <div>First Round</div>: <div>Second Round</div>}*/}
-                                    {/*</div>*/}
-                                    {/*<div>*/}
-                                    {/*    {student.begin_deadline} - {student.end_deadline}*/}
-                                    {/*</div>*/}
                                 </div>
                             ))}
                         </div>
@@ -1007,7 +1096,7 @@ export default function Maintenance_Admin(props){
                     </div>
                     <div className={"borderinwindow"}/>
                     <div className={"windowrightcrud"}>
-                        <div>
+                        <div className={"windowrightcrudForm"}>
                             {StudentCreate? createStudent(): showStudentInfo()}
                         </div>
                         <div className={"InfoButtonsBottom"}>
@@ -1030,7 +1119,6 @@ export default function Maintenance_Admin(props){
                     </div>
                 </div>
             )
-            return null;
         }
         function showMasters() {
             const handleMasterChange = (event) => {
@@ -2703,7 +2791,6 @@ export default function Maintenance_Admin(props){
         }
         function showTopics() {
             const handleTopicChange = (event) => {
-                console.log(event.target.name + ": " + event.target.value);
                 setFormValueTopic({
                     ...FormValueTopic,
                     [event.target.name]: event.target.value
@@ -2714,7 +2801,7 @@ export default function Maintenance_Admin(props){
                     ...FormValueTopic,
                     [event.target.name]: Array.from(event.target.selectedOptions, item => item.value)
                 });
-                console.log(Array.from(event.target.selectedOptions, item => item.value));
+                // console.log(Array.from(event.target.selectedOptions, item => item.value));
             }
 
             function showTopicInfo() {
@@ -2731,7 +2818,10 @@ export default function Maintenance_Admin(props){
                     </div>
                 }
                 function getReleaseDate(date) {
-                    return date.slice(0,10)
+                    if (date !== null && date !== "")
+                        return date.slice(0,10)
+                    else
+                        return "No date"
                 }
                 return(
                     <div>
@@ -2767,11 +2857,13 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="promotor" className={"InfoAttribute"}>Topic promotor</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].promotor? Topics[TopicIndex].promotor.firstName + " " +Topics[TopicIndex].promotor.lastName:<div/>}
-                                        <input type="text" name="promotor" placeholder={"Topic promotor"}
-                                               value={FormValueTopic.promotor}
-                                               onChange={handleTopicChange}
-                                        />
+                                        {Topics[TopicIndex].promotor && Topics[TopicIndex].promotor!==null && Topics[TopicIndex].promotor!==-1? Topics[TopicIndex].promotor.firstName + " " +Topics[TopicIndex].promotor.lastName:"No promotor"}
+                                        <select name="promotor" onChange={handleTopicChange} >
+                                            <option value={"null"}>--None--</option>
+                                            {Promotors? Promotors.map((p) => (
+                                                <option value={p.id}>{p.firstName} {p.lastName}</option>
+                                            )):"No promotor"}
+                                        </select>
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
@@ -2789,7 +2881,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="release_date" className={"InfoAttribute"}>Topic release date</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].release_date? getReleaseDate(Topics[TopicIndex].release_date):<div/>}
+                                        {Topics[TopicIndex].release_date!==""? getReleaseDate(Topics[TopicIndex].release_date):<div/>}
                                         <input type="date" name="release_date" placeholder={"Topic release date"}
                                                value={FormValueTopic.release_date}
                                                onChange={handleTopicChange}
@@ -2809,7 +2901,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="boostedStudent" className={"InfoAttribute"}>Boosted Student</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].boostedStudent? Topics[TopicIndex].boostedStudent:<div>No boosted student(s)</div>}
+                                        {Topics[TopicIndex].boostedStudent.length!==0? Topics[TopicIndex].boostedStudent:<div>No boosted student(s)</div>}
                                         <select name="boostedStudent" onChange={handleTopicChange}>
                                             <option value={"null"}>--None--</option>
                                             {Students.map((student) => (
@@ -2819,11 +2911,11 @@ export default function Maintenance_Admin(props){
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="student_list" className={"InfoAttribute"}>AssignedStudent(s)</label>
+                                    <label htmlFor="student_list" className={"InfoAttribute"}>Assigned Student(s)</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].boostedStudent?
+                                        {Topics[TopicIndex].student_list.length!==0?
                                             <div>
-                                            {Topics[TopicIndex].boostedStudent.map((s) => (
+                                            {Topics[TopicIndex].student_list.map((s) => (
                                                 <div key={s.id}>{s.firstName} {s.lastName}
                                                 </div>))}
                                             </div>:<div>No assigned students</div>}
@@ -2838,7 +2930,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="keyword_list" className={"InfoAttribute"}>Keywords</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].keyword_list?
+                                        {Topics[TopicIndex].keyword_list.length!==0?
                                             <div>
                                                 {Topics[TopicIndex].keyword_list.map((s) => (
                                                     <div key={s.keyword_id}>{s.keyword_name}
@@ -2855,7 +2947,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="targetAudiences" className={"InfoAttribute"}>Target Audiences</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].targetAudiences?
+                                        {Topics[TopicIndex].targetAudiences.length!==0?
                                             <div>
                                                 {Topics[TopicIndex].targetAudiences.map((ta) => (
                                                     <div key={ta.targetAudience_id}>{ta.campus.campus_name} {ta.course.abbriviationName}
@@ -2875,7 +2967,7 @@ export default function Maintenance_Admin(props){
                                 <div className={"InfoSection"}>
                                     <label htmlFor="tags" className={"InfoAttribute"}>Students with topic as first choice</label>
                                     <div className={"InfoAttributeValueAndInput"}>
-                                        {Topics[TopicIndex].tags?
+                                        {Topics[TopicIndex].tags.length!==0?
                                             <div>
                                                 {Topics[TopicIndex].tags.map((a) => (
                                                     <div key={a.id}>{getStudent(a.student)}
@@ -2904,10 +2996,10 @@ export default function Maintenance_Admin(props){
                                     </div>
                                 </div>
                                 <div className={"InfoSection"}>
-                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
+                                    <label htmlFor="hide_topic" className={"InfoAttribute"}>Hide</label>
                                     <div className={"InfoAttributeValueAndInput"}>
                                         {Topics[TopicIndex].hide? "True":"False"}
-                                        <select name="hide" onChange={handleTopicChange}>
+                                        <select name="hide_topic" onChange={handleTopicChange}>
                                             <option value={"null"}>Null</option>
                                             <option value={"false"}>False</option>
                                             <option value={"true"}>True</option>
@@ -2953,10 +3045,6 @@ export default function Maintenance_Admin(props){
                                             <option value={p.id}>{p.firstName} {p.lastName}</option>
                                         ))}
                                     </select>
-                                    {/*<input type="text" name="promotor" placeholder={"Topic promotor"}*/}
-                                    {/*       value={FormValueTopic.promotor}*/}
-                                    {/*       onChange={handleTopicChange}*/}
-                                    {/*/>*/}
                                 </div>
                             </div>
                             <div className={"InfoSection"}>
@@ -3061,8 +3149,8 @@ export default function Maintenance_Admin(props){
                             </div>
                             <div className={"InfoSection"}>
                                 <div className={"InfoAttributeValueAndInput"}>
-                                    <label htmlFor="hide" className={"InfoAttribute"}>Hide</label>
-                                    <select name="hide" onChange={handleTopicChange}>
+                                    <label htmlFor="hide_topic" className={"InfoAttribute"}>Hide</label>
+                                    <select name="hide_topic" onChange={handleTopicChange}>
                                         <option value={"null"}>Null</option>
                                         <option value={"false"}>False</option>
                                         <option value={"true"}>True</option>
@@ -3077,20 +3165,48 @@ export default function Maintenance_Admin(props){
             const submitTopicUpdate = async(e) => {
                 console.log(Topics[TopicIndex]);
                 console.log(FormValueTopic);
+                let keywords = getObjectOrNull(FormValueTopic.keyword_list);
+                let tas = getObjectOrNull(FormValueTopic.targetAudiences);
+                let students = getObjectOrNull(FormValueTopic.student_list);
+                let tags = getObjectOrNull(FormValueTopic.tags);
+
+                setErrorMessageForm("");
                 try {
                     const response = await axiosPrivate({
                         method: "post",
                         url: "http://localhost:8080/admin/update/topic/" + Topics[TopicIndex].topic_id,
                         data: {
                             topicName: FormValueTopic.topicName,
-                            hide: FormValueTopic.hide,
+                            aantal_studenten: FormValueTopic.aantal_studenten,
+                            approved_topic: FormValueTopic.approved_topic,
+                            boostedStudent: FormValueTopic.boostedStudent,
+                            description_topic: FormValueTopic.description_topic,
+                            hide_topic: FormValueTopic.hide_topic,
+                            keyword_list: keywords,
+                            promotor: FormValueTopic.promotor,
+                            provider: FormValueTopic.provider,
+                            release_date: FormValueTopic.release_date,
+                            student_list: students,
+                            tags: tags,
+                            targetAudiences: tas
                         }
                     });
                     console.log(response)
                     navigate("/maintenance", { replace: true });
                     setFormValueTopic({
-                            topicName: "",
-                            hide: null,
+                        aantal_studenten: 2,
+                        approved_topic: null,
+                        boostedStudent: -1,
+                        description_topic: "",
+                        hide_topic: null,
+                        keyword_list: [],
+                        promotor: -1,
+                        provider: -1,
+                        release_date: "",
+                        student_list: [],
+                        tags: [],
+                        targetAudiences: [],
+                        topicName: ""
                         }
                     );
                     await updateTopics();
@@ -3099,159 +3215,158 @@ export default function Maintenance_Admin(props){
                 }
             }
 
-            function getStudentJSON(boostedStudent) {
-                for(var i = 0; i < Students.length; i++) {
-                    if (Students[i].id === boostedStudent) {
-                        console.log(Students[i])
-                        return Students[i]
-                    }
+            function getObjectOrNull(a) {
+                if (a.includes('null')){
+                    // console.log("a: " + a)
+                    return null;
                 }
-                return null;
+                return a;
             }
-            function getKeywords(klist) {
-                let temp = [];
-                for(var i = 0; i < Keywords.length; i++) {
-                    for(var j=0; j<klist;j++){
-                        if (Keywords[i].keyword_id === klist[j]) {
-                            console.log(Keywords[i])
-                            temp.push(Keywords[i]);
-                        }
-                    }
-                }
-                return temp;
-            }
-            function getPromotorJSON(p) {
-                for(var i = 0; i < Promotors.length; i++) {
-                    if (Promotors[i].id === p) {
-                        console.log(Promotors[i])
-                        return Promotors[i]
-                    }
-                }
-                return null;
-            }
-            function getTargetAsJSON(a) {
-                let temp = [];
-                for(var i = 0; i < TargetAudiences.length; i++) {
-                    for(var j=0; j<a;j++){
-                        if (TargetAudiences[i].keyword_id === a[j]) {
-                            console.log(TargetAudiences[i])
-                            temp.push(TargetAudiences[i]);
-                        }
-                    }
-                }
-                return temp;
-            }
-
-
             const submitTopicCreate = async(e) => {
                 let FormValidTopic = true;
                 function checkFormValueTopic() {
-                    if (FormValueTopic.topicName === ""){
-                        setErrorMessageForm("Invalid name" + FormValueTopic.topicName);
+                    if (FormValueTopic.hide_topic === null){
+                        setErrorMessageForm("Invalid hide");
                         FormValidTopic = false;
                     }
-                    if (FormValueTopic.hide === null){
-                        setErrorMessageForm("Invalid hide" + FormValueTopic.hide);
+                    if (FormValueTopic.approved_topic === null){
+                        setErrorMessageForm("Invalid approved");
+                        FormValidTopic = false;
+                    }
+                    if (FormValueTopic.targetAudiences.length===0){
+                        setErrorMessageForm("Invalid target audiences");
+                        FormValidTopic = false;
+                    }
+                    if (FormValueTopic.release_date===""){
+                        setErrorMessageForm("Invalid release date");
+                        FormValidTopic = false;
+                    }
+                    if (FormValueTopic.provider === -1){
+                        setErrorMessageForm("Invalid provider");
+                        FormValidTopic = false;
+                    }
+                    if (FormValueTopic.description_topic === ""){
+                        setErrorMessageForm("Invalid description");
+                        FormValidTopic = false;
+                    }
+                    if (FormValueTopic.topicName === ""){
+                        setErrorMessageForm("Invalid name");
                         FormValidTopic = false;
                     }
                     console.log("FormValid: " + FormValidTopic);
                 }
                 checkFormValueTopic();
                 if (FormValidTopic){
-                    let boostedStudent = getStudentJSON(FormValueTopic.boostedStudent);
-                    let keywords = getKeywords(FormValueTopic.keyword_list);
-                    let promotor = getPromotorJSON(FormValueTopic.promotor);
-                    let tas = getTargetAsJSON(FormValueTopic.targetAudiences);
-
+                    let keywords = getObjectOrNull(FormValueTopic.keyword_list);
+                    let tas = getObjectOrNull(FormValueTopic.targetAudiences);
+                    let students = getObjectOrNull(FormValueTopic.student_list);
+                    let tags = getObjectOrNull(FormValueTopic.tags);
                     setErrorMessageForm("");
-                    // try {
-                    //     const response = await axiosPrivate({
-                    //         method: "post",
-                    //         url: "http://localhost:8080/admin/create/topic/",
-                    //         data: {
-                    //             topicName: FormValueTopic.topicName,
-                    //             aantal_studenten: FormValueTopic.aantal_studenten,
-                    //             approved_topic: FormValueTopic.approved_topic,
-                    //             boostedStudent: boostedStudent,
-                    //             description_topic: FormValueTopic.description_topic,
-                    //             hide_topic: FormValueTopic.hide_topic,
-                    //             keyword_list: keywords,
-                    //             promotor: promotor,
-                    //             provider: FormValueTopic.provider,
-                    //             release_date: FormValueTopic.release_date,
-                    //             student_list: FormValueTopic.student_list,
-                    //             tags: FormValueTopic.tags,
-                    //             targetAudiences: tas
-                    //         }
-                    //     });
-                    //     console.log(response)
-                    //     navigate("/maintenance", { replace: true });
-                    //     setTopicIndex(-1);
-                    //     setTopicCreate(false);
-                    //     setFormValueTopic({
-                    //         aantal_studenten: 2,
-                    //         approved_topic: null,
-                    //         boostedStudent: null,
-                    //         description_topic: "",
-                    //         hide_topic: null,
-                    //         keyword_list: [],
-                    //         promotor: null,
-                    //         provider: -1,
-                    //         release_date: "",
-                    //         student_list: [],
-                    //         tags: [],
-                    //         targetAudiences: [],
-                    //         topicName: ""
-                    //         }
-                    //     );
-                    //     await updateTopics();
-                    // } catch(error) {
-                    //     console.log(error)
-                    // }
+                    // console.log(FormValueTopic);
+                    // console.log("keywords " + keywords);
+                    // console.log("tas " + tas);
+                    // console.log("students " + students);
+                    // console.log("tags " + tags);
+
+                    try {
+                        const response = await axiosPrivate({
+                            method: "post",
+                            url: "http://localhost:8080/admin/create/topic/",
+                            data: {
+                                topicName: FormValueTopic.topicName,
+                                aantal_studenten: FormValueTopic.aantal_studenten,
+                                approved_topic: FormValueTopic.approved_topic,
+                                boostedStudent: FormValueTopic.boostedStudent,
+                                description_topic: FormValueTopic.description_topic,
+                                hide_topic: FormValueTopic.hide_topic,
+                                keyword_list: keywords,
+                                promotor: FormValueTopic.promotor,
+                                provider: FormValueTopic.provider,
+                                release_date: FormValueTopic.release_date,
+                                student_list: students,
+                                tags: tags,
+                                targetAudiences: tas
+                            }
+                        });
+                        // console.log(response)
+                        navigate("/maintenance", { replace: true });
+                        setTopicIndex(-1);
+                        setTopicCreate(false);
+                        setFormValueTopic({
+                            aantal_studenten: 2,
+                            approved_topic: null,
+                            boostedStudent: -1,
+                            description_topic: "",
+                            hide_topic: null,
+                            keyword_list: [],
+                            promotor: -1,
+                            provider: -1,
+                            release_date: "",
+                            student_list: [],
+                            tags: [],
+                            targetAudiences: [],
+                            topicName: ""
+                            }
+                        );
+                        await updateTopics();
+                    } catch(error) {
+                        console.log(error)
+                    }
                 }
             }
             const submitTopicDelete = async(e) => {
-                console.log(Topics[TopicIndex]);
-                // try {
-                //     const response = await axiosPrivate({
-                //         method: "post",
-                //         url: "http://localhost:8080/admin/delete/topic",
-                //         data: {
-                //             topic_id: Topics[TopicIndex].topic_id
-                //         }
-                //     });
-                //     console.log(response)
-                //     navigate("/maintenance", { replace: true });
-                //     setTopicIndex(-1);
-                //     setFormValueTopic({
-                //             topicName: "",
-                //             hide: null,
-                //         }
-                //     );
-                //     await updateTopics();
-                // } catch(error) {
-                //     console.log(error)
-                // }
+                // console.log(Topics[TopicIndex]);
+                try {
+                    const response = await axiosPrivate({
+                        method: "post",
+                        url: "http://localhost:8080/admin/delete/topic",
+                        data: {
+                            topic_id: Topics[TopicIndex].topic_id
+                        }
+                    });
+                    // console.log(response)
+                    navigate("/maintenance", { replace: true });
+                    setTopicIndex(-1);
+                    setFormValueTopic({
+                        aantal_studenten: 2,
+                        approved_topic: null,
+                        boostedStudent: null,
+                        description_topic: "",
+                        hide_topic: null,
+                        keyword_list: [],
+                        promotor: null,
+                        provider: -1,
+                        release_date: "",
+                        student_list: [],
+                        tags: [],
+                        targetAudiences: [],
+                        topicName: ""
+                        }
+                    );
+                    await updateTopics();
+                } catch(error) {
+                    console.log(error)
+                }
             }
             async function updateTopics() {
                 let isMounted = true;
                 const controller = new AbortController();
-                // try {
-                //     const response = await axiosPrivate({
-                //         method: "get",
-                //         url: "/topic/all",
-                //         signal: controller.signal
-                //     });
-                //     console.log(response.data);
-                //     const myData = [].concat(response.data).sort((a, b) => a.topic_id > b.topic_id ? 1 : -1);
-                //     console.log(response.data);
-                //     isMounted && setTopics(myData);
-                //
-                // } catch (err) {
-                //     console.error(err);
-                //     navigate('/login', {state: {from: location}, replace: true});
-                //     console.log(errMsg);
-                // }
+                try {
+                    const response = await axiosPrivate({
+                        method: "get",
+                        url: "/topic/all",
+                        signal: controller.signal
+                    });
+                    console.log(response.data);
+                    const myData = [].concat(response.data).sort((a, b) => a.topic_id > b.topic_id ? 1 : -1);
+                    console.log(response.data);
+                    isMounted && setTopics(myData);
+
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', {state: {from: location}, replace: true});
+                    console.log(errMsg);
+                }
             }
             function cancelCreateTopic() {
                 setTopicCreate(false);
@@ -3283,7 +3398,7 @@ export default function Maintenance_Admin(props){
                                         {getProviderVanTopic(t.provider)}
                                     </div>
                                     <div>
-                                        {t.promotor.firstName} {t.promotor.lastName}
+                                        {t.promotor?<div>{t.promotor.firstName} {t.promotor.lastName}</div>:""}
                                     </div>
                                 </div>
                             ))}

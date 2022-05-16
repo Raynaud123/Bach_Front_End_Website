@@ -155,7 +155,6 @@ export default function TopicInfo_Promotor(props) {
                     signal: controller.signal
                 });
                 // console.log(response.data);
-                console.log(response.data.phase_id);
                 if(response.data.phase_id == 3 || response.data.phase_id === 6 && isMounted){
                     setPhase(true)
                 }
@@ -168,7 +167,7 @@ export default function TopicInfo_Promotor(props) {
             }
         }
 
-        getPhase();
+        await getPhase();
         await getTopic();
 
 
@@ -177,32 +176,6 @@ export default function TopicInfo_Promotor(props) {
             controller.abort();
         }
     }, [])
-
-
-
-/*    useEffect(
-
-        async () =>{
-            const handleBoost = async () => {
-                try {
-                    const response = await axiosPrivate({
-                        method: "PUT",
-                        url: `/topic/boost/${topicid}`,
-                        data: JSON.stringify({'studentid': SelectStudent})
-                    });
-                    console.log(response.data);
-                    navigate(`/topics/info/${topicid}`, {replace: true});
-                } catch (err) {
-                    console.error(err);
-                    navigate('/login', {state: {from: location}, replace: true});
-                    console.log(errMsg);
-                }
-        }
-        await handleBoost();
-
-    },[submit])*/
-
-
 
 
     function PromInfo() {
@@ -243,8 +216,6 @@ export default function TopicInfo_Promotor(props) {
         )
     }
     function KeywordInfo() {
-        console.log(BoostedComponent);
-        console.log(Phase);
         return(
             <div className={"tekst"}>
                 <h3>Keywords:</h3> {Keyword? <div>{Keyword.map((keyword) => (<div> &emsp; {keyword.keyword_name}</div> ))}</div> : "None"}

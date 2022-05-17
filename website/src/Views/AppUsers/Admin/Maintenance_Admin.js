@@ -444,6 +444,15 @@ export default function Maintenance_Admin(){
             const submitPhaseUpdate = async() => {
                 //console.log(Phases[PhaseIndex]);
                 //console.log(FormValuePhase);
+                if (FormValuePhase.phaseBeginDeadline !== ""){
+                    FormValuePhase.phaseBeginDeadline = FormValuePhase.phaseBeginDeadline + " 00:00:00";
+                    console.log(FormValuePhase.phaseBeginDeadline);
+
+                }
+                if (FormValuePhase.phaseEndDeadline !== ""){
+                    FormValuePhase.phaseEndDeadline = FormValuePhase.phaseEndDeadline + " 23:55:55";
+                    console.log(FormValuePhase.phaseEndDeadline);
+                }
                 try {
                     const response = await axiosPrivate({
                         method: "post",

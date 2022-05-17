@@ -15,8 +15,8 @@ export default function TopicInfo_Promotor(props) {
     const [Provider, setProvider] = useState([]);
     const [Promotor, setPromotor] = useState([]);
     const [Phase, setPhase] = useState(true);
-    const [setTargetAudience] = useState([]);
-    const [setStudents] = useState([]);
+    const [TargetAudience, setTargetAudience] = useState([]);
+    const [Students, setStudents] = useState([]);
     const [Keyword, setKeyword] = useState([]);
     const [setBoostedStudent] = useState([]);
     const [BoostedComponent, setBoostedComponent] = useState(false);
@@ -43,7 +43,7 @@ export default function TopicInfo_Promotor(props) {
                     url: `/topic/${topicid}`,
                     signal: controller.signal
                 });
-                //console.log(response.data);
+                console.log(response.data);
                 isMounted && setTopic(response.data);
                 setAantalStudenten(response.data.aantal_studenten);
                 //console.log(response.data.aantal_studenten);
@@ -246,8 +246,6 @@ export default function TopicInfo_Promotor(props) {
                     id={topicid}
                 />}
             </div>
-
-
         </div>
     )
 }
